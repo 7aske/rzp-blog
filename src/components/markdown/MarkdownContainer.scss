@@ -1,0 +1,18 @@
+@import "../../assets/css/theme";
+
+.markdown-container {
+	a {
+		color: $theme-green !important;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	th, tr, td {
+		border-color: $theme-grey;
+	}
+
+	img {
+		max-width: 100%;
+	}
+}

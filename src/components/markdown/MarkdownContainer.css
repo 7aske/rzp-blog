@@ -1,0 +1,12 @@
+.markdown-container a {
+  color: #4ecca3 !important;
+}
+.markdown-container a:hover {
+  text-decoration: underline;
+}
+.markdown-container th, .markdown-container tr, .markdown-container td {
+  border-color: #393e46;
+}
+.markdown-container img {
+  max-width: 100%;
+}

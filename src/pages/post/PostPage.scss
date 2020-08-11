@@ -1,0 +1,23 @@
+@import "../../assets/css/theme";
+
+#post {
+	min-height: 80vh;
+	padding-top: 3em;
+	color: $theme-white;
+	.btn-back {
+		background-color: $theme-green;
+		&:hover {
+			background-color: $theme-green-lightest;
+			color: $theme-grey;
+		}
+	}
+	.title {
+		color: $theme-green;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	#post {
+		padding-top: 2em;
+	}
+}

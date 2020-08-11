@@ -1,0 +1,18 @@
+@import "../../assets/css/theme";
+
+#index {
+
+	.title {
+		color: $theme-green;
+	}
+	.text {
+		color: $theme-white;
+		font-size: 1.2em;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	#index {
+		padding-top: 0;
+	}
+}

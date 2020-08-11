@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "typeRoots": [
+      "src/@types/**.*"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,7 +20,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "removeComments": true
   },
   "include": [
     "src"

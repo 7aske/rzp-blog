@@ -1,0 +1,21 @@
+#post {
+  min-height: 80vh;
+  padding-top: 3em;
+  color: #eeeeee;
+}
+#post .btn-back {
+  background-color: #4ecca3;
+}
+#post .btn-back:hover {
+  background-color: #c2eddf;
+  color: #393e46;
+}
+#post .title {
+  color: #4ecca3;
+}
+
+@media screen and (max-width: 900px) {
+  #post {
+    padding-top: 2em;
+  }
+}

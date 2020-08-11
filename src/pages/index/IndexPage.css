@@ -1,0 +1,13 @@
+#index .title {
+  color: #4ecca3;
+}
+#index .text {
+  color: #eeeeee;
+  font-size: 1.2em;
+}
+
+@media screen and (max-width: 900px) {
+  #index {
+    padding-top: 0;
+  }
+}

@@ -1,0 +1,82 @@
+@import "../../assets/css/theme";
+
+.post-preview {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	span {
+		position: absolute;
+		right: 0;
+		padding-left: 1em;
+
+		a {
+			color: $theme-green-light;
+		}
+
+		&:hover a {
+			border-bottom: 2px solid $theme-green-lightest;
+			color: $theme-white;
+		}
+	}
+
+	h4 {
+		display: inline;
+		color: $theme-green;
+		&:hover{
+			color: $theme-green-lightest;
+			border-bottom: 2px solid $theme-green-lightest;
+		}
+	}
+
+	h5, h6 {
+		color: $theme-white;
+	}
+
+	p {
+		color: $theme-white;
+		font-size: 1.2em;
+	}
+}
+
+.post-preview-placeholder {
+	.title {
+		background-color: $theme-green;
+		top: 0 !important;
+		height: 4em !important;
+	}
+
+	.author {
+		background-color: $theme-grey;
+		top: 6em;
+		width: 40% !important;
+	}
+
+	.date {
+		background-color: $theme-grey;
+		top: 8em;
+		width: 40% !important;
+	}
+
+	.excerpt {
+		background-color: $theme-grey;
+		top: 10em;
+		height: 3em !important;
+		width: 100% !important;
+	}
+
+	.outer {
+		background-color: $theme-black;
+		width: 100%;
+		height: 15em;
+		border-radius: 10px;
+		position: relative;
+	}
+
+	.inner {
+		position: absolute;
+		height: 1em;
+		width: 70%;
+		left: .25em;
+		border-radius: 10px;
+	}
+}
+
