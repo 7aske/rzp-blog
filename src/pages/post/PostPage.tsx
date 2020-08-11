@@ -1,13 +1,13 @@
-import marked from "marked";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
-import * as postService from "../../services/postsService";
+import postService from "../../services/postService";
 import { formatDate, scrollToTop } from "../../utils/utils";
 import "./PostPage.css";
+import localization from "./localization";
 
 export const PostPage = () => {
 	const [locale] = useLocale();
@@ -25,16 +25,17 @@ export const PostPage = () => {
 			history.replace("/404");
 		});
 		scrollToTop();
+
 		// eslint-disable-next-line
 	}, []);
 
 	return (
 		<div id="post" className="container">
-			<Link className={"btn btn-back"} to={"/"}>Back</Link>
+			<Link className={"btn btn-back"} to={"/"}>{localization[locale].back}</Link>
 			<article className="animate__animated animate__fadeIn animate__slow">
 				<h2 className="title">{post?.postTitle}</h2>
-				<h5>{post?.postAuthor}</h5>
-				<h6>{formatDate(post?.postDatePosted ? post.postDatePosted : "", locale)}</h6>
+				<h5 className="author">{post?.postAuthor.toUpperCase()}</h5>
+				<h6 className="date">{formatDate(post?.postDatePosted ? post.postDatePosted : "", locale)}</h6>
 				<MarkdownContainer content={post?.postBody ? post?.postBody : ""}/>
 			</article>
 		</div>

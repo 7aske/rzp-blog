@@ -11,6 +11,7 @@ export const LocaleSwitch = (props: LocaleSwitchProps) => {
 	};
 
 	return (
+		// eslint-disable-next-line jsx-a11y/anchor-is-valid
 		<a onClick={toggleLocale}>{locale.toUpperCase()}</a>
 	);
 };

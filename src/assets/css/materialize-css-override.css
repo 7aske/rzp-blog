@@ -1,22 +1,22 @@
 nav {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .collection {
-  background-color: #232931 !important;
-  border: none !important;
+  background-color: #232931;
+  border: none;
 }
 .collection .collection-header {
-  color: #eeeeee !important;
-  background-color: #232931 !important;
-  border-bottom: 4px solid #393e46 !important;
+  color: #eeeeee;
+  background-color: #232931;
+  border-bottom: 4px solid #393e46;
 }
 .collection .collection-item {
-  background-color: #232931 !important;
-  border-bottom: 2px solid #393e46 !important;
+  background-color: #232931;
+  border-bottom: 2px solid #393e46;
 }
 .collection .collection-item:last-of-type {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 input::placeholder {
@@ -39,7 +39,7 @@ textarea {
 }
 
 .card {
-  background-color: #393e46 !important;
+  background-color: #393e46;
 }
 .card .card-image {
   text-align: center;
@@ -49,18 +49,18 @@ textarea {
 }
 
 .modal {
-  background-color: #393e46 !important;
+  background-color: #393e46;
   color: #eeeeee;
 }
 .modal, .modal .modal-content {
-  width: 80vw !important;
+  width: 80vw;
 }
 .modal .modal-footer, .modal .modal-content {
-  background-color: #393e46 !important;
+  background-color: #393e46;
 }
 
 @media screen and (max-width: 900px) {
   .modal, .modal .modal-content {
-    height: 80vh !important;
+    height: 80vh;
   }
 }

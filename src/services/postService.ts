@@ -18,3 +18,10 @@ export const getByPostSlug = async (postSlug: string): Promise<PostDTO | null> =
 	return post;
 };
 
+const postService = {
+	getAllPreviews,
+	getByPostSlug,
+}
+
+export default postService;
+

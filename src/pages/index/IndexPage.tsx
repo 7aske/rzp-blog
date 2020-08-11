@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
-import * as postsService from "../../services/postsService";
+import postService from "../../services/postService";
 import "./IndexPage.css";
 import localization from "./localization";
 
@@ -13,7 +13,7 @@ export const IndexPage = (props: IndexPageProps) => {
 	const [posts, setPosts] = useState(new Array(postCount).fill(null));
 
 	useEffect(() => {
-		postsService.getAllPreviews().then(newPosts => {
+		postService.getAllPreviews().then(newPosts => {
 			setPosts(newPosts);
 		});
 	}, []);

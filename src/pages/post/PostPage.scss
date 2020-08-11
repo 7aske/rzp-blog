@@ -4,13 +4,16 @@
 	min-height: 80vh;
 	padding-top: 3em;
 	color: $theme-white;
+
 	.btn-back {
 		background-color: $theme-green;
+
 		&:hover {
 			background-color: $theme-green-lightest;
 			color: $theme-grey;
 		}
 	}
+
 	.title {
 		color: $theme-green;
 	}

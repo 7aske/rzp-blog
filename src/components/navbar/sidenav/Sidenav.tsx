@@ -23,9 +23,11 @@ export const Sidenav = (props: SidenavProps) => {
 			<ul ref={sidenavRef} id="sidenav" className="sidenav">
 				<li>
 					<div className="user-view">
+						{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 						<a className="logo sidenav-close" href="#">
 							<img src={logo} alt="Logo"/>
 						</a>
+						{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 						<a className="name">
 							Company Name
 						</a>

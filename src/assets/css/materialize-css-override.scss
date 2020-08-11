@@ -1,24 +1,24 @@
 @import "theme";
 
 nav {
-	box-shadow: none !important;
+	box-shadow: none;
 }
 
 .collection {
-	background-color: $theme-black !important;
-	border: none !important;
+	background-color: $theme-black;
+	border: none;
 	.collection-header {
-		color: $theme-white !important;
-		background-color: $theme-black !important;
-		border-bottom: 4px solid $theme-grey !important;
+		color: $theme-white;
+		background-color: $theme-black;
+		border-bottom: 4px solid $theme-grey;
 	}
 
 	.collection-item {
-		background-color: $theme-black !important;
-		border-bottom: 2px solid $theme-grey !important;
+		background-color: $theme-black;
+		border-bottom: 2px solid $theme-grey;
 
 		&:last-of-type {
-			border-bottom: none !important;
+			border-bottom: none;
 		}
 	}
 }
@@ -45,7 +45,7 @@ textarea {
 }
 
 .card {
-	background-color: $theme-grey !important;
+	background-color: $theme-grey;
 
 	.card-image {
 		text-align: center;
@@ -57,16 +57,16 @@ textarea {
 }
 
 .modal {
-	background-color: $theme-grey !important;
+	background-color: $theme-grey;
 	color: $theme-white;
 
 	&, .modal-content {
-		width: 80vw !important;
+		width: 80vw;
 	}
 ;
 
 	.modal-footer, .modal-content {
-		background-color: $theme-grey !important;
+		background-color: $theme-grey;
 	}
 }
 
@@ -74,7 +74,7 @@ textarea {
 
 	.modal {
 		&, .modal-content {
-			height: 80vh !important;
+			height: 80vh;
 		}
 	}
 }

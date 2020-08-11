@@ -11,16 +11,17 @@ export const Footer = () => {
 	const [locale] = useLocale();
 
 	const menuItems = [
-		<li><Link className="sidenav-close" to="/">{routes[locale].home}</Link></li>,
-		<li><a href={websiteUrl + "/#/about"}>{routes[locale].about}</a></li>,
-		<li><a href={websiteUrl + "/#/team"}>{routes[locale].team}</a></li>,
-		<li><a href={websiteUrl + "/#/contact"}>{routes[locale].contact}</a></li>,
-		<li><a target="blank" href={websiteUrl}>{routes[locale].website}</a></li>,
+		<li key={0}><Link className="sidenav-close" to="/">{routes[locale].home}</Link></li>,
+		<li key={1}><a href={websiteUrl + "/#/about"}>{routes[locale].about}</a></li>,
+		<li key={2}><a href={websiteUrl + "/#/team"}>{routes[locale].team}</a></li>,
+		<li key={3}><a href={websiteUrl + "/#/contact"}>{routes[locale].contact}</a></li>,
+		<li key={4}><a target="blank" href={websiteUrl}>{routes[locale].website}</a></li>,
 	];
 
 	return (
 		<footer id="footer" className="page-footer">
 			<div className="container to-top">
+				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a className="grey-text text-lighten-4 right" href="#"
 				   onClick={scrollToTop}>{localization[locale].toTop}</a>
 			</div>
