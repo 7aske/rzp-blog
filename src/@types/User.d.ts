@@ -3,5 +3,5 @@ type User = {
 	userDisplayName: string;
 	userFirstName: string;
 	userLastName: string;
-	userRoles: Role[];
+	userRoles: string[];
 }

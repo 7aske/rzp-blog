@@ -22,7 +22,13 @@ export const LoginPage = () => {
 
 		userService.getById(idUser).then(_user => {
 			setCtx({...ctx, user:_user})
-			history.push("/admin");
+			if (_user.userRoles.indexOf("admin") !== -1) {
+				history.replace("/admin/posts")
+			} else if (_user.userRoles.indexOf("user") !== -1) {
+				history.replace("/user/profile")
+			} else {
+				history.replace("/")
+			}
 		}).catch(err => {
 			console.error(err.response);
 			setErrors([err.response.data.error])

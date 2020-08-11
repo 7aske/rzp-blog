@@ -18,7 +18,7 @@ export const Navbar = () => {
 
 	const loggedIn = ctx.user !== null;
 
-	const roles = ctx.user ? ctx.user.userRoles.map(role => role.roleName) : [];
+	const roles = ctx.user ? ctx.user.userRoles : [];
 	console.log(roles);
 
 	const navItems = new MenuBuilder(locale)
@@ -30,6 +30,11 @@ export const Navbar = () => {
 		.withLoggedIn([loggedIn, null])
 		.withRoles(roles)
 		.build();
+
+	const mobileNav = new MenuBuilder(locale)
+		.withNavTrigger()
+		.build();
+
 
 	useEffect(() => {
 		window.addEventListener("scroll", () => {
@@ -54,6 +59,9 @@ export const Navbar = () => {
 
 				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a className="nav-logo"><img src={logo} alt="Logo"/></a>
+				<ul className="menu right hide-on-med-and-up">
+					{mobileNav}
+				</ul>
 				<ul className="menu right hide-on-med-and-down">
 					{navItems}
 				</ul>

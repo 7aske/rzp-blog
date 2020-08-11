@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import authService from "../../services/authService";
 
 type AuthGuardProps = {
-	children?: JSX.Element | never[];
+	children?: JSX.Element[] | JSX.Element | never[];
 };
 export const AuthGuard = (props: AuthGuardProps) => {
 	const history = useHistory();
