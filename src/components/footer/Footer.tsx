@@ -11,11 +11,11 @@ export const Footer = () => {
 	const [locale] = useLocale();
 
 	const menuItems = [
-		<li key={0}><Link className="sidenav-close" to="/">{routes[locale].home}</Link></li>,
+		<li key={0}><a href={websiteUrl}>{routes[locale].home}</a></li>,
 		<li key={1}><a href={websiteUrl + "/#/about"}>{routes[locale].about}</a></li>,
 		<li key={2}><a href={websiteUrl + "/#/team"}>{routes[locale].team}</a></li>,
 		<li key={3}><a href={websiteUrl + "/#/contact"}>{routes[locale].contact}</a></li>,
-		<li key={4}><a target="blank" href={websiteUrl}>{routes[locale].website}</a></li>,
+		<li key={4}><Link to="/">{routes[locale].blog}</Link></li>,
 	];
 
 	return (

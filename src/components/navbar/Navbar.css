@@ -34,6 +34,9 @@ nav#nav ul.menu li a:hover {
   border-bottom: 2px solid #4ecca3;
   height: 4em;
 }
+nav#nav .sidenav-trigger {
+  display: inline !important;
+}
 
 @media screen and (max-width: 900px) {
   nav#nav {

@@ -43,6 +43,10 @@ nav#nav {
 			height: 4em;
 		}
 	}
+
+	.sidenav-trigger {
+		display: inline !important;
+	}
 }
 
 @media screen and (max-width: 900px) {

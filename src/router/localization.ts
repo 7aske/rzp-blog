@@ -5,6 +5,12 @@ type RoutesLocalizationStrings = {
 	contact: string;
 	website: string;
 	blog: string;
+	login: string;
+	logout: string;
+	profile: string;
+	users: string;
+	posts: string;
+	tags: string;
 	[key: string]: string;
 }
 
@@ -14,7 +20,13 @@ const sr: RoutesLocalizationStrings = {
 	contact: "Kontakt",
 	home: "Početna",
 	blog: "Blog",
-	team: "Naš tim"
+	team: "Naš tim",
+	login: "Uloguj se",
+	logout: "Izloguj se",
+	profile: "Profil",
+	users: "Korisnici",
+	posts: "Objave",
+	tags: "Tagovi",
 };
 
 const en: RoutesLocalizationStrings = {
@@ -23,7 +35,13 @@ const en: RoutesLocalizationStrings = {
 	contact: "Contact",
 	home: "Home",
 	blog: "Blog",
-	team: "Team"
+	team: "Team",
+	login: "Login",
+	logout: "Logout",
+	profile: "Profile",
+	users:"Users",
+	posts: "Posts",
+	tags: "Tags"
 };
 
 const localization: Localized<RoutesLocalizationStrings> = {en, sr};
