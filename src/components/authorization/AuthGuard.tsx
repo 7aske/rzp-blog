@@ -15,10 +15,13 @@ export const AuthGuard = (props: AuthGuardProps) => {
 			setAuthorized(true);
 		}).catch(err => {
 			console.error(err.response);
-			history.replace({
-				pathname: "/login",
-				state: {error: err.response.data.error},
-			});
+			if (err.response)
+				history.replace({
+					pathname: "/login",
+					state: {error: err.response.data.error},
+				});
+			else
+				history.replace("/");
 		});
 
 		// eslint-disable-next-line
