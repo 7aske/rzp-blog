@@ -1,24 +1,22 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import adminPostService from "../../../../services/adminPostService";
-import "./AdminPostsListPage.css"
+import { AdminPostList } from "../../../../admin/adminPostList/AdminPostList";
+import { Sidebar } from "../../../../components/sidebar/Sidebar";
+import "./AdminPostsListPage.css";
 
 type AdminPostsListPageProps = {};
 export const AdminPostsListPage = (props: AdminPostsListPageProps) => {
-	const [posts, setPosts] = useState<PostPreviewDTO[]>([]);
-	useEffect(() => {
-		adminPostService.getAllPreviews().then(res => {
-			setPosts(res);
-		}).catch(err => {
-			setPosts([]);
-			console.error(err);
-		});
-	}, []);
+
+
 	return (
-		<div id="admin-post-list-page" className="container white-text">
-			<ul>
-				{posts.map(post => <li>{post.postSlug}</li>)}
-			</ul>
+		<div id="admin-post-list-page" className="white-text">
+			<div className="row">
+				<div className="col s12 m3 hide-on-med-and-down">
+					<Sidebar/>
+				</div>
+				<div className="col s12 m9">
+					<AdminPostList/>
+				</div>
+			</div>
 		</div>
 	);
 };

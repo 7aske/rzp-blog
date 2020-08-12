@@ -14,8 +14,9 @@ const useLocale = () => {
 	const locale = cookies.locale || defaultLocale;
 
 	const setLocale = (_locale: string) => {
-		if (locales.indexOf(_locale) !== -1)
+		if (locales.indexOf(_locale) !== -1) {
 			setCookie(localeCookieName, _locale);
+		}
 	};
 
 	return [locale, setLocale];

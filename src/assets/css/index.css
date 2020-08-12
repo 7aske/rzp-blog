@@ -15,6 +15,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.blob {
+  background-color: #88dcc1;
+  padding: 0.2em 0.5em;
+  border-radius: 10px;
+}
+
 ::-webkit-scrollbar {
   width: 0.5em;
 }

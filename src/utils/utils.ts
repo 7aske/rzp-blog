@@ -15,9 +15,26 @@ export const formatDate = (date: string, locale = "en"): string => {
 	return new Date(date).toLocaleDateString(locale, format);
 };
 
+
+
+export const formatDateTime = (date: string, locale = "en"): string => {
+	const format: Intl.DateTimeFormatOptions = {
+		day: "2-digit",
+		month: "long",
+		year: "numeric",
+		hour:"numeric",
+		minute:"numeric",
+	};
+	return new Date(date).toLocaleDateString(locale, format);
+};
+
 export const getHistoryErrors = (history: H.History<any>): string[] => {
 	if (history.location.state && (history.location.state as any).error) {
 		return [(history.location.state as any).error]
 	}
 	return [];
+}
+
+export const capitalize = (str: string): string => {
+	return str.charAt(0).toUpperCase() + str.substring(1);
 }
