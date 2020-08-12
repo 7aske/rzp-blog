@@ -14,7 +14,7 @@ export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postT
 		<li className="collection-item">
 			<div className="post-preview">
 				<span><Link to={"/category/" + categoryName}>{categoryName}</Link></span>
-				<Link to={postSlug}><h4>{postTitle}</h4></Link>
+				<Link to={"/posts/" + postSlug}><h4>{postTitle}</h4></Link>
 				<h5>{postAuthor.toLocaleUpperCase()}</h5>
 				<h6>{formatDate(postDatePosted, locale)}</h6>
 				<p>{postExcerpt}</p>

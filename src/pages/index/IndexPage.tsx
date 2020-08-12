@@ -15,6 +15,9 @@ export const IndexPage = (props: IndexPageProps) => {
 	useEffect(() => {
 		postService.getAllPreviews().then(newPosts => {
 			setPosts(newPosts);
+		}).catch(err => {
+			console.error(err);
+			setPosts([])
 		});
 	}, []);
 

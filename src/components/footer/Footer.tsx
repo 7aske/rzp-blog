@@ -21,7 +21,6 @@ export const Footer = () => {
 	return (
 		<footer id="footer" className="page-footer">
 			<div className="container to-top">
-				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a className="grey-text text-lighten-4 right" href="#"
 				   onClick={scrollToTop}>{localization[locale].toTop}</a>
 			</div>

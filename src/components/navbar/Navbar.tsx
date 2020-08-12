@@ -57,7 +57,6 @@ export const Navbar = () => {
 			<div className="spacer"/>
 			<div className="menu container">
 
-				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a className="nav-logo"><img src={logo} alt="Logo"/></a>
 				<ul className="menu right hide-on-med-and-up">
 					{mobileNav}
