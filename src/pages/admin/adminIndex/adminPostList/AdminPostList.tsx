@@ -3,15 +3,14 @@ import "moment/locale/sr";
 import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { Pagination } from "../../components/pagination/Pagination";
-import useLocale from "../../hooks/useLocale";
-import adminPostService from "../../services/adminPostService";
-import postService from "../../services/postService";
+import { Pagination } from "../../../../components/pagination/Pagination";
+import useLocale from "../../../../hooks/useLocale";
+import adminPostService from "../../../../services/adminPostService";
+import postService from "../../../../services/postService";
 import "./AdminPostListItem.css";
 import localization from "./localization";
 
-type AdminPostListProps = {
-};
+type AdminPostListProps = {};
 export const AdminPostList = (props: AdminPostListProps) => {
 	const [locale] = useLocale();
 	const pageCount = useRef<number>(0);
@@ -36,8 +35,16 @@ export const AdminPostList = (props: AdminPostListProps) => {
 	}, [currentPage]);
 
 	return (
-		<div>
-			<ul className="admin-post-list collection with-header">
+		<div className="admin-post-list">
+			<nav>
+				<div className="nav-wrapper">
+					<ul className="right">
+						<li><Link className="btn" to="sass.html"><i className="material-icons left">add_to_photos</i>New
+							Post</Link></li>
+					</ul>
+				</div>
+			</nav>
+			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
 						<div className="col s4">
@@ -74,7 +81,8 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 		<li className="admin-post-list-item collection-item">
 			<div className="row">
 				<div className="col s4 truncate">
-					{post.postTitle}
+					<Link to={"/admin/posts/" + post.postSlug}><i
+						className="material-icons">edit</i></Link>{post.postTitle}
 				</div>
 				<div className="col s2">
 					<Link to={"/posts/" + post.postSlug}>{post.postSlug}</Link>

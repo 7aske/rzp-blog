@@ -19,6 +19,23 @@ nav {
   border-bottom: none;
 }
 
+ul.pagination li {
+  height: 100%;
+}
+ul.pagination li.active {
+  background-color: #c2eddf;
+}
+ul.pagination li.active button, ul.pagination li.active a {
+  font-weight: bold;
+  color: #393e46 !important;
+}
+ul.pagination li button, ul.pagination li a {
+  font-weight: bold;
+}
+ul.pagination li button:hover, ul.pagination li a:hover {
+  background-color: #4ecca3;
+}
+
 input::placeholder {
   color: #393e46;
 }

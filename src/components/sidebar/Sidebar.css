@@ -2,3 +2,17 @@
   min-height: 60vh;
   border-right: 2px solid #4ecca3;
 }
+.sidebar .collection .collection-item {
+  padding-left: 0;
+  padding-right: 0;
+}
+.sidebar .collection .collection-item i {
+  margin-right: 0.3em;
+}
+.sidebar .collection .collection-item a {
+  text-align: left;
+  height: 100% !important;
+  width: 100%;
+  line-height: 2em;
+  color: #eeeeee;
+}

@@ -7,6 +7,7 @@ nav {
 .collection {
 	background-color: $theme-black;
 	border: none;
+
 	.collection-header {
 		color: $theme-white;
 		background-color: $theme-black;
@@ -21,6 +22,26 @@ nav {
 			border-bottom: none;
 		}
 	}
+}
+
+ul.pagination li {
+	&.active {
+		background-color: $theme-green-lightest;
+
+		button, a {
+			font-weight: bold;
+			color: $theme-grey !important;
+		}
+	}
+
+
+	button, a {
+		&:hover {
+			background-color: $theme-green;
+		}
+		font-weight: bold;
+	}
+	height: 100%;
 }
 
 input::placeholder {

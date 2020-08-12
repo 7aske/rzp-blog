@@ -33,7 +33,7 @@ export const Pagination = (props: PaginationProps) => {
 						<button className="btn btn-flat white-text disabled"/>
 					</li>
 				}
-				<li>
+				<li className="active">
 					<button className="btn btn-flat white-text">{currentPage + 1}</button>
 				</li>
 				{currentPage < props.pageCount - 1 ?
