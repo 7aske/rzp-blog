@@ -1,9 +1,11 @@
+@import "../../../assets/css/theme";
 #admin-index-page {
+	border-top: 2px solid $theme-green;
 	padding-top: 2em;
 }
 
 @media screen and (max-width: 900px) {
 	#admin-index-page {
-		padding-top: 0;
+		padding-top: .5em;
 	}
 }

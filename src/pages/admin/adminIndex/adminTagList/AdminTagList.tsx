@@ -2,13 +2,13 @@ import * as React from "react";
 import { createRef, useEffect, useRef, useState } from "react";
 import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
-import adminCategoryService from "../../../../services/adminCategoryService";
-import "./AdminCategoryList.css";
+import adminTagService from "../../../../services/adminTagService";
+import "./AdminTagList.css";
 import localization from "./localization";
 
-type AdminCategoryListProps = {};
-export const AdminCategoryList = (props: AdminCategoryListProps) => {
-	const [categoryList, setCategoryList] = useState<Category[]>([]);
+type AdminTagListProps = {};
+export const AdminTagList = (props: AdminTagListProps) => {
+	const [tagList, setTagList] = useState<Tag[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const selectInstance = useRef<M.FormSelect>();
@@ -24,47 +24,47 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 	useEffect(() => {
 		if (selectRef.current) {
 			selectInstance.current = M.FormSelect.init(selectRef.current,
-				{dropdownOptions: {closeOnClick: true, onCloseEnd: () => setCategory()}});
+				{dropdownOptions: {closeOnClick: true, onCloseEnd: () => setTag()}});
 		}
 		M.updateTextFields();
 		// eslint-disable-next-line
-	}, [categoryList, errors]);
+	}, [tagList, errors]);
 
 	const getCategories = () => {
-		adminCategoryService.getAll().then(_categories => {
-			setCategoryList(_categories);
+		adminTagService.getAll().then(_categories => {
+			setTagList(_categories);
 		}).catch(err => {
 			console.error(err);
-			setCategoryList([]);
+			setTagList([]);
 		});
 	};
 
-	const setCategory = () => {
+	const setTag = () => {
 		if (idInput.current && nameInput.current && selectRef.current) {
-			const categ = categoryList.find(categ => categ.idCategory === parseInt(selectRef.current!.value));
+			const categ = tagList.find(categ => categ.idTag === parseInt(selectRef.current!.value));
 			if (!categ) {
 				idInput.current.value = "";
 				nameInput.current.value = "";
 			} else {
-				idInput.current.value = categ.idCategory.toString();
-				nameInput.current.value = categ.categoryName;
+				idInput.current.value = categ.idTag.toString();
+				nameInput.current.value = categ.tagName;
 			}
 			M.updateTextFields();
 		}
 	};
 
-	const saveCategory = (ev: React.FormEvent) => {
+	const saveTag = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		const form = ev.target as HTMLFormElement;
-		const categ: Category = {
-			idCategory: parseInt(form["idCategory"].value),
-			categoryName: form["categoryName"].value,
+		const categ: Tag = {
+			idTag: parseInt(form["idTag"].value),
+			tagName: form["tag-name"].value,
 		};
-		const action = isNaN(categ.idCategory) ? adminCategoryService.save : adminCategoryService.update;
+		const action = isNaN(categ.idTag) ? adminTagService.save : adminTagService.update;
 
 		action(categ).then(() => {
 			getCategories();
-			setMessages([localization[locale].categorySavedMessage]);
+			setMessages([localization[locale].tagSavedMessage]);
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
@@ -73,20 +73,20 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		});
 	};
 
-	const deleteCategory = () => {
+	const deleteTag = () => {
 		if (!idInput.current)
 			return;
 
 		const categId = parseInt(idInput.current.value);
 
 		if (isNaN(categId)) {
-			setErrors([localization[locale].categoryNotFoundMessage]);
+			setErrors([localization[locale].tagNotFoundMessage]);
 			return;
 		}
 
-		adminCategoryService.deleteById(categId).then(() => {
+		adminTagService.deleteById(categId).then(() => {
 			getCategories();
-			setMessages([localization[locale].categoryDeletedMessage]);
+			setMessages([localization[locale].tagDeletedMessage]);
 			if (nameInput.current && idInput.current) {
 				nameInput.current.value = "";
 				idInput.current.value = "";
@@ -100,28 +100,28 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 	};
 
 	return (
-		<div id="admin-category-list">
-				<form onSubmit={saveCategory}>
+		<div id="admin-tag-list">
+				<form onSubmit={saveTag}>
 					<div className="row">
 						<div className="input-field col s12 m8 l4">
-							<select id="categorySelect" ref={selectRef}>
-								<option value="">{localization[locale].categoryNewOption}</option>
-								{categoryList.map(categ => <option
-									value={categ.idCategory}>{categ.categoryName}</option>)}
+							<select id="tagSelect" ref={selectRef}>
+								<option value="">{localization[locale].tagNewOption}</option>
+								{tagList.map(categ => <option
+									value={categ.idTag}>{categ.tagName}</option>)}
 							</select>
-							<label htmlFor="categorySelect">{localization[locale].categorySelectLabel}</label>
+							<label htmlFor="tagSelect">{localization[locale].tagSelectLabel}</label>
 						</div>
 					</div>
 					<div className="row">
 						<div className="input-field col s12 m8 l4">
-							<input ref={idInput} id="idCategory" name="idCategory" type="text" disabled={true}/>
-							<label htmlFor="idCategory">ID</label>
+							<input ref={idInput} id="idTag" name="idTag" type="text" disabled={true}/>
+							<label htmlFor="idTag">ID</label>
 						</div>
 					</div>
 					<div className="row">
 						<div className="input-field col s12 m8 l4">
-							<input ref={nameInput} id="categoryName" name="categoryName" type="text"/>
-							<label htmlFor="categoryName">{localization[locale].categoryNameLabel}</label>
+							<input ref={nameInput} id="tagName" name="tag-name" type="text"/>
+							<label htmlFor="tag-name">{localization[locale].tagNameLabel}</label>
 						</div>
 					</div>
 					<div className="row">
@@ -133,13 +133,13 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 					<div className="row">
 						<div className="input-field col s12">
 							<button className="btn" type="submit"><i
-								className="material-icons left">save</i>{localization[locale].categorySaveButton}
+								className="material-icons left">save</i>{localization[locale].tagSaveButton}
 							</button>
 						</div>
 						<div className="input-field col s12">
-							<button onClick={deleteCategory} className="btn red accent-2"
+							<button onClick={deleteTag} className="btn red accent-2"
 							        type="button"><i
-								className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
+								className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
 							</button>
 						</div>
 					</div>

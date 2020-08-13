@@ -1,9 +1,10 @@
 import * as React from "react";
-import { HashRouter, Link, Route, Switch } from "react-router-dom";
+import { HashRouter, Link, NavLink, Route, Switch } from "react-router-dom";
 import { AdminCategoryList } from "./adminCategoryList/AdminCategoryList";
 import { AdminPostList } from "./adminPostList/AdminPostList";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import useLocale from "../../../hooks/useLocale";
+import { AdminTagList } from "./adminTagList/AdminTagList";
 import localization from "./localization";
 import "./AdminIndexPage.css";
 
@@ -12,14 +13,14 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 
 	const [locale] = useLocale();
 	const menuItems = [
-		<Link className="btn btn-flat" to="/admin/posts"><i
-			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}</Link>,
-		<Link className="btn btn-flat" to="/admin/categories"><i
-			className="material-icons left hide-on-small-and-down">label</i>{localization[locale].sidebarCategories}</Link>,
-		<Link className="btn btn-flat" to="/admin/tags"><i
-			className="material-icons left hide-on-small-and-down">local_offer</i>{localization[locale].sidebarTags}</Link>,
-		<Link className="btn btn-flat" to="/admin/authors"><i
-			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarAuthors}</Link>,
+		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/posts"><i
+			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}</NavLink>,
+		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/categories"><i
+			className="material-icons left hide-on-small-and-down">label</i>{localization[locale].sidebarCategories}</NavLink>,
+		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/tags"><i
+			className="material-icons left hide-on-small-and-down">local_offer</i>{localization[locale].sidebarTags}</NavLink>,
+		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/authors"><i
+			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarAuthors}</NavLink>,
 	];
 	return (
 		<div id="admin-index-page" className="white-text">
@@ -36,7 +37,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 								<AdminCategoryList/>
 							</Route>
 							<Route exact path="/admin/tags">
-								Tags
+								<AdminTagList/>
 							</Route>
 							<Route exact path="/admin/authors">
 								Authors

@@ -1,18 +1,20 @@
 @import "../../assets/css/theme";
 
 .sidebar {
-	border-right: 2px solid $theme-green;
-
 	.collection {
 		.collection-item {
 			padding-left: 0;
 			padding-right: 0;
+
 
 			i {
 				margin-right: .3em;
 			}
 
 			a {
+				&.active {
+					color: $theme-green !important;
+				}
 				text-align: left;
 				height: 100% !important;
 				width: 100%;
@@ -25,7 +27,7 @@
 	nav {
 		height: 3.5em;
 		transition: all 500ms;
-		background-color: $theme-grey;
+		background-color: $theme-black;
 		border-radius: 5px;
 
 		ul {
@@ -41,7 +43,11 @@
 				margin-right: 0;
 				top: -5px;
 				position: relative;
-				color: $theme-green;
+				color: $theme-white;
+
+				&.active {
+					color: $theme-green;
+				}
 
 				&:hover {
 					color: $theme-green;
