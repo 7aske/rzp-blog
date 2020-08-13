@@ -1,5 +1,4 @@
 .sidebar {
-  min-height: 60vh;
   border-right: 2px solid #4ecca3;
 }
 .sidebar .collection .collection-item {
@@ -15,4 +14,31 @@
   width: 100%;
   line-height: 2em;
   color: #eeeeee;
+}
+.sidebar nav {
+  height: 3.5em;
+  transition: all 500ms;
+  background-color: #393e46;
+  border-radius: 5px;
+}
+.sidebar nav ul {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  margin: 0 auto !important;
+}
+.sidebar nav ul li a {
+  margin-left: 0;
+  margin-right: 0;
+  top: -5px;
+  position: relative;
+  color: #4ecca3;
+}
+.sidebar nav ul li a:hover {
+  color: #4ecca3;
+  background-color: #232931;
+  border-bottom: 2px solid #4ecca3;
+}
+.sidebar nav .sidenav-trigger {
+  display: inline !important;
 }

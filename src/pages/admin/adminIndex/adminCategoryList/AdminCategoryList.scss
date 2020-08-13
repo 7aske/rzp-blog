@@ -1,0 +1,17 @@
+@import "../../../../assets/css/theme";
+
+#admin-category-list {
+	.row {
+		margin-bottom: 0;
+	}
+
+	form {
+		button {
+			//width: 100px !important;
+			background-color: $theme-green;
+		}
+	}
+}
+
+@media screen and (max-width: 993px) {
+}

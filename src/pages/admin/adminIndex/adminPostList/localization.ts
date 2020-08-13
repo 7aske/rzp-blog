@@ -5,6 +5,7 @@ type AdminPostsListLocalizationStrings = {
 	headStatus: string;
 	headUpdated: string;
 	published: string;
+	newPostButton: string;
 	[key: string]: string;
 }
 
@@ -14,7 +15,8 @@ const sr: AdminPostsListLocalizationStrings = {
 	headStatus: "Status",
 	headTitle: "Naslov",
 	headUpdated: "Ažurirano",
-	published: "Obavljeno"
+	published: "Obavljeno",
+	newPostButton: "Nova Objava",
 };
 
 const en: AdminPostsListLocalizationStrings = {
@@ -23,7 +25,8 @@ const en: AdminPostsListLocalizationStrings = {
 	headStatus: "Status",
 	headTitle: "Title",
 	headUpdated: "Updated",
-	published: "Published"
+	published: "Published",
+	newPostButton: "New Post",
 };
 
 const localization: Localized<AdminPostsListLocalizationStrings> = {en, sr};

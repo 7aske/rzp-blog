@@ -1,14 +1,17 @@
 @import "../../assets/css/theme";
+
 .sidebar {
-	min-height: 60vh;
 	border-right: 2px solid $theme-green;
+
 	.collection {
 		.collection-item {
 			padding-left: 0;
 			padding-right: 0;
+
 			i {
 				margin-right: .3em;
 			}
+
 			a {
 				text-align: left;
 				height: 100% !important;
@@ -16,6 +19,40 @@
 				line-height: 2em;
 				color: $theme-white;
 			}
+		}
+	}
+
+	nav {
+		height: 3.5em;
+		transition: all 500ms;
+		background-color: $theme-grey;
+		border-radius: 5px;
+
+		ul {
+			display: flex !important;
+			align-items: center !important;
+			justify-content: space-around !important;
+			margin: 0 auto !important;
+		}
+
+		ul li {
+			a {
+				margin-left: 0;
+				margin-right: 0;
+				top: -5px;
+				position: relative;
+				color: $theme-green;
+
+				&:hover {
+					color: $theme-green;
+					background-color: $theme-black;
+					border-bottom: 2px solid $theme-green;
+				}
+			}
+		}
+
+		.sidenav-trigger {
+			display: inline !important;
 		}
 	}
 }

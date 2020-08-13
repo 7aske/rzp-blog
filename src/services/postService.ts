@@ -18,10 +18,10 @@ const getByPostSlug = async (postSlug: string): Promise<PostDTO | null> => {
 	return post;
 };
 
-const getPageCount = async (): Promise<number> => {
-	const count: number = (await axios.get(`${backendUrl}/post/getPageCount`)).data;
-	console.log("Page count: ", count);
-	return count;
+const getPageCount = async (count = 10): Promise<number> => {
+	const _count: number = (await axios.get(`${backendUrl}/post/getPageCount?count=${count}`)).data;
+	console.log("Page count:", _count);
+	return _count;
 };
 
 const postService = {

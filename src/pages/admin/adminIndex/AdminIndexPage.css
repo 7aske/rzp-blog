@@ -1,1 +1,9 @@
+#admin-index-page {
+  padding-top: 2em;
+}
 
+@media screen and (max-width: 900px) {
+  #admin-index-page {
+    padding-top: 0;
+  }
+}

@@ -13,21 +13,23 @@ import localization from "./localization";
 type AdminPostListProps = {};
 export const AdminPostList = (props: AdminPostListProps) => {
 	const [locale] = useLocale();
+	const itemsPerPage = 10;
 	const pageCount = useRef<number>(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [posts, setPosts] = useState<PostPreviewDTO[]>([]);
 	moment.locale(locale);
 
 	useEffect(() => {
-		postService.getPageCount().then(_count => {
+		postService.getPageCount(itemsPerPage).then(_count => {
 			pageCount.current = _count;
 		});
 	}, []);
 
 	useEffect(() => {
 
-		adminPostService.getAllPreviews(currentPage).then(res => {
-			setPosts(res);
+		adminPostService.getAllPreviews(currentPage, itemsPerPage).then(_posts => {
+			_posts = new Array(itemsPerPage).fill(null).map((_, i) => _posts[i]);
+			setPosts(_posts);
 		}).catch(err => {
 			setPosts([]);
 			console.error(err);
@@ -39,8 +41,8 @@ export const AdminPostList = (props: AdminPostListProps) => {
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
-						<li><Link className="btn" to="sass.html"><i className="material-icons left">add_to_photos</i>New
-							Post</Link></li>
+						<li><Link className="btn" to="sass.html"><i className="material-icons left">add_to_photos</i>
+							{localization[locale].newPostButton}</Link></li>
 					</ul>
 				</div>
 			</nav>
@@ -64,7 +66,7 @@ export const AdminPostList = (props: AdminPostListProps) => {
 						</div>
 					</div>
 				</li>
-				{posts.map(post => <AdminPostListItem key={post.postSlug} post={post} locale={locale}/>)}
+				{posts.map((post, i) => <AdminPostListItem key={i} post={post} locale={locale}/>)}
 			</ul>
 			<Pagination className={"right"} onPageChange={setCurrentPage} pageCount={pageCount.current}/>
 		</div>
@@ -73,30 +75,36 @@ export const AdminPostList = (props: AdminPostListProps) => {
 
 
 type AdminPostListItemProps = {
-	post: PostPreviewDTO;
+	post: PostPreviewDTO | null;
 	locale: string;
 };
 const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
-	return (
-		<li className="admin-post-list-item collection-item">
-			<div className="row">
-				<div className="col s4 truncate">
-					<Link to={"/admin/posts/" + post.postSlug}><i
-						className="material-icons">edit</i></Link>{post.postTitle}
+	if (post !== undefined && post !== null) {
+		return (
+			<li className="admin-post-list-item collection-item">
+				<div className="row">
+					<div className="col s4 truncate">
+						<Link to={"/admin/posts/" + post.postSlug}><i
+							className="material-icons">edit</i></Link>{post.postTitle}
+					</div>
+					<div className="col s2">
+						<Link to={"/posts/" + post.postSlug}>{post.postSlug}</Link>
+					</div>
+					<div className="col s2">
+						<span className="blob">{post.categoryName}</span>
+					</div>
+					<div className="col s2">
+						{post.postPublished ? "Published" : ""}
+					</div>
+					<div className="col s2">
+						<Moment locale={locale} fromNow>{post.postDateUpdated}</Moment>
+					</div>
 				</div>
-				<div className="col s2">
-					<Link to={"/posts/" + post.postSlug}>{post.postSlug}</Link>
-				</div>
-				<div className="col s2">
-					<span className="blob">{post.categoryName}</span>
-				</div>
-				<div className="col s2">
-					{post.postPublished ? "Published" : ""}
-				</div>
-				<div className="col s2">
-					<Moment locale={locale} fromNow>{post.postDateUpdated}</Moment>
-				</div>
-			</div>
-		</li>
-	);
+			</li>
+		);
+	} else {
+		return (
+			<li style={{border:"none"}} className="admin-post-list-item collection-item">&nbsp;</li>
+		);
+	}
 };

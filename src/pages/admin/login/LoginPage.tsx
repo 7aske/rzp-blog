@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { ErrorList } from "../../../components/errorList/ErrorList";
+import { MessageList } from "../../../components/messageList/MessageList";
 import { AppContext } from "../../../context/AppContext";
 import { backendUrl } from "../../../globals";
 import authService from "../../../services/authService";
@@ -74,12 +74,12 @@ export const LoginPage = () => {
 					<div className="input-field col s12 m6 l6 xl4">
 						<input placeholder="Password" id="password" type="password"/>
 						<label htmlFor="password">Password</label>
-						<ErrorList errors={errors}/>
+						<MessageList className="red accent-2 white-text" timeout={3000} message={errors}/>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col s12 center">
-						<button className="btn waves-effect waves-light" type="submit" name="action">Login
+						<button className="btn btn-theme waves-effect waves-light" type="submit" name="action">Login
 							<i className="material-icons right">send</i>
 						</button>
 					</div>

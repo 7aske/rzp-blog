@@ -11,6 +11,39 @@ main {
   padding-top: 7em;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.btn-theme {
+  background-color: #4ecca3;
+}
+.btn-theme:hover {
+  color: #4ecca3;
+  background-color: #393e46;
+  border-bottom: 2px solid #4ecca3;
+}
+
+.theme {
+  background-color: #4ecca3 !important;
+}
+.theme.lighten-1 {
+  background-color: #88dcc1 !important;
+}
+.theme.lighten-2 {
+  background-color: #c2eddf !important;
+}
+
+.theme-text {
+  color: #4ecca3 !important;
+}
+.theme-text.lighten-1 {
+  color: #88dcc1 !important;
+}
+.theme-text.lighten-2 {
+  color: #c2eddf !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
