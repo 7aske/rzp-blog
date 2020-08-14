@@ -6,6 +6,7 @@ import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
 import adminTagService from "../../../../services/adminTagService";
 import "./AdminTagList.css";
+import { getErrorText } from "../../../errors/localization";
 import localization from "./localization";
 
 type AdminTagListProps = {};
@@ -19,13 +20,13 @@ export const AdminTagList = (props: AdminTagListProps) => {
 	const [locale] = useLocale();
 
 	useEffect(() => {
-		getCategories();
+		getTags();
 	}, []);
 
 
-	const getCategories = () => {
-		adminTagService.getAll().then(_categories => {
-			setTagList(_categories);
+	const getTags = () => {
+		adminTagService.getAll().then(_tags => {
+			setTagList(_tags);
 		}).catch(err => {
 			console.error(err);
 			setTagList([]);
@@ -48,19 +49,19 @@ export const AdminTagList = (props: AdminTagListProps) => {
 	const saveTag = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		const form = ev.target as HTMLFormElement;
-		const categ: Tag = {
+		const tag: Tag = {
 			idTag: parseInt(form["idTag"].value),
 			tagName: form["tag-name"].value,
 		};
-		const action = isNaN(categ.idTag) ? adminTagService.save : adminTagService.update;
+		const action = isNaN(tag.idTag) ? adminTagService.save : adminTagService.update;
 
-		action(categ).then(() => {
-			getCategories();
+		action(tag).then(() => {
+			getTags();
 			setMessages([localization[locale].tagSavedMessage]);
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
-				setErrors([err.response.data.error]);
+				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
 		});
 	};
@@ -69,15 +70,15 @@ export const AdminTagList = (props: AdminTagListProps) => {
 		if (!idRef)
 			return;
 
-		const categId = parseInt(idRef.value);
+		const tagId = parseInt(idRef.value);
 
-		if (isNaN(categId)) {
+		if (isNaN(tagId)) {
 			setErrors([localization[locale].tagNotFoundMessage]);
 			return;
 		}
 
-		adminTagService.deleteById(categId).then(() => {
-			getCategories();
+		adminTagService.deleteById(tagId).then(() => {
+			getTags();
 			setMessages([localization[locale].tagDeletedMessage]);
 			if (nameRef && idRef) {
 				nameRef.value = "";
@@ -86,7 +87,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
-				setErrors([err.response.data.error]);
+				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
 		});
 	};

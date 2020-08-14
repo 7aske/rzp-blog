@@ -1,17 +1,20 @@
 import Cookies from "js-cookie";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { MessageList } from "../../../components/messageList/MessageList";
 import { AppContext } from "../../../context/AppContext";
 import { backendUrl } from "../../../globals";
+import useLocale from "../../../hooks/useLocale";
 import authService from "../../../services/authService";
 import "./LoginPage.css";
 import userService from "../../../services/userService";
 import { getHistoryErrors } from "../../../utils/utils";
 import jwtDecode from "jwt-decode";
+import { getErrorText } from "../../errors/localization";
 
 export const LoginPage = () => {
+	const [locale] = useLocale();
 	const history = useHistory();
 	const {ctx, setCtx} = useContext(AppContext);
 	const [errors, setErrors] = useState<string[]>([]);
@@ -29,15 +32,14 @@ export const LoginPage = () => {
 			} else {
 				history.replace("/")
 			}
-		}).catch(err => {
-			console.error(err.response);
-			setErrors([err.response.data.error])
-		})
+		}).catch(failure)
 	};
 
 	const failure = (err:any) => {
-		setErrors([err.response.data.error]);
-		console.error(err.response);
+		console.error(err);
+		if (err.response && err.response.data) {
+			setErrors([getErrorText(err.response.data.error, locale)]);
+		}
 	};
 
 	const login = (ev: React.FormEvent) => {

@@ -6,6 +6,7 @@ import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
 import adminCategoryService from "../../../../services/adminCategoryService";
 import "./AdminCategoryList.css";
+import { getErrorText } from "../../../errors/localization";
 import localization from "./localization";
 
 type AdminCategoryListProps = {};
@@ -22,6 +23,9 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 			setCategoryList(_categories);
 		}).catch(err => {
 			console.error(err);
+			if (err.response && err.response.data) {
+				setErrors([getErrorText(err.response.data.error, locale)]);
+			}
 			setCategoryList([]);
 		});
 	};
@@ -58,7 +62,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
-				setErrors([err.response.data.error]);
+				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
 		});
 	};
@@ -84,7 +88,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
-				setErrors([err.response.data.error]);
+				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
 		});
 	};
@@ -94,7 +98,6 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 			<form onSubmit={saveCategory}>
 				<div className="row">
 					<div className="input-field col s12 m8 l4">
-						{/*<CategorySelect categoryList={categoryList} onSelect={setCategory}/>*/}
 						<GenericSelect
 							labelText={localization[locale].categoryNameLabel}
 							newOptionText={localization[locale].categoryNewOption}
