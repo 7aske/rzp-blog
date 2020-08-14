@@ -44,6 +44,23 @@ nav {
   color: #393e46 !important;
 }
 
+.chips input {
+  color: #eeeeee !important;
+}
+
+.chips.focus {
+  border-bottom: 1px solid #4ecca3 !important;
+  box-shadow: 0 1px 0 0 #4ecca3 !important;
+}
+
+label {
+  color: #4ecca3;
+}
+
+.chips + label {
+  color: #4ecca3 !important;
+}
+
 ul.pagination li {
   height: 100%;
 }

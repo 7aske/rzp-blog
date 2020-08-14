@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import GenericElement from "../../../../components/categorySelect/GenericElement";
-import { GenericSelect } from "../../../../components/categorySelect/GenericSelect";
 import { FloatingActionButton } from "../../../../components/floatingActionButton/FloatingActionButton";
+import { GenericChipSelect } from "../../../../components/genericSelect/GenericChipSelect";
+import GenericElement from "../../../../components/genericSelect/GenericElement";
+import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
 import { MessageList } from "../../../../components/messageList/MessageList";
 import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
@@ -68,16 +69,16 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	const deletePost = () => {
 		adminPostService.deleteById(post!.idPost).then(_post => {
 			setMessages([localization[locale].postDeletedText]);
-			setTimeout(()=> {
+			setTimeout(() => {
 				history.replace("/admin/posts");
-			}, 3000)
+			}, 3000);
 		}).catch(err => {
 			console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
 		});
-	}
+	};
 
 	useEffect(() => {
 		if (postSlug) {
@@ -155,6 +156,21 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 										       })}/>
 										<span>{localization[locale].postPublishedLabel}</span>
 									</label>
+								</div>
+							</div>
+							<div className="row">
+								<div className="col s12 m12 l8">
+									<GenericChipSelect
+										labelText={localization[locale].postTagsLabel}
+										list={tags.map(tag => new GenericElement<Tag>(tag, tag.idTag, tag.tagName))}
+										onUpdate={elems => setPost({
+											...(post as PostDTO),
+											tags: elems.map(elem => ({
+												idTag: elem.id,
+												tagName: elem.name,
+											})),
+										})}
+										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.idTag, tag.tagName)) : []}/>
 								</div>
 							</div>
 							<div className="row">

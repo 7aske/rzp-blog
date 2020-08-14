@@ -56,6 +56,31 @@ nav {
 	}
 }
 
+.chips {
+}
+
+.chips .input:not(:disabled) {
+	//border-bottom: 1px solid #9e9e9e;
+	//box-shadow: 0 1px 0 0 transparent !important;
+}
+
+.chips input {
+	color: $theme-white !important;
+}
+
+.chips.focus {
+	border-bottom: 1px solid $theme-green !important;
+	box-shadow: 0 1px 0 0 $theme-green !important;
+}
+
+label {
+	color: $theme-green;
+}
+
+.chips + label {
+	color: $theme-green !important;
+}
+
 ul.pagination li {
 	&.active {
 		background-color: $theme-green-lightest;

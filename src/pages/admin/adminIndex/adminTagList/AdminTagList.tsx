@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import GenericElement from "../../../../components/categorySelect/GenericElement";
-import { GenericSelect } from "../../../../components/categorySelect/GenericSelect";
+import GenericElement from "../../../../components/genericSelect/GenericElement";
+import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
 import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
 import adminTagService from "../../../../services/adminTagService";

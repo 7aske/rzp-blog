@@ -9,6 +9,6 @@ type PostDTO = {
 	idUser: number;
 	idPost: number;
 	postAuthor: string;
-	tagList: Tag[];
+	tags: Tag[];
 	views: number;
 }

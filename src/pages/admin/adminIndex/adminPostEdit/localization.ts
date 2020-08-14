@@ -13,6 +13,7 @@ type AdminPostEditPageLocalizationStrings = {
 	deletePostButton: string;
 	postSavedText: string;
 	postDeletedText: string;
+	postTagsLabel: string;
 	[key: string]: string;
 }
 
@@ -31,6 +32,7 @@ const sr: AdminPostEditPageLocalizationStrings = {
 	savePostButton: "Sačuvaj",
 	postSavedText: "Objava sačuvana",
 	postDeletedText: "Objava obrisana",
+	postTagsLabel: "Tagovi",
 };
 
 const en: AdminPostEditPageLocalizationStrings = {
@@ -48,6 +50,7 @@ const en: AdminPostEditPageLocalizationStrings = {
 	savePostButton: "Save",
 	postSavedText: "Post saved",
 	postDeletedText: "Post deleted",
+	postTagsLabel: "Tags",
 };
 
 const localization: Localized<AdminPostEditPageLocalizationStrings> = {en, sr};
