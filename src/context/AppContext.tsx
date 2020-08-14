@@ -6,7 +6,7 @@ interface AppContext {
 }
 
 type AppState = {
-	user: User | null;
+	user: UserDTO | null;
 }
 
 const initialAppState: AppState = {

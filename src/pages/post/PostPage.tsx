@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { Link } from "react-router-dom";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
 import postService from "../../services/postService";
@@ -31,7 +30,7 @@ export const PostPage = () => {
 
 	return (
 		<div id="post" className="container">
-			<Link className={"btn btn-back"} to={"/"}>{localization[locale].back}</Link>
+			<button className={"btn btn-back"} onClick={history.goBack}>{localization[locale].back}</button>
 			<article className="animate__animated animate__fadeIn animate__slow">
 				<h2 className="title">{post?.postTitle}</h2>
 				<h5 className="author">{post?.postAuthor.toUpperCase()}</h5>

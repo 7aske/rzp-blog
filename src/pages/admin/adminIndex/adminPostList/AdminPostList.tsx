@@ -87,14 +87,14 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 						<Link to={"/admin/posts/edit/" + post.postSlug}><i
 							className="material-icons">edit</i></Link>{post.postTitle}
 					</div>
-					<div className="col s2">
+					<div className="col s2 truncate">
 						<Link to={"/posts/" + post.postSlug}>{post.postSlug}</Link>
 					</div>
 					<div className="col s2">
-						<span className="blob">{post.categoryName}</span>
+						<span className="blob grey darken-2">{post.categoryName}</span>
 					</div>
-					<div className="col s2">
-						{post.postPublished ? "Published" : ""}
+					<div className="col s2 truncate">
+						{post.postPublished ?  localization[locale].published : ""}
 					</div>
 					<div className="col s2">
 						<Moment locale={locale} fromNow>{post.postDateUpdated}</Moment>

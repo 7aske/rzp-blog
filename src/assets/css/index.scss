@@ -29,6 +29,35 @@ main {
 	}
 }
 
+
+.theme-green {
+	background-color: $theme-green;
+}
+
+.theme-green-light {
+	background-color: $theme-green-light;
+}
+
+.theme-green-lightest {
+	background-color: $theme-green-lightest;
+}
+
+.theme-grey {
+	background-color: $theme-grey;
+}
+
+.theme-grey-light {
+	background-color: $theme-grey-light;
+}
+
+.theme-black {
+	background-color: $theme-black;
+}
+
+.theme-white {
+	background-color: $theme-white;
+}
+
 //.container {
 //	margin: 0 auto;
 //	max-width: 1280px;

@@ -1,7 +1,7 @@
 import { backendUrl } from "../globals";
 import { getClient } from "./client/http";
 
-export const getById = async (id: number): Promise<User> => {
+export const getById = async (id: number): Promise<UserDTO> => {
 	const client = getClient();
 	return (await client.get(`${backendUrl}/user/getById/${id}`)).data
 }

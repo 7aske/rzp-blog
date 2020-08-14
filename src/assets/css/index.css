@@ -24,6 +24,34 @@ main {
   border-bottom: 2px solid #4ecca3;
 }
 
+.theme-green {
+  background-color: #4ecca3;
+}
+
+.theme-green-light {
+  background-color: #88dcc1;
+}
+
+.theme-green-lightest {
+  background-color: #c2eddf;
+}
+
+.theme-grey {
+  background-color: #393e46;
+}
+
+.theme-grey-light {
+  background-color: #9e9e9e;
+}
+
+.theme-black {
+  background-color: #232931;
+}
+
+.theme-white {
+  background-color: #eeeeee;
+}
+
 .theme {
   background-color: #4ecca3 !important;
 }

@@ -1,19 +1,18 @@
 type AdminPostEditPageLocalizationStrings = {
 	postTitleLabel: string;
 	postTitlePlaceholder: string;
-
 	postSlugLabel: string;
 	postSlugPlaceholder: string;
-
 	postCategoryLabel: string;
 	postCategoryPlaceholder: string;
-
 	postExcerptLabel: string;
 	postExcerptPlaceholder: string;
-
 	postPublishedLabel: string;
 	postPublishedPlaceholder: string;
-
+	savePostButton: string;
+	deletePostButton: string;
+	postSavedText: string;
+	postDeletedText: string;
 	[key: string]: string;
 }
 
@@ -27,7 +26,11 @@ const sr: AdminPostEditPageLocalizationStrings = {
 	postSlugLabel: "ULR Objave",
 	postSlugPlaceholder: "url-objave",
 	postTitleLabel: "Naslov",
-	postTitlePlaceholder: "Naslov objave"
+	postTitlePlaceholder: "Naslov objave",
+	deletePostButton: "Obriši",
+	savePostButton: "Sačuvaj",
+	postSavedText: "Objava sačuvana",
+	postDeletedText: "Objava obrisana",
 };
 
 const en: AdminPostEditPageLocalizationStrings = {
@@ -40,8 +43,12 @@ const en: AdminPostEditPageLocalizationStrings = {
 	postSlugLabel: "Post URL",
 	postSlugPlaceholder: "post-url",
 	postTitleLabel: "Title",
-	postTitlePlaceholder: "Post Title"
-}
+	postTitlePlaceholder: "Post Title",
+	deletePostButton: "Remove",
+	savePostButton: "Save",
+	postSavedText: "Post saved",
+	postDeletedText: "Post deleted",
+};
 
 const localization: Localized<AdminPostEditPageLocalizationStrings> = {en, sr};
 

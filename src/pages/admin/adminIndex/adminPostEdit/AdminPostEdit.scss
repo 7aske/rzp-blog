@@ -1,2 +1,9 @@
 #admin-post-edit {
+	.post-edit-controls {
+		text-align: center;
+		button {
+			width: 150px;
+			margin-bottom: .5em;
+		}
+	}
 }

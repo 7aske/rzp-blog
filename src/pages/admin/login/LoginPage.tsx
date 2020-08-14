@@ -1,17 +1,17 @@
 import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { MessageList } from "../../../components/messageList/MessageList";
 import { AppContext } from "../../../context/AppContext";
 import { backendUrl } from "../../../globals";
 import useLocale from "../../../hooks/useLocale";
 import authService from "../../../services/authService";
-import "./LoginPage.css";
 import userService from "../../../services/userService";
 import { getHistoryErrors } from "../../../utils/utils";
-import jwtDecode from "jwt-decode";
 import { getErrorText } from "../../errors/localization";
+import "./LoginPage.css";
 
 export const LoginPage = () => {
 	const [locale] = useLocale();
@@ -24,18 +24,18 @@ export const LoginPage = () => {
 		const idUser = (jwtDecode(Cookies.get("auth")!) as any).idUser;
 
 		userService.getById(idUser).then(_user => {
-			setCtx({...ctx, user:_user})
+			setCtx({...ctx, user: _user});
 			if (_user.userRoles.indexOf("admin") !== -1) {
-				history.replace("/admin/posts")
+				history.replace("/admin/posts");
 			} else if (_user.userRoles.indexOf("user") !== -1) {
-				history.replace("/user/profile")
+				history.replace("/user/profile");
 			} else {
-				history.replace("/")
+				history.replace("/");
 			}
-		}).catch(failure)
+		}).catch(failure);
 	};
 
-	const failure = (err:any) => {
+	const failure = (err: any) => {
 		console.error(err);
 		if (err.response && err.response.data) {
 			setErrors([getErrorText(err.response.data.error, locale)]);
@@ -55,7 +55,7 @@ export const LoginPage = () => {
 
 	useEffect(() => {
 		M.updateTextFields();
-		authService.verify().then(success)
+		authService.verify().then(success);
 		setErrors(getHistoryErrors(history));
 
 		// eslint-disable-next-line
