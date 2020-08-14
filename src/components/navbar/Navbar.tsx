@@ -58,7 +58,7 @@ export const Navbar = () => {
 			<div className="menu container">
 
 				<a className="nav-logo"><img src={logo} alt="Logo"/></a>
-				<ul className="menu right hide-on-med-and-up">
+				<ul className="menu right hide-on-large-only">
 					{mobileNav.map((item, i) => <li key={i}>{item}</li>)}
 				</ul>
 				<ul className="menu right hide-on-med-and-down">
