@@ -1,0 +1,73 @@
+@import "../../../../../assets/css/theme";
+@import "../../../../../assets/css/markdown";
+
+#post-editor {
+	padding: 1em;
+
+	.EasyMDEContainer {
+		border-radius: 0;
+		border: none;
+
+		.editor-toolbar.fullscreen,
+		.editor-toolbar.fullscreen + .CodeMirror,
+		.editor-preview {
+			margin-top: 7em;
+		}
+
+		.CodeMirror {
+			border-radius: 0;
+			border: none;
+			caret-color: $theme-white !important;
+		}
+
+		.CodeMirror-cursor {
+			border-left-color: $theme-white;
+		}
+
+		span.CodeMirror-selectedtext, div.CodeMirror-selected {
+			background-color: $theme-green;
+			border: none;
+		}
+
+		span.cm-tab {
+			background-color: $theme-black;
+		}
+
+		.editor-toolbar {
+
+			border-radius: 0;
+			border: none;
+			background-color: $theme-green;
+
+			button {
+				//color: $theme-white;
+				border: none;
+				border-radius: 0;
+
+				&.active, &:hover {
+					background-color: $theme-black;
+					color: $theme-green-lightest;
+				}
+			}
+
+			i.separator {
+				background-color: $theme-black;
+				border-left: 1px solid $theme-black;
+				border-right: 1px solid $theme-black;
+			}
+		}
+
+		.editor-preview {
+			@include markdown-styles;
+			border: none;
+			border-radius: 0;
+		}
+
+		.CodeMirror {
+			background-color: $theme-grey;
+			color: $theme-white;
+
+		}
+	}
+
+}

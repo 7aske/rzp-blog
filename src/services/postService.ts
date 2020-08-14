@@ -12,7 +12,7 @@ const getAllPreviews = async (): Promise<PostPreviewDTO[]> => {
 	}
 };
 
-const getByPostSlug = async (postSlug: string): Promise<PostDTO | null> => {
+const getByPostSlug = async (postSlug: string): Promise<PostDTO> => {
 	const post: PostDTO = (await axios.get(`${backendUrl}/post/getByPostSlug/${postSlug}`)).data;
 	console.log(post);
 	return post;

@@ -1,18 +1,6 @@
 @import "../../assets/css/theme";
+@import "../../assets/css/markdown";
 
 .markdown-container {
-	a {
-		color: $theme-green !important;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-
-	th, tr, td {
-		border-color: $theme-grey;
-	}
-
-	img {
-		max-width: 100%;
-	}
+	@include markdown-styles;
 }

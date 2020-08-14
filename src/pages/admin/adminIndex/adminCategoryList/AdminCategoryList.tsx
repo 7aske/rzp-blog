@@ -1,5 +1,7 @@
 import * as React from "react";
-import { createRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import GenericElement from "../../../../components/categorySelect/GenericElement";
+import { GenericSelect } from "../../../../components/categorySelect/GenericSelect";
 import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
 import adminCategoryService from "../../../../services/adminCategoryService";
@@ -8,28 +10,13 @@ import localization from "./localization";
 
 type AdminCategoryListProps = {};
 export const AdminCategoryList = (props: AdminCategoryListProps) => {
-	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
-	const selectInstance = useRef<M.FormSelect>();
-	const idInput = createRef<HTMLInputElement>();
-	const nameInput = createRef<HTMLInputElement>();
-	const selectRef = createRef<HTMLSelectElement>();
+	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
+	const [nameRef, setNameRef] = useState<HTMLInputElement | null>(null);
 	const [locale] = useLocale();
 
-	useEffect(() => {
-		getCategories();
-	}, []);
-
-	useEffect(() => {
-		if (selectRef.current) {
-			selectInstance.current = M.FormSelect.init(selectRef.current,
-				{dropdownOptions: {closeOnClick: true, onCloseEnd: () => setCategory()}});
-		}
-		M.updateTextFields();
-		// eslint-disable-next-line
-	}, [categoryList, errors]);
-
+	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const getCategories = () => {
 		adminCategoryService.getAll().then(_categories => {
 			setCategoryList(_categories);
@@ -39,15 +26,18 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		});
 	};
 
-	const setCategory = () => {
-		if (idInput.current && nameInput.current && selectRef.current) {
-			const categ = categoryList.find(categ => categ.idCategory === parseInt(selectRef.current!.value));
+	useEffect(() => {
+		getCategories();
+	}, []);
+
+	const setCategory = (categ?: Category) => {
+		if (idRef && nameRef) {
 			if (!categ) {
-				idInput.current.value = "";
-				nameInput.current.value = "";
+				idRef.value = "";
+				nameRef.value = "";
 			} else {
-				idInput.current.value = categ.idCategory.toString();
-				nameInput.current.value = categ.categoryName;
+				idRef.value = categ.idCategory.toString();
+				nameRef.value = categ.categoryName;
 			}
 			M.updateTextFields();
 		}
@@ -74,10 +64,10 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 	};
 
 	const deleteCategory = () => {
-		if (!idInput.current)
+		if (!idRef)
 			return;
 
-		const categId = parseInt(idInput.current.value);
+		const categId = parseInt(idRef.value);
 
 		if (isNaN(categId)) {
 			setErrors([localization[locale].categoryNotFoundMessage]);
@@ -87,9 +77,9 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		adminCategoryService.deleteById(categId).then(() => {
 			getCategories();
 			setMessages([localization[locale].categoryDeletedMessage]);
-			if (nameInput.current && idInput.current) {
-				nameInput.current.value = "";
-				idInput.current.value = "";
+			if (nameRef && idRef) {
+				nameRef.value = "";
+				idRef.value = "";
 			}
 		}).catch(err => {
 			console.error(err);
@@ -101,49 +91,54 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 
 	return (
 		<div id="admin-category-list">
-				<form onSubmit={saveCategory}>
-					<div className="row">
-						<div className="input-field col s12 m8 l4">
-							<select id="categorySelect" ref={selectRef}>
-								<option value="">{localization[locale].categoryNewOption}</option>
-								{categoryList.map(categ => <option
-									value={categ.idCategory}>{categ.categoryName}</option>)}
-							</select>
-							<label htmlFor="categorySelect">{localization[locale].categorySelectLabel}</label>
-						</div>
+			<form onSubmit={saveCategory}>
+				<div className="row">
+					<div className="input-field col s12 m8 l4">
+						{/*<CategorySelect categoryList={categoryList} onSelect={setCategory}/>*/}
+						<GenericSelect
+							labelText={localization[locale].categoryNameLabel}
+							newOptionText={localization[locale].categoryNewOption}
+							create={true}
+							list={categoryList.map(elem => new GenericElement<Category>(
+								elem,
+								elem.idCategory,
+								elem.categoryName,
+							))} onSelect={(elem) => setCategory(elem?.element)}/>
 					</div>
-					<div className="row">
-						<div className="input-field col s12 m8 l4">
-							<input ref={idInput} id="idCategory" name="idCategory" type="text" disabled={true}/>
-							<label htmlFor="idCategory">ID</label>
-						</div>
+				</div>
+				<div className="row">
+					<div className="input-field col s12 m8 l4">
+						<input ref={elem => setIdRef(elem)} id="idCategory" name="idCategory" type="text"
+						       disabled={true}/>
+						<label htmlFor="idCategory">ID</label>
 					</div>
-					<div className="row">
-						<div className="input-field col s12 m8 l4">
-							<input ref={nameInput} id="categoryName" name="categoryName" type="text"/>
-							<label htmlFor="categoryName">{localization[locale].categoryNameLabel}</label>
-						</div>
+				</div>
+				<div className="row">
+					<div className="input-field col s12 m8 l4">
+						<input ref={elem => setNameRef(elem)} id="categoryName" name="categoryName" type="text"/>
+						<label htmlFor="categoryName">{localization[locale].categoryNameLabel}</label>
 					</div>
-					<div className="row">
-						<div className="col s12 m8 l4">
-							<MessageList className="red accent-2 white-text" timeout={3000} message={errors}/>
-							<MessageList className="green accent-2 white-text" timeout={3000} message={messages}/>
-						</div>
+				</div>
+				<div className="row">
+					<div className="col s12 m8 l4">
+						<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
+						<MessageList className="green accent-2 white-text" timeout={3000} messages={messages}/>
 					</div>
-					<div className="row">
-						<div className="input-field col s12">
-							<button className="btn" type="submit"><i
-								className="material-icons left">save</i>{localization[locale].categorySaveButton}
-							</button>
-						</div>
-						<div className="input-field col s12">
-							<button onClick={deleteCategory} className="btn red accent-2"
-							        type="button"><i
-								className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
-							</button>
-						</div>
+				</div>
+				<div className="row">
+					<div className="input-field col s12">
+						<button className="btn" type="submit"><i
+							className="material-icons left">save</i>{localization[locale].categorySaveButton}
+						</button>
 					</div>
-				</form>
+					<div className="input-field col s12">
+						<button onClick={deleteCategory} className="btn red accent-2"
+						        type="button"><i
+							className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
+						</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	);
 };

@@ -41,7 +41,7 @@ export const AdminPostList = (props: AdminPostListProps) => {
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
-						<li><Link className="btn" to="sass.html"><i className="material-icons left">add_to_photos</i>
+						<li><Link className="btn" to="/admin/posts/edit"><i className="material-icons left">add_to_photos</i>
 							{localization[locale].newPostButton}</Link></li>
 					</ul>
 				</div>
@@ -84,7 +84,7 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
 					<div className="col s4 truncate">
-						<Link to={"/admin/posts/" + post.postSlug}><i
+						<Link to={"/admin/posts/edit/" + post.postSlug}><i
 							className="material-icons">edit</i></Link>{post.postTitle}
 					</div>
 					<div className="col s2">

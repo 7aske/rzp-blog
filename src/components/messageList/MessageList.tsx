@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./MessageList.css";
 
 type MessageListProps = {
-	message: string[];
+	messages: string[];
 	timeout?: number;
 	className?: string;
 };
@@ -12,8 +12,8 @@ export const MessageList = (props: MessageListProps) => {
 	const [messages, setMessages] = useState<string[]>([]);
 
 	useEffect(() => {
-		setMessages([...props.message]);
-	}, [props.message]);
+		setMessages([...props.messages]);
+	}, [props.messages]);
 
 	const filterMessages = (err: string) => {
 		setMessages(messages.filter(e => err !== e));

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { HashRouter, Link, NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import { AdminCategoryList } from "./adminCategoryList/AdminCategoryList";
+import { AdminPostEdit } from "./adminPostEdit/AdminPostEdit";
 import { AdminPostList } from "./adminPostList/AdminPostList";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import useLocale from "../../../hooks/useLocale";
@@ -41,6 +42,12 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							</Route>
 							<Route exact path="/admin/authors">
 								Authors
+							</Route>
+							<Route exact path="/admin/posts/edit">
+								<AdminPostEdit/>
+							</Route>
+							<Route path="/admin/posts/edit/:postSlug">
+								<AdminPostEdit/>
 							</Route>
 						</Switch>
 					</div>

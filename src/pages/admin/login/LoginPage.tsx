@@ -74,7 +74,7 @@ export const LoginPage = () => {
 					<div className="input-field col s12 m6 l6 xl4">
 						<input placeholder="Password" id="password" type="password"/>
 						<label htmlFor="password">Password</label>
-						<MessageList className="red accent-2 white-text" timeout={3000} message={errors}/>
+						<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
 					</div>
 				</div>
 				<div className="row">
