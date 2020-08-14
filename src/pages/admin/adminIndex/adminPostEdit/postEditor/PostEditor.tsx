@@ -26,22 +26,21 @@ export const PostEditor = (props: PostEditorProps) => {
 			<br/>
 			<SimpleMDE onChange={props.onChange}
 			           options={{
-				           autofocus: true,
-				           autosave: {
-					           enabled: true,
-					           uniqueId: props.id ? props.id.toString() : "newPost",
-					           delay: 1000,
-					           submit_delay: 5000,
-					           timeFormat: {
-						           locale,
-						           format: {
-							           hour: "2-digit",
-							           minute: "2-digit",
-							           second: "numeric",
-						           },
-					           },
-					           text: localization[locale].autosaved,
-				           },
+				           // autosave: {
+					       //     enabled: true,
+					       //     uniqueId: props.id ? props.id.toString() : "newPost",
+					       //     delay: 1000,
+					       //     submit_delay: 5000,
+					       //     timeFormat: {
+						   //         locale,
+						   //         format: {
+							//            hour: "2-digit",
+							//            minute: "2-digit",
+							//            second: "numeric",
+						   //         },
+					       //     },
+					       //     text: localization[locale].autosaved,
+				           // },
 				           initialValue: props.value,
 				           sideBySideFullscreen: true,
 				           previewRender: function (plainText) {

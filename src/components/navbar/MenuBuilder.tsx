@@ -72,7 +72,7 @@ class MenuBuilder {
 			});
 		return this.navItems
 			.sort((a, b) => MenuBuilder.compareTo(a.order, b.order))
-			.map(item => item.element).map(item => <li>{item}</li>);
+			.map(item => item.element);
 	}
 
 	private static compareTo(a: number, b: number) {

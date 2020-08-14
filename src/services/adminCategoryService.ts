@@ -3,24 +3,32 @@ import { getClient } from "./client/http";
 
 const getAll = async () => {
 	const client = getClient();
-	return (await client.get(`${backendUrl}/category/getAll`)).data;
+	const categories =  (await client.get(`${backendUrl}/category/getAll`)).data;
+	console.log(categories);
+	return categories;
 };
 
-const save = async (category: Category) => {
+const save = async (_category: Category) => {
 	const client = getClient();
-	return (await client.post(`${backendUrl}/category/save`, category)).data;
+	const category = (await client.post(`${backendUrl}/category/save`, _category)).data;
+	console.log(category);
+	return category;
 };
 
 
-const update = async (category: Category) => {
+const update = async (_category: Category) => {
 	const client = getClient();
-	return (await client.put(`${backendUrl}/category/update`, category)).data;
+	const category = (await client.put(`${backendUrl}/category/update`, _category)).data;
+	console.log(category);
+	return category;
 };
 
 
 const deleteById = async (idCategory: number) => {
 	const client = getClient();
-	return (await client.delete(`${backendUrl}/category/deleteById/${idCategory}`)).data;
+	const retval = (await client.delete(`${backendUrl}/category/deleteById/${idCategory}`)).data;
+	console.log(retval);
+	return retval;
 };
 
 

@@ -59,10 +59,10 @@ export const Navbar = () => {
 
 				<a className="nav-logo"><img src={logo} alt="Logo"/></a>
 				<ul className="menu right hide-on-med-and-up">
-					{mobileNav}
+					{mobileNav.map((item, i) => <li key={i}>{item}</li>)}
 				</ul>
 				<ul className="menu right hide-on-med-and-down">
-					{navItems}
+					{navItems.map((item, i) => <li key={i}>{item}</li>)}
 				</ul>
 			</div>
 			<Sidenav menuItems={sidenavItems}/>

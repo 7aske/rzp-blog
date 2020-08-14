@@ -7,6 +7,7 @@ type GenericSelectProps = {
 	list: GenericElement<any>[];
 	onUpdate?: (list: GenericElement<any>[]) => void;
 	onSelect?: (element?: GenericElement<any>) => void;
+	value?: any;
 	create?: boolean;
 	newOptionText?: string;
 	labelText?: string;
@@ -24,7 +25,7 @@ export const GenericSelect = (props: GenericSelectProps) => {
 		M.updateTextFields();
 		props.onUpdate && props.onUpdate(props.list);
 		// eslint-disable-next-line
-	}, [props.list]);
+	}, [props.list, props.value]);
 
 	const selectElement = () => {
 		if (selectInstance.current) {
@@ -36,9 +37,11 @@ export const GenericSelect = (props: GenericSelectProps) => {
 
 	return (
 		<div>
-			<select id={props.id} ref={selectRef}>
+			<select value={props.value} id={props.id} ref={selectRef}>
 				{!!props.create ? <option value="">{props.newOptionText}</option> : ""}
-				{props.list.map(categ => <option value={categ.id}>{categ.name}</option>)}
+				{props.list.map(elem =>
+					<option key={elem.id}
+					        value={elem.id}>{elem.name}</option>)}
 			</select>
 			<label htmlFor={props.id}>{props.labelText}</label>
 		</div>

@@ -1,9 +1,9 @@
+import * as M from "materialize-css";
 import * as React from "react";
 import { createRef, useEffect, useRef } from "react";
-import * as M from "materialize-css";
-import "./Sidenav.css";
 // @ts-ignore
 import logo from "../../../assets/img/logo.png";
+import "./Sidenav.css";
 
 type SidenavProps = {
 	menuItems: JSX.Element[];
@@ -34,7 +34,7 @@ export const Sidenav = (props: SidenavProps) => {
 						</a>
 					</div>
 				</li>
-				{props.menuItems}
+				{props.menuItems.map((item, i) => <li key={i}>{item}</li>)}
 			</ul>
 		</div>
 	);
