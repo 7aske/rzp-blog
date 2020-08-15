@@ -3,9 +3,11 @@ import { getClient } from "./client/http";
 
 export const getById = async (id: number): Promise<UserDTO> => {
 	const client = getClient();
-	return (await client.get(`${backendUrl}/user/getById/${id}`)).data
-}
+	const user = (await client.get(`${backendUrl}/user/getById/${id}`)).data;
+	console.log(user)
+	return user;
+};
 
-const userService = {getById}
+const userService = {getById};
 
 export default userService;

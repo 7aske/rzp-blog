@@ -5,8 +5,7 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../../../components/pagination/Pagination";
 import useLocale from "../../../../hooks/useLocale";
-import adminPostService from "../../../../services/adminPostService";
-import postService from "../../../../services/postService";
+import adminPostService from "../../../../services/modules/admin/adminPostService";
 import "./AdminPostListItem.css";
 import localization from "./localization";
 
@@ -20,14 +19,14 @@ export const AdminPostList = (props: AdminPostListProps) => {
 	moment.locale(locale);
 
 	useEffect(() => {
-		postService.getPageCount(itemsPerPage).then(_count => {
+		adminPostService.getPageCount(itemsPerPage).then(_count => {
 			pageCount.current = _count;
 		});
 	}, []);
 
 	useEffect(() => {
 
-		adminPostService.getAllPreviews(currentPage, itemsPerPage).then(_posts => {
+		adminPostService.getAllPreview(currentPage, itemsPerPage).then(_posts => {
 			_posts = new Array(itemsPerPage).fill(null).map((_, i) => _posts[i]);
 			setPosts(_posts);
 		}).catch(err => {
@@ -41,7 +40,8 @@ export const AdminPostList = (props: AdminPostListProps) => {
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
-						<li><Link className="btn" to="/admin/posts/edit"><i className="material-icons left">add_to_photos</i>
+						<li><Link className="btn" to="/admin/posts/edit"><i
+							className="material-icons left">add_to_photos</i>
 							{localization[locale].newPostButton}</Link></li>
 					</ul>
 				</div>
@@ -94,7 +94,7 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 						<span className="blob grey darken-2">{post.categoryName}</span>
 					</div>
 					<div className="col s2 truncate">
-						{post.postPublished ?  localization[locale].published : ""}
+						{post.postPublished ? localization[locale].published : ""}
 					</div>
 					<div className="col s2">
 						<Moment locale={locale} fromNow>{post.postDateUpdated}</Moment>
@@ -104,7 +104,7 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 		);
 	} else {
 		return (
-			<li style={{border:"none"}} className="admin-post-list-item collection-item">&nbsp;</li>
+			<li style={{border: "none"}} className="admin-post-list-item collection-item">&nbsp;</li>
 		);
 	}
 };

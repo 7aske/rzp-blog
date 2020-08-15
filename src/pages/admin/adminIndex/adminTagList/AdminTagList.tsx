@@ -4,7 +4,7 @@ import GenericElement from "../../../../components/genericSelect/GenericElement"
 import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
 import { MessageList } from "../../../../components/messageList/MessageList";
 import useLocale from "../../../../hooks/useLocale";
-import adminTagService from "../../../../services/adminTagService";
+import adminTagService from "../../../../services/modules/admin/adminTagService";
 import "./AdminTagList.css";
 import { getErrorText } from "../../../errors/localization";
 import localization from "./localization";

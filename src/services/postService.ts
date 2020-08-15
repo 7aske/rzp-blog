@@ -2,14 +2,9 @@ import axios from "axios";
 import { backendUrl } from "../globals";
 
 const getAllPreviews = async (): Promise<PostPreviewDTO[]> => {
-	try {
-		const posts: PostPreviewDTO[] = (await axios.get(`${backendUrl}/post/getAllPreview?published=true`)).data;
-		console.log(posts);
-		return posts;
-	} catch (e) {
-		console.error(e);
-		return [];
-	}
+	const posts: PostPreviewDTO[] = (await axios.get(`${backendUrl}/post/getAllPreview?published=true`)).data;
+	console.log(posts);
+	return posts;
 };
 
 const getByPostSlug = async (postSlug: string): Promise<PostDTO> => {

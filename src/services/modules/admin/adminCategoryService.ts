@@ -1,16 +1,18 @@
-import { backendUrl } from "../globals";
-import { getClient } from "./client/http";
+import { backendUrl } from "../../../globals";
+import { getClient } from "../../client/http";
+
+const submodule = "admin";
 
 const getAll = async () => {
 	const client = getClient();
-	const categories =  (await client.get(`${backendUrl}/category/getAll`)).data;
+	const categories =  (await client.get(`${backendUrl}/${submodule}/category/getAll`)).data;
 	console.log(categories);
 	return categories;
 };
 
 const save = async (_category: Category) => {
 	const client = getClient();
-	const category = (await client.post(`${backendUrl}/category/save`, _category)).data;
+	const category = (await client.post(`${backendUrl}/${submodule}/category/save`, _category)).data;
 	console.log(category);
 	return category;
 };
@@ -18,7 +20,7 @@ const save = async (_category: Category) => {
 
 const update = async (_category: Category) => {
 	const client = getClient();
-	const category = (await client.put(`${backendUrl}/category/update`, _category)).data;
+	const category = (await client.put(`${backendUrl}/${submodule}/category/update`, _category)).data;
 	console.log(category);
 	return category;
 };
@@ -26,7 +28,7 @@ const update = async (_category: Category) => {
 
 const deleteById = async (idCategory: number) => {
 	const client = getClient();
-	const retval = (await client.delete(`${backendUrl}/category/deleteById/${idCategory}`)).data;
+	const retval = (await client.delete(`${backendUrl}/${submodule}/category/deleteById/${idCategory}`)).data;
 	console.log(retval);
 	return retval;
 };

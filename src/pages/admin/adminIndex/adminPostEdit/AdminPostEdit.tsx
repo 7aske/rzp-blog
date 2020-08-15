@@ -8,10 +8,9 @@ import { GenericSelect } from "../../../../components/genericSelect/GenericSelec
 import { MessageList } from "../../../../components/messageList/MessageList";
 import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
-import adminCategoryService from "../../../../services/adminCategoryService";
-import adminPostService from "../../../../services/adminPostService";
-import adminTagService from "../../../../services/adminTagService";
-import postService from "../../../../services/postService";
+import adminCategoryService from "../../../../services/modules/admin/adminCategoryService";
+import adminPostService from "../../../../services/modules/admin/adminPostService";
+import adminTagService from "../../../../services/modules/admin/adminTagService";
 import { scrollToTop } from "../../../../utils/utils";
 import { getErrorText } from "../../../errors/localization";
 import "./AdminPostEdit.css";
@@ -82,7 +81,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 
 	useEffect(() => {
 		if (postSlug) {
-			postService.getByPostSlug(postSlug).then(_post => {
+			adminPostService.getByPostSlug(postSlug).then(_post => {
 				setPost(_post);
 			}).catch(err => {
 				console.error(err);
