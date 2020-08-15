@@ -22,26 +22,37 @@ nav {
 .select-wrapper .caret path:first-of-type {
   fill: #eeeeee;
 }
-.select-wrapper .dropdown-content li {
+
+.dropdown-content li {
   background-color: #393e46 !important;
 }
-.select-wrapper .dropdown-content li span {
+.dropdown-content li span {
   color: #eeeeee !important;
 }
-.select-wrapper .dropdown-content li:hover {
+.dropdown-content li:hover {
   background-color: #c2eddf;
 }
-.select-wrapper .dropdown-content li:hover span {
+.dropdown-content li:hover span {
   color: #393e46;
 }
-.select-wrapper .dropdown-content li.selected, .select-wrapper .dropdown-content li:active, .select-wrapper .dropdown-content li:focus {
+.dropdown-content li .highlight {
+  color: #4ecca3 !important;
+}
+.dropdown-content li.selected, .dropdown-content li:active, .dropdown-content li:focus {
   background-color: #4ecca3 !important;
 }
-.select-wrapper .dropdown-content li.selected:hover, .select-wrapper .dropdown-content li:active:hover, .select-wrapper .dropdown-content li:focus:hover {
+.dropdown-content li.selected:hover, .dropdown-content li:active:hover, .dropdown-content li:focus:hover {
   background-color: #c2eddf;
 }
-.select-wrapper .dropdown-content li.selected:hover span, .select-wrapper .dropdown-content li:active:hover span, .select-wrapper .dropdown-content li:focus:hover span {
+.dropdown-content li.selected:hover span, .dropdown-content li:active:hover span, .dropdown-content li:focus:hover span {
   color: #393e46 !important;
+}
+
+.chips .chip {
+  background-color: #4ecca3;
+  color: #eeeeee;
+  cursor: pointer;
+  user-select: none;
 }
 
 .chips input {

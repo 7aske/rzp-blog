@@ -8,6 +8,7 @@ import adminTagService from "../../../../services/modules/admin/adminTagService"
 import "./AdminTagList.css";
 import { getErrorText } from "../../../errors/localization";
 import localization from "./localization";
+import Console from "../../../../utils/Console";
 
 type AdminTagListProps = {};
 export const AdminTagList = (props: AdminTagListProps) => {
@@ -28,7 +29,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 		adminTagService.getAll().then(_tags => {
 			setTagList(_tags);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setTagList([]);
 		});
 	};
@@ -59,7 +60,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 			getTags();
 			setMessages([localization[locale].tagSavedMessage]);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
@@ -85,7 +86,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 				idRef.value = "";
 			}
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}

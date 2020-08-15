@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import GenericElement from "./GenericElement";
+import Console from "../../utils/Console";
 
 type GenericChipSelectProps = {
 	id?: string;
@@ -18,7 +19,7 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 
 	useEffect(() => {
 		// setData(props.list);
-		console.log("props", props.list);
+		Console.log("props", props.list);
 	}, [props.list]);
 
 	useEffect(() => {
@@ -52,7 +53,11 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 					}
 				},
 				onChipDelete: (element, chip) => {
-					console.log(chip);
+					const val = chip.childNodes[0].nodeValue;
+					const elem = props.list.find(e => e.filter(val));
+					if (elem) {
+						onUpdate(data.filter(e => e.name !== elem.name));
+					}
 				},
 				data: initialData,
 				autocompleteOptions: {
@@ -61,13 +66,16 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 			});
 			setChipInstance(instance);
 		}
+		// eslint-disable-next-line
 	}, [chipRef, data, props.value, props.list]);
 
 
 	return (
-		<label>
-			{props.labelText ? props.labelText : ""}
-		<div ref={elem => setChipRef(elem)} className="chips chips-autocomplete chips-placeholder"/>
-		</label>
+		<div>
+			<label>
+				{props.labelText ? props.labelText : ""}
+				<div ref={elem => setChipRef(elem)} className="chips chips-autocomplete chips-placeholder"/>
+			</label>
+		</div>
 	);
 };

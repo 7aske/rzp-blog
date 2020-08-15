@@ -16,24 +16,26 @@ import { getErrorText } from "../../../errors/localization";
 import "./AdminPostEdit.css";
 import localization from "./localization";
 import { PostEditor } from "./postEditor/PostEditor";
+import Console from "../../../../utils/Console";
 
 type AdminPostEditProps = {};
 export const AdminPostEdit = (props: AdminPostEditProps) => {
-	const history = useHistory();
-	const {ctx} = useContext(AppContext);
+	const [categories, setCategories] = useState<Category[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
+	const [locale] = useLocale();
 	const [messages, setMessages] = useState<string[]>([]);
 	const [post, setPost] = useState<PostDTO>();
-	const [categories, setCategories] = useState<Category[]>([]);
 	const [tags, setTags] = useState<Tag[]>([]);
+	const [textareaRef, setTextareaRef] = useState<HTMLTextAreaElement | null>(null);
+	const history = useHistory();
+	const {ctx} = useContext(AppContext);
 	const {postSlug} = useParams();
-	const [locale] = useLocale();
 
 	const getCategories = () => {
 		adminCategoryService.getAll().then(_categories => {
 			setCategories(_categories);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setCategories([]);
 		});
 	};
@@ -41,6 +43,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	useEffect(() => {
 		if (post && !post?.idCategory)
 			setPost({...(post as PostDTO), idCategory: categories[0].idCategory});
+		// eslint-disable-next-line
 	}, [categories]);
 
 
@@ -48,7 +51,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 		adminTagService.getAll().then(_tags => {
 			setTags(_tags);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setTags([]);
 		});
 	};
@@ -58,7 +61,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 		action(post!).then(_post => {
 			setMessages([localization[locale].postSavedText]);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
@@ -72,7 +75,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 				history.replace("/admin/posts");
 			}, 3000);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
@@ -84,9 +87,10 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 			adminPostService.getByPostSlug(postSlug).then(_post => {
 				setPost(_post);
 			}).catch(err => {
-				console.error(err);
+				Console.error(err);
 			});
 		}
+
 		getCategories();
 		getTags();
 		setPost({...(post as PostDTO), postPublished: false, idUser: ctx.user!.idUser});
@@ -94,7 +98,11 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	}, []);
 
 	useEffect(() => {
-		console.log(post);
+		if (textareaRef) {
+			M.textareaAutoResize(textareaRef);
+		}
+		Console.log(post);
+		// eslint-disable-next-line
 	}, [post]);
 
 	return (
@@ -135,7 +143,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 								</div>
 							</div>
 							<div className="row">
-								<div className="input-field col s12 m12 l6">
+								<div className="col s12 m12 l6">
 									<GenericSelect
 										value={post?.idCategory}
 										list={categories.map(categ => new GenericElement<Category>(categ, categ.idCategory, categ.categoryName))}
@@ -174,9 +182,17 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 							</div>
 							<div className="row">
 								<div className="input-field col s12 m12 l8">
-							<textarea id="postExcerpt" placeholder={localization[locale].postExcerptPlaceholder}
-							          className="materialize-textarea"
-							          onChange={(ev) => setPost({...(post as PostDTO), postExcerpt: ev.target.value})}/>
+									<textarea
+										id="postExcerpt"
+										ref={elem => setTextareaRef(elem)}
+										placeholder={localization[locale].postExcerptPlaceholder}
+										className="materialize-textarea"
+										spellCheck={false}
+										value={post?.postExcerpt}
+										onChange={(ev) => setPost({
+											...(post as PostDTO),
+											postExcerpt: ev.target.value,
+										})}/>
 									<label htmlFor="postExcerpt">{localization[locale].postExcerptLabel}</label>
 								</div>
 							</div>

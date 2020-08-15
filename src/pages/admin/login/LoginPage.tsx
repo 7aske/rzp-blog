@@ -12,6 +12,7 @@ import userService from "../../../services/userService";
 import { getHistoryErrors } from "../../../utils/utils";
 import { getErrorText } from "../../errors/localization";
 import "./LoginPage.css";
+import Console from "../../../utils/Console";
 
 export const LoginPage = () => {
 	const [locale] = useLocale();
@@ -36,7 +37,7 @@ export const LoginPage = () => {
 	};
 
 	const failure = (err: any) => {
-		console.error(err);
+		Console.error(err);
 		if (err.response && err.response.data) {
 			setErrors([getErrorText(err.response.data.error, locale)]);
 		}

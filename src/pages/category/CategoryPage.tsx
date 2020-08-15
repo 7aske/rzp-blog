@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import GenericElement from "../../components/genericSelect/GenericElement";
 import { GenericSelect } from "../../components/genericSelect/GenericSelect";
 import { Pagination } from "../../components/pagination/Pagination";
@@ -9,6 +9,7 @@ import useLocale from "../../hooks/useLocale";
 import categoryService from "../../services/categoryService";
 import postService from "../../services/postService";
 import localization from "./localization";
+import Console from "../../utils/Console";
 
 type CategoryPageProps = {};
 export const CategoryPage = (props: CategoryPageProps) => {
@@ -28,7 +29,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 				setCategory(categ);
 			}
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setCategories([]);
 		});
 		// eslint-disable-next-line
@@ -39,7 +40,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			setPosts(_posts);
 			if (category) window.history.replaceState(null, null!, "/#/category/" + category?.categoryName);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setPosts([]);
 		});
 	};

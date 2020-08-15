@@ -8,6 +8,7 @@ import useLocale from "../../hooks/useLocale";
 import MenuBuilder from "./MenuBuilder";
 import "./Navbar.css";
 import { Sidenav } from "./sidenav/Sidenav";
+import Console from "../../utils/Console";
 
 
 export const Navbar = () => {
@@ -19,7 +20,7 @@ export const Navbar = () => {
 	const loggedIn = ctx.user !== null;
 
 	const roles = ctx.user ? ctx.user.userRoles : [];
-	console.log(roles);
+	Console.log(roles);
 
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])

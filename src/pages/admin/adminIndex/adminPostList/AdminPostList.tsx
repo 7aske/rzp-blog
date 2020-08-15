@@ -8,6 +8,7 @@ import useLocale from "../../../../hooks/useLocale";
 import adminPostService from "../../../../services/modules/admin/adminPostService";
 import "./AdminPostListItem.css";
 import localization from "./localization";
+import Console from "../../../../utils/Console";
 
 type AdminPostListProps = {};
 export const AdminPostList = (props: AdminPostListProps) => {
@@ -31,7 +32,7 @@ export const AdminPostList = (props: AdminPostListProps) => {
 			setPosts(_posts);
 		}).catch(err => {
 			setPosts([]);
-			console.error(err);
+			Console.error(err);
 		});
 	}, [currentPage]);
 

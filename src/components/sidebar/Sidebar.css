@@ -15,6 +15,9 @@
 .sidebar .collection .collection-item a.active {
   color: #4ecca3 !important;
 }
+.sidebar .collection .collection-item a.active:hover {
+  color: #eeeeee !important;
+}
 .sidebar nav {
   height: 3.5em;
   transition: all 500ms;

@@ -7,6 +7,7 @@ import postService from "../../services/postService";
 import { formatDate, scrollToTop } from "../../utils/utils";
 import "./PostPage.css";
 import localization from "./localization";
+import Console from "../../utils/Console";
 
 export const PostPage = () => {
 	const [locale] = useLocale();
@@ -15,12 +16,12 @@ export const PostPage = () => {
 	const [post, setPost] = useState<PostDTO>();
 
 	useEffect(() => {
-		console.log(slug);
+		Console.log(slug);
 		postService.getByPostSlug(slug).then(_post => {
 			if (_post)
 				setPost(_post);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			history.replace("/404");
 		});
 		scrollToTop();

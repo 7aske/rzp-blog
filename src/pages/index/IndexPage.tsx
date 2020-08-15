@@ -6,6 +6,7 @@ import useLocale from "../../hooks/useLocale";
 import postService from "../../services/postService";
 import "./IndexPage.css";
 import localization from "./localization";
+import Console from "../../utils/Console";
 
 type IndexPageProps = {};
 export const IndexPage = (props: IndexPageProps) => {
@@ -24,7 +25,7 @@ export const IndexPage = (props: IndexPageProps) => {
 		postService.getAllPreview({count: postCount, page: page, published: true}).then(newPosts => {
 			setPosts(newPosts);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			setPosts([]);
 		});
 	}, [page]);

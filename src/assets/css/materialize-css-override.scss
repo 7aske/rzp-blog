@@ -30,33 +30,48 @@ nav {
 			fill: $theme-white;
 		}
 	}
-	.dropdown-content {
-		li {
-			background-color: $theme-grey !important;
-			span {
-				color: $theme-white !important;
-			}
+}
 
-			&:hover {
-				background-color: $theme-green-lightest;
-				span{
-					color: $theme-grey;
-				}
+.dropdown-content {
+	li {
+		background-color: $theme-grey !important;
+
+		span {
+			color: $theme-white !important;
+		}
+
+		&:hover {
+			background-color: $theme-green-lightest;
+
+			span {
+				color: $theme-grey;
 			}
 		}
-		li.selected, li:active, li:focus {
-			background-color: $theme-green !important;
-			&:hover {
-				background-color: $theme-green-lightest;
-				span{
-					color: $theme-grey !important;
-				}
+		.highlight {
+			color: $theme-green !important;
+		}
+	}
+
+	li.selected, li:active, li:focus {
+		background-color: $theme-green !important;
+
+		&:hover {
+			background-color: $theme-green-lightest;
+
+			span {
+				color: $theme-grey !important;
 			}
 		}
 	}
 }
 
 .chips {
+	.chip {
+		background-color: $theme-green;
+		color: $theme-white;
+		cursor: pointer;
+		user-select: none;
+	}
 }
 
 .chips .input:not(:disabled) {
@@ -96,8 +111,10 @@ ul.pagination li {
 		&:hover {
 			background-color: $theme-green;
 		}
+
 		font-weight: bold;
 	}
+
 	height: 100%;
 }
 
@@ -205,9 +222,10 @@ input[type="radio"] {
 	}
 
 	/* label color */
-	input[type="text"]:disabled + label{
+	input[type="text"]:disabled + label {
 		color: $theme-grey-light;
 	}
+
 	label {
 		//font-weight: bold;
 		color: $theme-green;
@@ -257,6 +275,7 @@ input[type="radio"] {
 		color: $theme-green;
 	}
 }
+
 textarea {
 	color: $theme-white;
 }

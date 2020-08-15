@@ -8,6 +8,7 @@ import adminCategoryService from "../../../../services/modules/admin/adminCatego
 import "./AdminCategoryList.css";
 import { getErrorText } from "../../../errors/localization";
 import localization from "./localization";
+import Console from "../../../../utils/Console";
 
 type AdminCategoryListProps = {};
 export const AdminCategoryList = (props: AdminCategoryListProps) => {
@@ -22,7 +23,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 		adminCategoryService.getAll().then(_categories => {
 			setCategoryList(_categories);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
@@ -60,7 +61,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 			getCategories();
 			setMessages([localization[locale].categorySavedMessage]);
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}
@@ -86,7 +87,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 				idRef.value = "";
 			}
 		}).catch(err => {
-			console.error(err);
+			Console.error(err);
 			if (err.response && err.response.data) {
 				setErrors([getErrorText(err.response.data.error, locale)]);
 			}

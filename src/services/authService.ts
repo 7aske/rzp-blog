@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { backendUrl } from "../globals";
 import { getClient } from "./client/http";
+import Console from "../utils/Console";
 
 export const login = async (username: string, password: string) => {
 	const bearer = (await axios.post(`${backendUrl}/auth/login`, {
@@ -16,7 +17,7 @@ export const login = async (username: string, password: string) => {
 export const verify = async () => {
 	const client = getClient();
 	const res = await client.post(`${backendUrl}/auth/verify`);
-	console.log(res);
+	Console.log(res);
 };
 
 const authService = {

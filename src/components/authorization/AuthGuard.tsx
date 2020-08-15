@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import authService from "../../services/authService";
+import Console from "../../utils/Console";
 
 type AuthGuardProps = {
 	children?: JSX.Element[] | JSX.Element | never[];
@@ -14,7 +15,7 @@ export const AuthGuard = (props: AuthGuardProps) => {
 		authService.verify().then(() => {
 			setAuthorized(true);
 		}).catch(err => {
-			console.error(err.response);
+			Console.error(err.response);
 			if (err.response)
 				history.replace({
 					pathname: "/login",

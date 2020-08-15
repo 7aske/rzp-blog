@@ -1,5 +1,6 @@
 import { backendUrl } from "../../../globals";
 import { getClient } from "../../client/http";
+import Console from "../../../utils/Console";
 
 const submodule = "admin"
 
