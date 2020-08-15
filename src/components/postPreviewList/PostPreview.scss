@@ -3,18 +3,30 @@
 .post-preview {
 	padding-top: 1em;
 	padding-bottom: 1em;
-	span {
-		position: absolute;
-		right: 0;
-		padding-left: 1em;
+	.category {
+		span {
+			position: absolute;
+			right: 0;
+			padding-left: 1em;
+			font-size: 1.2em;
 
-		a {
-			color: $theme-green-light;
+			a {
+				color: $theme-green-light;
+			}
+			&:hover a {
+				border-bottom: 2px solid $theme-green-lightest;
+				color: $theme-white;
+			}
 		}
-
-		&:hover a {
-			border-bottom: 2px solid $theme-green-lightest;
+	}
+	.tags {
+		.tag {
+			margin-right: .5em;
 			color: $theme-white;
+			padding: .25em 1em .5em 1em;
+			border-radius: 15px;
+			background-color: $theme-green;
+			text-align: center;
 		}
 	}
 

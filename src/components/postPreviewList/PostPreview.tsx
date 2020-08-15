@@ -7,17 +7,22 @@ import "./PostPreview.css";
 type PostPreviewProps = {
 	post: PostPreviewDTO
 };
-export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postTitle, postAuthor, categoryName, tagList}}: PostPreviewProps) => {
+export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postTitle, postAuthor, categoryName, tags}}: PostPreviewProps) => {
 	const [locale] = useLocale();
 
 	return (
 		<li className="collection-item">
 			<div className="post-preview">
-				<span><Link to={"/category/" + categoryName}>{categoryName}</Link></span>
+				<div className="category">
+					<span><Link to={"/category/" + categoryName}>{categoryName}</Link></span>
+				</div>
 				<Link to={"/posts/" + postSlug}><h4>{postTitle}</h4></Link>
 				<h5>{postAuthor.toLocaleUpperCase()}</h5>
 				<h6>{formatDate(postDatePosted, locale)}</h6>
 				<p>{postExcerpt}</p>
+				<div className="tags">
+					{tags.map(tag => <span className="tag">{tag.tagName}</span>)}
+				</div>
 			</div>
 		</li>
 	);

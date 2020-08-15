@@ -2,17 +2,26 @@
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.post-preview span {
+.post-preview .category span {
   position: absolute;
   right: 0;
   padding-left: 1em;
+  font-size: 1.2em;
 }
-.post-preview span a {
+.post-preview .category span a {
   color: #88dcc1;
 }
-.post-preview span:hover a {
+.post-preview .category span:hover a {
   border-bottom: 2px solid #c2eddf;
   color: #eeeeee;
+}
+.post-preview .tags .tag {
+  margin-right: 0.5em;
+  color: #eeeeee;
+  padding: 0.25em 1em 0.5em 1em;
+  border-radius: 15px;
+  background-color: #4ecca3;
+  text-align: center;
 }
 .post-preview h4 {
   display: inline;

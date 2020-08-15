@@ -52,6 +52,34 @@ main {
   background-color: #eeeeee;
 }
 
+.theme-green-text {
+  color: #4ecca3;
+}
+
+.theme-green-light-text {
+  color: #88dcc1;
+}
+
+.theme-green-lightest-text {
+  color: #c2eddf;
+}
+
+.theme-grey-text {
+  color: #393e46;
+}
+
+.theme-grey-light-text {
+  color: #9e9e9e;
+}
+
+.theme-black-text {
+  color: #232931;
+}
+
+.theme-white-text {
+  color: #eeeeee;
+}
+
 .theme {
   background-color: #4ecca3 !important;
 }

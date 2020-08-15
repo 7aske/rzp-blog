@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PaginationProps = {
 	pageCount: number;
@@ -8,6 +8,13 @@ type PaginationProps = {
 };
 export const Pagination = (props: PaginationProps) => {
 	const [currentPage, setCurrentPage] = useState(0);
+	const [pageCount, setPageCount] = useState(1);
+
+	useEffect(() => {
+		setPageCount(props.pageCount);
+		changePage(0);
+	}, [props.pageCount]);
+
 	const changePage = (page: number) => {
 		if (page >= 0 && page < props.pageCount) {
 			setCurrentPage(page);
@@ -36,7 +43,7 @@ export const Pagination = (props: PaginationProps) => {
 				<li className="active">
 					<button className="btn btn-flat white-text">{currentPage + 1}</button>
 				</li>
-				{currentPage < props.pageCount - 1 ?
+				{currentPage < pageCount - 1 ?
 					<li>
 						<button onClick={() => changePage(currentPage + 1)}
 						        className="btn btn-flat white-text">{currentPage + 2}</button>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { backendUrl } from "../../../globals";
 import { getClient } from "../../client/http";
 

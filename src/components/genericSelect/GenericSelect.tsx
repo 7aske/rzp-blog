@@ -36,7 +36,7 @@ export const GenericSelect = (props: GenericSelectProps) => {
 	};
 
 	return (
-		<div>
+		<div className="input-field">
 			<select value={props.value} id={props.id} ref={selectRef}>
 				{!!props.create ? <option value="">{props.newOptionText}</option> : ""}
 				{props.list.map(elem =>

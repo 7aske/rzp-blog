@@ -9,6 +9,6 @@ type PostPreviewDTO = {
 	idPost: number;
 	postAuthor: string;
 	postPublished: boolean;
-	tagList: Tag[];
+	tags: Tag[];
 	views: number;
 }

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { backendUrl } from "../globals";
 
-const getAllPreviews = async (): Promise<PostPreviewDTO[]> => {
-	const posts: PostPreviewDTO[] = (await axios.get(`${backendUrl}/post/getAllPreview?published=true`)).data;
+const getAllPreview = async (params?: PostQueryParams): Promise<PostPreviewDTO[]> => {
+	const posts: PostPreviewDTO[] = (await axios.get(`${backendUrl}/post/getAllPreview`, {params})).data;
 	console.log(posts);
 	return posts;
 };
@@ -13,14 +13,14 @@ const getByPostSlug = async (postSlug: string): Promise<PostDTO> => {
 	return post;
 };
 
-const getPageCount = async (count = 10): Promise<number> => {
-	const _count: number = (await axios.get(`${backendUrl}/post/getPageCount?count=${count}`)).data;
+const getPageCount = async (params?: PostQueryParams): Promise<number> => {
+	const _count: number = (await axios.get(`${backendUrl}/post/getPageCount`, {params})).data;
 	console.log("Page count:", _count);
 	return _count;
 };
 
 const postService = {
-	getAllPreviews,
+	getAllPreview,
 	getByPostSlug,
 	getPageCount,
 };
