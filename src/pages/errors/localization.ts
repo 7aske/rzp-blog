@@ -40,6 +40,7 @@ type ErrorLocalizationStrings = {
 	"user.update.address-invalid": string;
 	"user.update.password-invalid": string;
 	"user.update.password-empty": string;
+	"user.update.password-not-matching": string;
 	[key: string]: string;
 }
 
@@ -85,7 +86,7 @@ const sr: ErrorLocalizationStrings = {
 	"user.update.address-invalid": "Adresa nije validna",
 	"user.update.password-invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
 	"user.update.password-empty": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
-
+	"user.update.password-not-matching": "Šifre se ne poklapaju",
 };
 
 
@@ -114,7 +115,7 @@ const en: ErrorLocalizationStrings = {
 	"comment.save.user-invalid": "User is invalid",
 	"auth.token.expired": "Session expired. Please log in",
 	"auth.unauthorized": "Unauthorized. Please log in",
-	"user.update.username-invalid": "Username is invalid", 
+	"user.update.username-invalid": "Username is invalid",
 	"user.update.username-empty": "Username is invalid",
 	"user.update.username-short": "Username must be longer than 5 characters",
 	"user.update.user-exists": "Username is already used",
@@ -131,6 +132,7 @@ const en: ErrorLocalizationStrings = {
 	"user.update.address-invalid": "Address is invalid",
 	"user.update.password-invalid": "Password must contain one number, one uppercase letter and one special character",
 	"user.update.password-empty":  "Password must contain one number, one uppercase letter and one special character",
+	"user.update.password-not-matching": "Passwords do not match",
 };
 
 export const getErrorText = (error: string, locale: string) => {

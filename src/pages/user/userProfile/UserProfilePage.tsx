@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import { PasswordChangeInput } from "../../../components/propertyUpdateInput/PasswordChangeInput";
 import { PropertyUpdateInput } from "../../../components/propertyUpdateInput/PropertyUpdateInput";
 import { Sidebar } from "../../../components/sidebar/Sidebar";
 import { AppContext } from "../../../context/AppContext";
@@ -32,7 +33,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 		</NavLink>,
 	];
 
-	const userProps: { element?: string, prop: string, className: string }[] = [
+	const infoProps: { element?: string, prop: string, className: string }[] = [
 		{prop: "userUsername", className: "col s12 m12 l8"},
 		{prop: "userDisplayName", className: "col s12 m12 l8"},
 		{prop: "userEmail", className: "col s12 m12 l8"},
@@ -51,7 +52,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 					<Switch>
 						<Route exact path={"/user/profile/info"}>
 							<div className="row">
-								{userProps.map(p => {
+								{infoProps.map(p => {
 									return (
 										<div className={p.className}>
 											<PropertyUpdateInput
@@ -67,7 +68,14 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 							</div>
 						</Route>
 						<Route exact path={"/user/profile/security"}>
-							Security
+							<div className="row">
+								<div className="col s12 m12 l8">
+									<PasswordChangeInput />
+								</div>
+							</div>
+						</Route>
+						<Route>
+							<Redirect to={"/user/profile/info"}/>
 						</Route>
 					</Switch>
 				</div>

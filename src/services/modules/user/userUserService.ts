@@ -6,7 +6,18 @@ const updateProperty = async (property: string, value: any): Promise<UserDTO> =>
 	const client = getClient();
 	const user = (await client.put(`${backendUrl}/user/user/updateProperty`, {
 		property,
-		value
+		value,
+	})).data;
+	Console.log(user);
+	return user;
+};
+
+const updatePassword = async (password: string, confirmPassword: string, newPassword: string): Promise<UserDTO> => {
+	const client = getClient();
+	const user = (await client.put(`${backendUrl}/user/user/updatePassword`, {
+		password,
+		confirmPassword,
+		newPassword,
 	})).data;
 	Console.log(user);
 	return user;
@@ -14,6 +25,7 @@ const updateProperty = async (property: string, value: any): Promise<UserDTO> =>
 
 const userUserService = {
 	updateProperty,
+	updatePassword,
 };
 
 export default userUserService;
