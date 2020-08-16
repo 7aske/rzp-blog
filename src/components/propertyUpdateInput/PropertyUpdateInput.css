@@ -1,0 +1,23 @@
+.property-update-input .input-field button {
+  display: none;
+  width: 4rem;
+  background-color: #4ecca3;
+}
+.property-update-input .input-field:hover button {
+  display: inline;
+}
+.property-update-input .input-field:hover input {
+  margin-right: 1rem;
+  width: calc(100% - 5rem);
+}
+.property-update-input .input-field input, .property-update-input .input-field label {
+  margin-left: 0;
+  width: 100%;
+}
+.property-update-input .input-field input:focus ~ button, .property-update-input .input-field label:focus ~ button {
+  display: inline;
+}
+.property-update-input .input-field input:focus, .property-update-input .input-field input:hover, .property-update-input .input-field label:focus, .property-update-input .input-field label:hover {
+  margin-right: 1rem;
+  width: calc(100% - 5rem);
+}

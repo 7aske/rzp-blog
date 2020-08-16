@@ -22,7 +22,7 @@ export const Router = () => {
 			<AuthGuard>
 				<Route exact path="/logout" component={LogoutPage}/>
 				<RoleGuard roles={["user"]}>
-					<Route exact path={"/user/profile"} component={UserProfilePage}/>
+					<Route path={"/user/profile"} component={UserProfilePage}/>
 				</RoleGuard>
 				<RoleGuard roles={["admin"]}>
 					<Route path="/admin" component={AdminIndexPage}/>

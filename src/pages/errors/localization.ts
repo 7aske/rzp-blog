@@ -23,6 +23,23 @@ type ErrorLocalizationStrings = {
 	"comment.save.user-invalid": string;
 	"auth.token.expired": string;
 	"auth.unauthorized": string;
+	"user.update.username-invalid": string;
+	"user.update.username-empty": string;
+	"user.update.username-short": string;
+	"user.update.user-exists": string;
+	"user.update.displayname-invalid": string;
+	"user.update.displayname-empty": string;
+	"user.update.displayname-short": string;
+	"user.update.firstname-invalid": string;
+	"user.update.firstname-empty": string;
+	"user.update.lastname-invalid": string;
+	"user.update.lastname-empty": string;
+	"user.update.email-invalid": string;
+	"user.update.email-empty": string;
+	"user.update.about-invalid": string;
+	"user.update.address-invalid": string;
+	"user.update.password-invalid": string;
+	"user.update.password-empty": string;
 	[key: string]: string;
 }
 
@@ -51,7 +68,26 @@ const sr: ErrorLocalizationStrings = {
 	"comment.save.user-invalid": "Korisnik nije validan",
 	"auth.token.expired": "Sesija je istekla. Molimo ulogujte se",
 	"auth.unauthorized": "Nije dozvoljeno. Molimo ulogujte se",
+	"user.update.username-invalid": "Korisničko ime nije validno",
+	"user.update.username-empty": "Korisničko ime nije validno",
+	"user.update.username-short": "Korisničko ime mora biti duze od 5 karaktera",
+	"user.update.user-exists": "Korisničko ime je već zauzeto",
+	"user.update.displayname-invalid": "Ime nije validno",
+	"user.update.displayname-empty": "Ime nije validno",
+	"user.update.displayname-short": "Ime mora biti duže od 5 karatkera",
+	"user.update.firstname-invalid": "Ime nije validno",
+	"user.update.firstname-empty": "Ime nije validno",
+	"user.update.lastname-invalid": "Prezime nije validno",
+	"user.update.lastname-empty": "Prezime nije validno",
+	"user.update.email-invalid": "Email nije validan",
+	"user.update.email-empty": "Email nije validan",
+	"user.update.about-invalid": "Opis nije validan",
+	"user.update.address-invalid": "Adresa nije validna",
+	"user.update.password-invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
+	"user.update.password-empty": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
+
 };
+
 
 const en: ErrorLocalizationStrings = {
 	"generic": "There was an error.",
@@ -78,6 +114,23 @@ const en: ErrorLocalizationStrings = {
 	"comment.save.user-invalid": "User is invalid",
 	"auth.token.expired": "Session expired. Please log in",
 	"auth.unauthorized": "Unauthorized. Please log in",
+	"user.update.username-invalid": "Username is invalid", 
+	"user.update.username-empty": "Username is invalid",
+	"user.update.username-short": "Username must be longer than 5 characters",
+	"user.update.user-exists": "Username is already used",
+	"user.update.displayname-invalid": "Display name is invalid",
+	"user.update.displayname-empty": "Display name is invalid",
+	"user.update.displayname-short": "Display name must be longer than 5 characters",
+	"user.update.firstname-invalid": "First name is invalid",
+	"user.update.firstname-empty":  "First name is invalid",
+	"user.update.lastname-invalid": "Last name is invalid",
+	"user.update.lastname-empty":  "Last name is invalid",
+	"user.update.email-invalid": "Email is invalid",
+	"user.update.email-empty":  "Email is invalid",
+	"user.update.about-invalid": "About is invalid",
+	"user.update.address-invalid": "Address is invalid",
+	"user.update.password-invalid": "Password must contain one number, one uppercase letter and one special character",
+	"user.update.password-empty":  "Password must contain one number, one uppercase letter and one special character",
 };
 
 export const getErrorText = (error: string, locale: string) => {

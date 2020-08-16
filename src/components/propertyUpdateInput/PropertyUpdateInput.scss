@@ -1,0 +1,34 @@
+@import "../../assets/css/theme";
+
+.property-update-input {
+	.input-field {
+		button {
+			display: none;
+			width: 4rem;
+			background-color: $theme-green;
+		}
+
+		&:hover button {
+			display: inline;
+		}
+
+		&:hover input {
+			margin-right: 1rem;
+			width: calc(100% - 5rem);
+		}
+
+		input, label {
+			margin-left: 0;
+			width: 100%;
+
+			&:focus ~ button {
+				display: inline;
+			}
+
+			&:focus, &:hover {
+				margin-right: 1rem;
+				width: calc(100% - 5rem);
+			}
+		}
+	}
+}

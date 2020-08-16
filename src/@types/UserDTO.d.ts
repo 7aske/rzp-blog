@@ -9,6 +9,7 @@ type UserDTO = {
 	userAbout: string;
 	userDateCreated: string;
 	userRoles: string[];
+	[key: string]: string | number | string[];
 }
 
 type UserCommentDTO = {
@@ -18,4 +19,5 @@ type UserCommentDTO = {
 	userEmail: string;
 	userFirstName: string;
 	userLastName: string;
+	[key: string]: string | number;
 }
