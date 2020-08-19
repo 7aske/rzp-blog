@@ -2,7 +2,7 @@ import { backendUrl } from "../../../globals";
 import Console from "../../../utils/Console";
 import { getClient } from "../../client/http";
 
-const submodule = "admin";
+const submodule = "author";
 
 const getAll = async (): Promise<Tag[]> => {
 	const client = getClient();
@@ -35,11 +35,11 @@ const deleteById = async (idTag: number): Promise<boolean> => {
 };
 
 
-const adminTagService: TagService = {
+const authorTagService: TagService = {
 	getAll,
 	deleteById,
 	save,
 	update,
 };
 
-export default adminTagService;
+export default authorTagService;

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
-import { PasswordChangeInput } from "../../../components/propertyUpdateInput/PasswordChangeInput";
-import { PropertyUpdateInput } from "../../../components/propertyUpdateInput/PropertyUpdateInput";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import { AppContext } from "../../../context/AppContext";
-import useLocale from "../../../hooks/useLocale";
-import Console from "../../../utils/Console";
+import { PasswordChangeInput } from "../../../../components/propertyUpdateInput/PasswordChangeInput";
+import { PropertyUpdateInput } from "../../../../components/propertyUpdateInput/PropertyUpdateInput";
+import { Sidebar } from "../../../../components/sidebar/Sidebar";
+import { AppContext } from "../../../../context/AppContext";
+import useLocale from "../../../../hooks/useLocale";
+import Console from "../../../../utils/Console";
 import localization from "./localization";
 import "./UserProfilePage.css";
 

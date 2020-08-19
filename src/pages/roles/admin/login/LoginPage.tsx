@@ -3,16 +3,16 @@ import jwtDecode from "jwt-decode";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { MessageList } from "../../../components/messageList/MessageList";
-import { AppContext } from "../../../context/AppContext";
-import { backendUrl } from "../../../globals";
-import useLocale from "../../../hooks/useLocale";
-import authService from "../../../services/authService";
-import userService from "../../../services/userService";
-import { getHistoryErrors } from "../../../utils/utils";
-import { getErrorText } from "../../errors/localization";
+import { MessageList } from "../../../../components/messageList/MessageList";
+import { AppContext } from "../../../../context/AppContext";
+import { backendUrl } from "../../../../globals";
+import useLocale from "../../../../hooks/useLocale";
+import authService from "../../../../services/authService";
+import userService from "../../../../services/userService";
+import { getHistoryErrors } from "../../../../utils/utils";
+import { getErrorText } from "../../../errors/localization";
 import "./LoginPage.css";
-import Console from "../../../utils/Console";
+import Console from "../../../../utils/Console";
 
 export const LoginPage = () => {
 	const [locale] = useLocale();

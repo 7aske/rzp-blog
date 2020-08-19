@@ -1,17 +1,27 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import GenericElement from "../../../../components/genericSelect/GenericElement";
-import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
-import { MessageList } from "../../../../components/messageList/MessageList";
-import useLocale from "../../../../hooks/useLocale";
-import adminTagService from "../../../../services/modules/admin/adminTagService";
-import "./AdminTagList.css";
-import { getErrorText } from "../../../errors/localization";
+import useLocale from "../../../hooks/useLocale";
+import { getErrorText } from "../../../pages/errors/localization";
+import adminCategoryService from "../../../services/modules/admin/adminCategoryService";
+import adminPostService from "../../../services/modules/admin/adminPostService";
+import adminTagService from "../../../services/modules/admin/adminTagService";
+import authorCategoryService from "../../../services/modules/author/authorCategoryService";
+import authorPostService from "../../../services/modules/author/authorPostService";
+import authorTagService from "../../../services/modules/author/authorTagService";
+import Console from "../../../utils/Console";
+import { hasRole } from "../../../utils/utils";
+import GenericElement from "../../genericSelect/GenericElement";
+import { GenericSelect } from "../../genericSelect/GenericSelect";
+import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
-import Console from "../../../../utils/Console";
+import "./TagEdit.css";
 
-type AdminTagListProps = {};
-export const AdminTagList = (props: AdminTagListProps) => {
+type AdminTagListProps = {
+	roles: string[];
+};
+export const TagEdit = (props: AdminTagListProps) => {
+	const tagServices =
+		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
 	const [tagList, setTagList] = useState<Tag[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
@@ -26,7 +36,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 
 
 	const getTags = () => {
-		adminTagService.getAll().then(_tags => {
+		tagServices.getAll().then(_tags => {
 			setTagList(_tags);
 		}).catch(err => {
 			Console.error(err);
@@ -54,9 +64,9 @@ export const AdminTagList = (props: AdminTagListProps) => {
 			idTag: parseInt(form["idTag"].value),
 			tagName: form["tag-name"].value,
 		};
-		const action = isNaN(tag.idTag) ? adminTagService.save : adminTagService.update;
+		const service = isNaN(tag.idTag) ? tagServices.save : tagServices.update;
 
-		action(tag).then(() => {
+		service(tag).then(() => {
 			getTags();
 			setMessages([localization[locale].tagSavedMessage]);
 		}).catch(err => {
@@ -78,7 +88,7 @@ export const AdminTagList = (props: AdminTagListProps) => {
 			return;
 		}
 
-		adminTagService.deleteById(tagId).then(() => {
+		tagServices.deleteById(tagId).then(() => {
 			getTags();
 			setMessages([localization[locale].tagDeletedMessage]);
 			if (nameRef && idRef) {

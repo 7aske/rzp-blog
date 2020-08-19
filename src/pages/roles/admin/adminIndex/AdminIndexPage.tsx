@@ -1,17 +1,20 @@
+import { useContext } from "react";
 import * as React from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
-import { AdminCategoryList } from "./adminCategoryList/AdminCategoryList";
-import { AdminPostEdit } from "./adminPostEdit/AdminPostEdit";
-import { AdminPostList } from "./adminPostList/AdminPostList";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import useLocale from "../../../hooks/useLocale";
-import { AdminTagList } from "./adminTagList/AdminTagList";
+import { CategoryEdit } from "../../../../components/roles/categoryEdit/CategoryEdit";
+import { PostEdit } from "../../../../components/roles/postEdit/PostEdit";
+import { PostView } from "../../../../components/roles/postView/PostView";
+import { Sidebar } from "../../../../components/sidebar/Sidebar";
+import { AppContext } from "../../../../context/AppContext";
+import useLocale from "../../../../hooks/useLocale";
+import { TagEdit } from "../../../../components/roles/tagEdit/TagEdit";
+import { hasRole } from "../../../../utils/utils";
 import localization from "./localization";
 import "./AdminIndexPage.css";
 
 type AdminIndexPageProps = {};
 export const AdminIndexPage = (props: AdminIndexPageProps) => {
-
+	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
 	const menuItems = [
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/posts"><i
@@ -23,6 +26,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/authors"><i
 			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarAuthors}</NavLink>,
 	];
+	if (!hasRole(ctx.user?.userRoles!, "admin")) menuItems.pop();
 	return (
 		<div id="admin-index-page" className="white-text">
 				<div className="row">
@@ -32,22 +36,22 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 					<div className="col s12 m12 l10 xl10 container">
 						<Switch>
 							<Route exact path="/admin/posts">
-								<AdminPostList/>
+								<PostView />
 							</Route>
 							<Route exact path="/admin/categories">
-								<AdminCategoryList/>
+								<CategoryEdit roles={ctx.user?.userRoles || []} />
 							</Route>
 							<Route exact path="/admin/tags">
-								<AdminTagList/>
+								<TagEdit roles={ctx.user?.userRoles || []}/>
 							</Route>
 							<Route exact path="/admin/authors">
 								Authors
 							</Route>
 							<Route exact path="/admin/posts/edit">
-								<AdminPostEdit/>
+								<PostEdit roles={ctx.user?.userRoles || []}/>
 							</Route>
 							<Route path="/admin/posts/edit/:postSlug">
-								<AdminPostEdit/>
+								<PostEdit roles={ctx.user?.userRoles || []}/>
 							</Route>
 						</Switch>
 					</div>

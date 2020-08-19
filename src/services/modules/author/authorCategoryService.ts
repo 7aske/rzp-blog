@@ -2,7 +2,7 @@ import { backendUrl } from "../../../globals";
 import { getClient } from "../../client/http";
 import Console from "../../../utils/Console";
 
-const submodule = "admin";
+const submodule = "author";
 
 const getAll = async (): Promise<Category[]> => {
 	const client = getClient();
@@ -35,11 +35,11 @@ const deleteById = async (idCategory: number): Promise<boolean> => {
 };
 
 
-const adminCategoryService: CategoryService = {
+const authorCategoryService: CategoryService = {
 	getAll,
 	deleteById,
 	save,
 	update,
 };
 
-export default adminCategoryService;
+export default authorCategoryService;

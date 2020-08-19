@@ -1,25 +1,38 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { FloatingActionButton } from "../../../../components/floatingActionButton/FloatingActionButton";
-import { GenericChipSelect } from "../../../../components/genericSelect/GenericChipSelect";
-import GenericElement from "../../../../components/genericSelect/GenericElement";
-import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
-import { MessageList } from "../../../../components/messageList/MessageList";
-import { AppContext } from "../../../../context/AppContext";
-import useLocale from "../../../../hooks/useLocale";
-import adminCategoryService from "../../../../services/modules/admin/adminCategoryService";
-import adminPostService from "../../../../services/modules/admin/adminPostService";
-import adminTagService from "../../../../services/modules/admin/adminTagService";
-import { scrollToTop } from "../../../../utils/utils";
-import { getErrorText } from "../../../errors/localization";
-import "./AdminPostEdit.css";
+import { AppContext } from "../../../context/AppContext";
+import useLocale from "../../../hooks/useLocale";
+import { getErrorText } from "../../../pages/errors/localization";
+import adminCategoryService from "../../../services/modules/admin/adminCategoryService";
+import adminPostService from "../../../services/modules/admin/adminPostService";
+import adminTagService from "../../../services/modules/admin/adminTagService";
+import authorCategoryService from "../../../services/modules/author/authorCategoryService";
+import authorPostService from "../../../services/modules/author/authorPostService";
+import authorTagService from "../../../services/modules/author/authorTagService";
+import Console from "../../../utils/Console";
+import { hasRole, scrollToTop } from "../../../utils/utils";
+import { FloatingActionButton } from "../../floatingActionButton/FloatingActionButton";
+import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
+import GenericElement from "../../genericSelect/GenericElement";
+import { GenericSelect } from "../../genericSelect/GenericSelect";
+import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
+import "./PostEdit.css";
 import { PostEditor } from "./postEditor/PostEditor";
-import Console from "../../../../utils/Console";
 
-type AdminPostEditProps = {};
-export const AdminPostEdit = (props: AdminPostEditProps) => {
+type PostEditProps = {
+	roles: string[];
+};
+export const PostEdit = (props: PostEditProps) => {
+
+	const postServices: PostService =
+		hasRole(props.roles, "admin") ? adminPostService : authorPostService;
+	const tagServices =
+		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
+	const categoryServices =
+		hasRole(props.roles, "admin") ? adminCategoryService : authorCategoryService;
+
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [locale] = useLocale();
@@ -32,7 +45,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	const {postSlug} = useParams();
 
 	const getCategories = () => {
-		adminCategoryService.getAll().then(_categories => {
+		categoryServices.getAll().then(_categories => {
 			setCategories(_categories);
 		}).catch(err => {
 			Console.error(err);
@@ -41,14 +54,14 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	};
 
 	useEffect(() => {
-		if (post && !post?.idCategory)
+		if (post && !post.idCategory)
 			setPost({...(post as PostDTO), idCategory: categories[0].idCategory});
 		// eslint-disable-next-line
 	}, [categories]);
 
 
 	const getTags = () => {
-		adminTagService.getAll().then(_tags => {
+		tagServices.getAll().then(_tags => {
 			setTags(_tags);
 		}).catch(err => {
 			Console.error(err);
@@ -57,8 +70,8 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	};
 
 	const savePost = () => {
-		const action = post?.idPost ? adminPostService.update : adminPostService.save;
-		action(post!).then(_post => {
+		const service = post?.idPost ? postServices.update : postServices.save;
+		service(post!).then(_post => {
 			setMessages([localization[locale].postSavedText]);
 		}).catch(err => {
 			Console.error(err);
@@ -69,7 +82,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 	};
 
 	const deletePost = () => {
-		adminPostService.deleteById(post!.idPost).then(_post => {
+		postServices.deleteById(post!.idPost).then(_post => {
 			setMessages([localization[locale].postDeletedText]);
 			setTimeout(() => {
 				history.replace("/admin/posts");
@@ -84,7 +97,7 @@ export const AdminPostEdit = (props: AdminPostEditProps) => {
 
 	useEffect(() => {
 		if (postSlug) {
-			adminPostService.getByPostSlug(postSlug).then(_post => {
+			postServices.getByPostSlug(postSlug).then(_post => {
 				setPost(_post);
 			}).catch(err => {
 				Console.error(err);

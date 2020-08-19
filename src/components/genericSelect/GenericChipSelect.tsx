@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import GenericElement from "./GenericElement";
-import Console from "../../utils/Console";
 
 type GenericChipSelectProps = {
 	id?: string;
@@ -14,12 +13,10 @@ type GenericChipSelectProps = {
 };
 export const GenericChipSelect = (props: GenericChipSelectProps) => {
 	const [chipRef, setChipRef] = useState<HTMLDivElement | null>();
-	const [chipInstance, setChipInstance] = useState<M.Chips>();
 	const [data, setData] = useState<GenericElement<any>[]>([]);
 
 	useEffect(() => {
 		// setData(props.list);
-		Console.log("props", props.list);
 	}, [props.list]);
 
 	useEffect(() => {
@@ -44,7 +41,7 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 			props.list.forEach(item => Object.assign(autocompleteData, {[item.name]: null}));
 			const initialData: M.ChipData[] = [];
 			data.forEach(item => initialData.push({tag: item.name}));
-			const instance = M.Chips.init(chipRef, {
+			M.Chips.init(chipRef, {
 				onChipAdd: (element, chip) => {
 					const val = chip.childNodes[0].nodeValue;
 					const elem = props.list.find(e => e.filter(val));
@@ -64,7 +61,6 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 					data: autocompleteData,
 				},
 			});
-			setChipInstance(instance);
 		}
 		// eslint-disable-next-line
 	}, [chipRef, data, props.value, props.list]);

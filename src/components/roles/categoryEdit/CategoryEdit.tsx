@@ -1,17 +1,23 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import GenericElement from "../../../../components/genericSelect/GenericElement";
-import { GenericSelect } from "../../../../components/genericSelect/GenericSelect";
-import { MessageList } from "../../../../components/messageList/MessageList";
-import useLocale from "../../../../hooks/useLocale";
-import adminCategoryService from "../../../../services/modules/admin/adminCategoryService";
-import "./AdminCategoryList.css";
-import { getErrorText } from "../../../errors/localization";
+import authorCategoryService from "../../../services/modules/author/authorCategoryService";
+import { hasRole } from "../../../utils/utils";
+import GenericElement from "../../genericSelect/GenericElement";
+import { GenericSelect } from "../../genericSelect/GenericSelect";
+import { MessageList } from "../../messageList/MessageList";
+import useLocale from "../../../hooks/useLocale";
+import adminCategoryService from "../../../services/modules/admin/adminCategoryService";
+import "./CategoryEdit.css";
+import { getErrorText } from "../../../pages/errors/localization";
 import localization from "./localization";
-import Console from "../../../../utils/Console";
+import Console from "../../../utils/Console";
 
-type AdminCategoryListProps = {};
-export const AdminCategoryList = (props: AdminCategoryListProps) => {
+type CategoryEditProps = {
+	roles: string[];
+};
+export const CategoryEdit = (props: CategoryEditProps) => {
+	const categoryServices =
+		hasRole(props.roles, "admin") ? adminCategoryService : authorCategoryService;
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
@@ -20,7 +26,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 
 	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const getCategories = () => {
-		adminCategoryService.getAll().then(_categories => {
+		categoryServices.getAll().then(_categories => {
 			setCategoryList(_categories);
 		}).catch(err => {
 			Console.error(err);
@@ -55,9 +61,9 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 			idCategory: parseInt(form["idCategory"].value),
 			categoryName: form["categoryName"].value,
 		};
-		const action = isNaN(categ.idCategory) ? adminCategoryService.save : adminCategoryService.update;
+		const service = isNaN(categ.idCategory) ? categoryServices.save : categoryServices.update;
 
-		action(categ).then(() => {
+		service(categ).then(() => {
 			getCategories();
 			setMessages([localization[locale].categorySavedMessage]);
 		}).catch(err => {
@@ -79,7 +85,7 @@ export const AdminCategoryList = (props: AdminCategoryListProps) => {
 			return;
 		}
 
-		adminCategoryService.deleteById(categId).then(() => {
+		categoryServices.deleteById(categId).then(() => {
 			getCategories();
 			setMessages([localization[locale].categoryDeletedMessage]);
 			if (nameRef && idRef) {

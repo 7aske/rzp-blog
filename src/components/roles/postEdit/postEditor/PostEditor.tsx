@@ -3,8 +3,8 @@ import marked from "marked";
 import * as React from "react";
 import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
-import { MessageList } from "../../../../../components/messageList/MessageList";
-import { backendUrl } from "../../../../../globals";
+import { MessageList } from "../../../messageList/MessageList";
+import { backendUrl } from "../../../../globals";
 import localization from "./localization";
 import "./PostEditor.css";
 

@@ -1,17 +1,20 @@
 import * as moment from "moment";
 import "moment/locale/sr";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { Pagination } from "../../../../components/pagination/Pagination";
-import useLocale from "../../../../hooks/useLocale";
-import adminPostService from "../../../../services/modules/admin/adminPostService";
-import "./AdminPostListItem.css";
+import { Pagination } from "../../pagination/Pagination";
+import { AppContext } from "../../../context/AppContext";
+import useLocale from "../../../hooks/useLocale";
+import adminPostService from "../../../services/modules/admin/adminPostService";
+import authorPostService from "../../../services/modules/author/authorPostService";
+import Console from "../../../utils/Console";
+import "./PostView.css";
 import localization from "./localization";
-import Console from "../../../../utils/Console";
 
 type AdminPostListProps = {};
-export const AdminPostList = (props: AdminPostListProps) => {
+export const PostView = (props: AdminPostListProps) => {
+	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
 	const itemsPerPage = 10;
 	const pageCount = useRef<number>(0);
@@ -20,20 +23,33 @@ export const AdminPostList = (props: AdminPostListProps) => {
 	moment.locale(locale);
 
 	useEffect(() => {
-		adminPostService.getPageCount(itemsPerPage).then(_count => {
+		let action;
+		if (ctx.user && ctx.user.userRoles.indexOf("admin") !== -1) {
+			action = adminPostService.getPageCount;
+		} else {
+			action = authorPostService.getPageCount;
+		}
+		action(itemsPerPage).then(_count => {
 			pageCount.current = _count;
 		});
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-
-		adminPostService.getAllPreview(currentPage, itemsPerPage).then(_posts => {
+		let action;
+		if (ctx.user && ctx.user.userRoles.indexOf("admin") !== -1) {
+			action = adminPostService.getAllPreview;
+		} else {
+			action = authorPostService.getAllPreview;
+		}
+		action(currentPage, itemsPerPage).then(_posts => {
 			_posts = new Array(itemsPerPage).fill(null).map((_, i) => _posts[i]);
 			setPosts(_posts);
 		}).catch(err => {
 			setPosts([]);
 			Console.error(err);
 		});
+		// eslint-disable-next-line
 	}, [currentPage]);
 
 	return (
@@ -44,7 +60,7 @@ export const AdminPostList = (props: AdminPostListProps) => {
 						<li><Link className="btn" to="/admin/posts/edit"><i
 							className="material-icons left">add_to_photos</i>
 							{localization[locale].newPostButton}</Link></li>
-					</ul>
+						</ul>
 				</div>
 			</nav>
 			<ul className="collection with-header">

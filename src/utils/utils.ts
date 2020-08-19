@@ -35,6 +35,10 @@ export const getHistoryErrors = (history: H.History<any>): string[] => {
 	return [];
 }
 
+export const hasRole = (roles: Role[]|string[], role: string): boolean => {
+	return (roles as any[]).find(r => r.roleName ? r.roleName === role : r === role) !== undefined;
+}
+
 export const capitalize = (str: string): string => {
 	return str.charAt(0).toUpperCase() + str.substring(1);
 }

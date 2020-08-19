@@ -29,7 +29,7 @@ class MenuBuilder {
 			// user end
 			// admin
 			new MenuItem(<Link className="sidenav-close" to="/admin/posts">{routes[locale].posts}</Link>,
-				100, ["admin"], true),
+				100, ["author", "admin"], true),
 			// admin end
 			// auth
 			new MenuItem(<Link className="sidenav-close" to="/login">{routes[this.locale].login}</Link>,

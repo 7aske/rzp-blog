@@ -2,7 +2,7 @@ import { backendUrl } from "../../../globals";
 import { getClient } from "../../client/http";
 import Console from "../../../utils/Console";
 
-const submodule = "admin";
+const submodule = "author";
 
 const getAllPreview = async (page = 0, count = 10): Promise<PostPreviewDTO[]> => {
 	const client = getClient();
@@ -13,7 +13,7 @@ const getAllPreview = async (page = 0, count = 10): Promise<PostPreviewDTO[]> =>
 
 const getById = async (idPost: number): Promise<PostDTO> => {
 	const client = getClient();
-	const post: PostDTO = (await client.get(`${backendUrl}/${submodule}/post/getById/${idPost}`)).data;
+	const post: PostDTO = (await client.get(`${backendUrl}/post/getById/${idPost}`)).data;
 	Console.log(post);
 	return post;
 };
@@ -41,19 +41,19 @@ const deleteById = async (idPost: number): Promise<boolean> => {
 
 const getByPostSlug = async (postSlug: string): Promise<PostDTO> => {
 	const client = getClient();
-	const post: PostDTO = (await client.get(`${backendUrl}/${submodule}/post/getByPostSlug/${postSlug}`)).data;
+	const post: PostDTO = (await client.get(`${backendUrl}/post/getByPostSlug/${postSlug}`)).data;
 	Console.log(post);
 	return post;
 };
 
 const getPageCount = async (count = 10): Promise<number> => {
 	const client = getClient();
-	const _count: number = (await client.get(`${backendUrl}/${submodule}/post/getPageCount?count=${count}`)).data;
+	const _count: number = (await client.get(`${backendUrl}/post/getPageCount?count=${count}`)).data;
 	Console.log("Page count:", _count);
 	return _count;
 };
 
-const adminPostService: PostService = {
+const authorPostService: PostService = {
 	deleteById,
 	getAllPreview,
 	getById,
@@ -63,4 +63,4 @@ const adminPostService: PostService = {
 	update,
 };
 
-export default adminPostService;
+export default authorPostService;
