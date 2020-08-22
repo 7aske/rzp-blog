@@ -4,11 +4,14 @@ import { NavLink, Route, Switch } from "react-router-dom";
 import { CategoryEdit } from "../../../../components/roles/categoryEdit/CategoryEdit";
 import { PostEdit } from "../../../../components/roles/postEdit/PostEdit";
 import { PostView } from "../../../../components/roles/postView/PostView";
+import { UserEdit } from "../../../../components/roles/userEdit/UserEdit";
+import { UserView } from "../../../../components/roles/userView/UserView";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
 import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
 import { TagEdit } from "../../../../components/roles/tagEdit/TagEdit";
 import { hasRole } from "../../../../utils/utils";
+import { UserProfilePage } from "../../user/userProfile/UserProfilePage";
 import localization from "./localization";
 import "./AdminIndexPage.css";
 
@@ -16,6 +19,7 @@ type AdminIndexPageProps = {};
 export const AdminIndexPage = (props: AdminIndexPageProps) => {
 	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
+
 	const menuItems = [
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/posts"><i
 			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}</NavLink>,
@@ -23,9 +27,10 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 			className="material-icons left hide-on-small-and-down">label</i>{localization[locale].sidebarCategories}</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/tags"><i
 			className="material-icons left hide-on-small-and-down">local_offer</i>{localization[locale].sidebarTags}</NavLink>,
-		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/authors"><i
+		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/users"><i
 			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarAuthors}</NavLink>,
 	];
+
 	if (!hasRole(ctx.user?.userRoles!, "admin")) menuItems.pop();
 	return (
 		<div id="admin-index-page" className="white-text">
@@ -44,14 +49,23 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							<Route exact path="/admin/tags">
 								<TagEdit roles={ctx.user?.userRoles || []}/>
 							</Route>
-							<Route exact path="/admin/authors">
-								Authors
+							<Route exact path="/admin/users">
+								<UserView/>
 							</Route>
 							<Route exact path="/admin/posts/edit">
 								<PostEdit roles={ctx.user?.userRoles || []}/>
 							</Route>
 							<Route path="/admin/posts/edit/:postSlug">
 								<PostEdit roles={ctx.user?.userRoles || []}/>
+							</Route>
+							<Route exact path="/admin/users/edit">
+								<UserEdit roles={ctx.user?.userRoles || []} />
+							</Route>
+							<Route path="/admin/users/edit/:idUser">
+								<UserEdit roles={ctx.user?.userRoles || []} />
+							</Route>
+							<Route>
+								<UserProfilePage/>
 							</Route>
 						</Switch>
 					</div>

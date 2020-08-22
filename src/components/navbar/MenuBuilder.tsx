@@ -34,6 +34,8 @@ class MenuBuilder {
 			// auth
 			new MenuItem(<Link className="sidenav-close" to="/login">{routes[this.locale].login}</Link>,
 				900, [], false),
+			new MenuItem(<Link className="sidenav-close" to="/register">{routes[this.locale].register}</Link>,
+				900, [], false),
 			new MenuItem(<Link className="sidenav-close" to="/logout">{routes[this.locale].logout}</Link>,
 				900, [], true),
 			// auth

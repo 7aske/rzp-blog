@@ -1,0 +1,55 @@
+@import "../../../assets/css/theme";
+
+.admin-user-list {
+	nav {
+		transition: all 500ms;
+		margin-left: 0;
+		margin-right: 0;
+		background-color: $theme-grey;
+		height: 3.5em;
+		border-radius: 3px;
+
+		ul li {
+			height: 3.5em !important;
+
+			a {
+				top: -5px;
+				position: relative;
+				&:hover {
+					color: $theme-green;
+					background-color: $theme-black;
+					border-bottom: 2px solid $theme-green;
+				}
+			}
+		}
+
+		.sidenav-trigger {
+			display: inline !important;
+		}
+	}
+
+	.admin-post-list-item {
+		padding-left:  1em !important;
+		padding-right: 0 !important;
+		i {
+			margin-right: 0.5em;
+		}
+		&.collection-header {
+			background-color: $theme-grey;
+			border-bottom: 2px solid $theme-green-light;
+		}
+
+		.row {
+			margin-bottom: 0 !important;
+		}
+
+		a {
+			color: $theme-green;
+
+			&:hover {
+				color: $theme-green-lightest;
+				text-decoration: underline;
+			}
+		}
+	}
+}

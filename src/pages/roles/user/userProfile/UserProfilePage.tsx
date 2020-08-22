@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
 import { PasswordChangeInput } from "../../../../components/propertyUpdateInput/PasswordChangeInput";
 import { PropertyUpdateInput } from "../../../../components/propertyUpdateInput/PropertyUpdateInput";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
@@ -33,8 +33,8 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 		</NavLink>,
 	];
 
-	const infoProps: { element?: string, prop: string, className: string }[] = [
-		{prop: "userUsername", className: "col s12 m12 l8"},
+	const infoProps: { element?: string, prop: string, className: string, disabled?: boolean }[] = [
+		{prop: "userUsername", className: "col s12 m12 l8", disabled: true},
 		{prop: "userDisplayName", className: "col s12 m12 l8"},
 		{prop: "userEmail", className: "col s12 m12 l8"},
 		{prop: "userFirstName", className: "col s12 m12 l6"},
@@ -61,6 +61,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 												labelText={localization[locale][p.prop]}
 												property={p.prop}
 												element={p.element}
+												disabled={p.disabled}
 												value={user ? user![p.prop] : ""}/>
 										</div>
 									);
@@ -80,7 +81,6 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 					</Switch>
 				</div>
 			</div>
-
 		</div>
 	);
 };

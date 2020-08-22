@@ -35,8 +35,8 @@ export const PostEdit = (props: PostEditProps) => {
 
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
-	const [locale] = useLocale();
 	const [messages, setMessages] = useState<string[]>([]);
+	const [locale] = useLocale();
 	const [post, setPost] = useState<PostDTO>();
 	const [tags, setTags] = useState<Tag[]>([]);
 	const [textareaRef, setTextareaRef] = useState<HTMLTextAreaElement | null>(null);

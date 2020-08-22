@@ -17,9 +17,9 @@ const sr: PropertyUpdateInputLocalizationStrings = {
 
 const en: PropertyUpdateInputLocalizationStrings = {
 	success: "Updated",
-	confirmPassword: "Potvrdite šifru",
-	newPassword: "Nova šifra",
-	password: "Šifra",
+	confirmPassword: "Confirm password",
+	newPassword: "New password",
+	password: "Password",
 	update: "Update",
 };
 

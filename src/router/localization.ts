@@ -6,6 +6,7 @@ type RoutesLocalizationStrings = {
 	website: string;
 	blog: string;
 	login: string;
+	register: string;
 	logout: string;
 	profile: string;
 	users: string;
@@ -22,6 +23,7 @@ const sr: RoutesLocalizationStrings = {
 	blog: "Blog",
 	team: "Naš tim",
 	login: "Uloguj se",
+	register: "Registracija",
 	logout: "Izloguj se",
 	profile: "Profil",
 	users: "Korisnici",
@@ -38,10 +40,11 @@ const en: RoutesLocalizationStrings = {
 	team: "Team",
 	login: "Login",
 	logout: "Logout",
+	register: "Register",
 	profile: "Profile",
-	users:"Users",
+	users: "Users",
 	posts: "Posts",
-	tags: "Tags"
+	tags: "Tags",
 };
 
 const localization: Localized<RoutesLocalizationStrings> = {en, sr};

@@ -3,16 +3,16 @@ import jwtDecode from "jwt-decode";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { MessageList } from "../../../../components/messageList/MessageList";
-import { AppContext } from "../../../../context/AppContext";
-import { backendUrl } from "../../../../globals";
-import useLocale from "../../../../hooks/useLocale";
-import authService from "../../../../services/authService";
-import userService from "../../../../services/userService";
-import { getHistoryErrors } from "../../../../utils/utils";
-import { getErrorText } from "../../../errors/localization";
+import { MessageList } from "../../components/messageList/MessageList";
+import { AppContext } from "../../context/AppContext";
+import { backendUrl } from "../../globals";
+import useLocale from "../../hooks/useLocale";
+import authService from "../../services/authService";
+import userService from "../../services/userService";
+import { getHistoryErrors } from "../../utils/utils";
+import { getErrorText } from "../errors/localization";
 import "./LoginPage.css";
-import Console from "../../../../utils/Console";
+import Console from "../../utils/Console";
 
 export const LoginPage = () => {
 	const [locale] = useLocale();
@@ -27,7 +27,7 @@ export const LoginPage = () => {
 		userService.getById(idUser).then(_user => {
 			setCtx({...ctx, user: _user});
 			if (_user.userRoles.indexOf("admin") !== -1) {
-				history.replace("/admin/posts");
+				history.replace("/admin/users");
 			} else if (_user.userRoles.indexOf("user") !== -1) {
 				history.replace("/user/profile");
 			} else {

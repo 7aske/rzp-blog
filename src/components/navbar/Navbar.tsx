@@ -24,6 +24,7 @@ export const Navbar = () => {
 
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
+		.withRoles(["user"])
 		.withNavTrigger()
 		.build();
 

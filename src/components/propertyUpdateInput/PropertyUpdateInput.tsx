@@ -16,6 +16,7 @@ type PropertyUpdateInputProps = {
 	element?: string;
 	onChange?: (val: string) => void
 	locale?: string;
+	disabled?: boolean;
 };
 export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 	const {setCtx} = useContext(AppContext)
@@ -41,6 +42,9 @@ export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 
 	useEffect(() => {
 		onChange(value);
+		if (value !== props.value) {
+			console.log("hi");
+		}
 		// eslint-disable-next-line
 	}, [value]);
 
@@ -62,13 +66,13 @@ export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 		<div className="property-update-input">
 			<div className="input-field">
 				{props.element === "textarea" ?
-					<textarea className="materialize-textarea" ref={elem => setInputRef(elem)} id={props.property}
+					<textarea disabled={!!props.disabled} className="materialize-textarea" ref={elem => setInputRef(elem)} id={props.property}
 					          value={value}
 					          onChange={ev => setValue(ev.target.value)}/> :
-					<input ref={elem => setInputRef(elem)} id={props.property} value={value}
+					<input disabled={!!props.disabled} ref={elem => setInputRef(elem)} id={props.property} value={value}
 					       onChange={ev => setValue(ev.target.value)} type={props.type ? props.type : "text"}/>}
 				<label htmlFor={props.property}>{props.labelText}</label>
-				<button className="btn" onClick={updateProperty}><i className="material-icons">check</i></button>
+				<button disabled={!!props.disabled} className="btn" onClick={updateProperty}><i className="material-icons">check</i></button>
 			</div>
 			<MessageList messages={errors} timeout={3000} className="red accent-2"/>
 			<MessageList messages={messages} timeout={3000} className="green accent-2"/>

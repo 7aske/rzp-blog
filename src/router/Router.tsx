@@ -2,9 +2,10 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import { AuthGuard } from "../components/authorization/AuthGuard";
 import { RoleGuard } from "../components/authorization/RoleGuard";
+import { RegisterPage } from "../pages/register/RegisterPage";
 import { AdminIndexPage } from "../pages/roles/admin/adminIndex/AdminIndexPage";
-import { LoginPage } from "../pages/roles/admin/login/LoginPage";
-import { LogoutPage } from "../pages/roles/admin/login/LogoutPage";
+import { LoginPage } from "../pages/login/LoginPage";
+import { LogoutPage } from "../pages/login/LogoutPage";
 import { CategoryPage } from "../pages/category/CategoryPage";
 import { Error404 } from "../pages/errors/Error404";
 import { IndexPage } from "../pages/index/IndexPage";
@@ -19,6 +20,7 @@ export const Router = () => {
 			<Route exact path="/404" component={Error404}/>
 			<Route path="/posts/:slug" component={PostPage}/>
 			<Route path="/category/:categoryName" component={CategoryPage}/>
+			<Route path="/register" component={RegisterPage}/>
 			<AuthGuard>
 				<Route exact path="/logout" component={LogoutPage}/>
 				<RoleGuard roles={["user"]}>

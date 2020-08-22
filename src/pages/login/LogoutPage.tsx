@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router";
-import { AppContext } from "../../../../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 
 type LogoutPageProps = {};
 export const LogoutPage = (props: LogoutPageProps) => {

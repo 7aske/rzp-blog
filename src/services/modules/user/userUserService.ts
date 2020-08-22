@@ -23,7 +23,12 @@ const updatePassword = async (password: string, confirmPassword: string, newPass
 	return user;
 };
 
-const userUserService = {
+const register = async (user: UserDTO): Promise<UserDTO> => {
+	return (await undefined) as any;
+};
+
+const userUserService: UserUserService = {
+	register,
 	updateProperty,
 	updatePassword,
 };
