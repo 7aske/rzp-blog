@@ -37,6 +37,11 @@ nav#nav ul.menu li a:hover {
 nav#nav .sidenav-trigger {
   display: inline !important;
 }
+nav#nav .prog {
+  background-color: #4ecca3;
+  height: 2px;
+  width: 0px;
+}
 
 @media screen and (max-width: 993px) {
   nav#nav {

@@ -1,14 +1,15 @@
 import * as React from "react";
 import { createRef, useContext, useEffect } from "react";
+import { Route } from "react-router";
 import "../../assets/img/logo.png";
 // @ts-ignore
 import logo from "../../assets/img/logo.png";
 import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
+import Console from "../../utils/Console";
 import MenuBuilder from "./MenuBuilder";
 import "./Navbar.css";
 import { Sidenav } from "./sidenav/Sidenav";
-import Console from "../../utils/Console";
 
 
 export const Navbar = () => {
@@ -16,11 +17,13 @@ export const Navbar = () => {
 	const {ctx} = useContext(AppContext);
 
 	const navRef = createRef<HTMLElement>();
+	const progRef = createRef<HTMLDivElement>();
 
 	const loggedIn = ctx.user !== null;
 
 	const roles = ctx.user ? ctx.user.userRoles : [];
 	Console.log(roles);
+
 
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
@@ -50,6 +53,13 @@ export const Navbar = () => {
 			} else if (scroll <= offset) {
 				navRef.current.classList.remove("fixed");
 			}
+
+			if (progRef.current) {
+				const height = document.body.offsetHeight - window.innerHeight;
+				const width: number = window.innerWidth;
+
+				progRef.current.style.width = `${Number(width * (scroll / height))}px`;
+			}
 		});
 		// eslint-disable-next-line
 	}, []);
@@ -68,5 +78,8 @@ export const Navbar = () => {
 				</ul>
 			</div>
 			<Sidenav menuItems={sidenavItems}/>
+			<Route path="/posts/*">
+				<div ref={progRef} className="prog"/>
+			</Route>
 		</nav>);
 };

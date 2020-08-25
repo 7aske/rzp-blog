@@ -47,6 +47,12 @@ nav#nav {
 	.sidenav-trigger {
 		display: inline !important;
 	}
+
+	.prog {
+		background-color: $theme-green;
+		height: 2px;
+		width: 0px;
+	}
 }
 
 @media screen and (max-width: 993px) {
