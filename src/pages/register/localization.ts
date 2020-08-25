@@ -1,4 +1,5 @@
-type UserEditLocalizationStrings = {
+type RegisterPageLocalizationStrings = {
+	registerTitle: string;
 	idUserLabel: string;
 	userUsernameLabel: string;
 	userPasswordLabel: string;
@@ -10,13 +11,13 @@ type UserEditLocalizationStrings = {
 	userAboutLabel: string;
 	userDateCreatedLabel: string;
 	userRolesLabel: string;
-	userSavedText: string;
-	userActiveLabel: string;
-	saveUserButton: string;
+	successText: string;
+	registerButton: string;
 	[keyLabel: string]: string;
 }
 
-const sr: UserEditLocalizationStrings = {
+const sr: RegisterPageLocalizationStrings = {
+	registerTitle: "Registracija",
 	idUserLabel: "ID",
 	userAboutLabel: "Opis",
 	userAddressLabel: "Adresa",
@@ -28,12 +29,12 @@ const sr: UserEditLocalizationStrings = {
 	userRolesLabel: "Role",
 	userUsernameLabel: "Korisničko ime",
 	userPasswordLabel: "Šifra",
-	userSavedText: "Korisnik ažuriran",
-	userActiveLabel: "Aktivan",
-	saveUserButton: "Pošalji"
+	successText: "Registracija uspešna. Bićete preusmereni",
+	registerButton: "Registracija"
 };
 
-const en: UserEditLocalizationStrings = {
+const en: RegisterPageLocalizationStrings = {
+	registerTitle: "Registration",
 	idUserLabel: "ID",
 	userAboutLabel: "About",
 	userAddressLabel: "Address",
@@ -45,11 +46,10 @@ const en: UserEditLocalizationStrings = {
 	userRolesLabel: "Roles",
 	userUsernameLabel: "Username",
 	userPasswordLabel:"Password",
-	userActiveLabel: "Active",
-	userSavedText: "User updated",
-	saveUserButton: "Send"
+	successText: "Success. You will be redirected",
+	registerButton: "Register"
 };
 
-const localization: Localized<UserEditLocalizationStrings> = {en, sr};
+const localization: Localized<RegisterPageLocalizationStrings> = {en, sr};
 
 export default localization;

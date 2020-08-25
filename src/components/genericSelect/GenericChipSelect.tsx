@@ -8,6 +8,7 @@ type GenericChipSelectProps = {
 	onUpdate?: (list: GenericElement<any>[]) => void;
 	// onSelect?: (element?: GenericElement<any>) => void;
 	value?: any[];
+	className?: string;
 	create?: boolean;
 	labelText?: string;
 };
@@ -67,7 +68,7 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 
 
 	return (
-		<div>
+		<div className={props.className}>
 			<label>
 				{props.labelText ? props.labelText : ""}
 				<div ref={elem => setChipRef(elem)} className="chips chips-autocomplete chips-placeholder"/>

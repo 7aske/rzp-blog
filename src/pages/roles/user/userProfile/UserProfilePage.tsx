@@ -71,7 +71,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 						<Route exact path={"/user/profile/security"}>
 							<div className="row">
 								<div className="col s12 m12 l8">
-									<PasswordChangeInput />
+									<PasswordChangeInput locale={locale} />
 								</div>
 							</div>
 						</Route>

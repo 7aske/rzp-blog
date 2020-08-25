@@ -49,7 +49,7 @@ export const PasswordChangeInput = (props: PasswordChangeInputProps) => {
 				<input id="newPassword" type="password"/>
 				<label htmlFor="newPassword">{localization[props.locale || "en"].newPassword}</label>
 			</div>
-			<div className="row">
+			<div className="input-field col s12">
 				<button type="submit" className="btn theme-green">{localization[props.locale || "en"].update}</button>
 			</div>
 			<div className="row">

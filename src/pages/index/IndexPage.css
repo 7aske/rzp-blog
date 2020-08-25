@@ -5,6 +5,9 @@
   color: #eeeeee;
   font-size: 1.2em;
 }
+#index .no-posts {
+  min-height: 30vh;
+}
 
 @media screen and (max-width: 993px) {
   #index {

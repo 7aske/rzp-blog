@@ -4,9 +4,9 @@ import { Pagination } from "../../components/pagination/Pagination";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
 import postService from "../../services/postService";
+import Console from "../../utils/Console";
 import "./IndexPage.css";
 import localization from "./localization";
-import Console from "../../utils/Console";
 
 type IndexPageProps = {};
 export const IndexPage = (props: IndexPageProps) => {
@@ -40,10 +40,14 @@ export const IndexPage = (props: IndexPageProps) => {
 				</div>
 			</div>
 			<div className="row">
-				<div className="col s12">
-					<PostPreviewList posts={posts}/>
-					<Pagination onPageChange={setPage} pageCount={pageCount}/>
-				</div>
+				{posts.length > 0 ?
+					<div className="col s12">
+						<PostPreviewList posts={posts}/>
+						<Pagination onPageChange={setPage} pageCount={pageCount}/>
+					</div>
+					: <div className="col s12 no-posts">
+						<h3 className="title">{localization[locale].noPosts}</h3>
+					</div>}
 			</div>
 		</div>
 	);
