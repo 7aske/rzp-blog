@@ -17,6 +17,35 @@
 	.title {
 		color: $theme-green;
 	}
+
+	.post-placeholder {
+		padding-top: 4em;
+		.placeholder {
+			border-radius: 10px;
+			margin-bottom: 1em;
+			width: 100%;
+			margin-top: 1em;
+		}
+
+		.title {
+			background-color: $theme-green;
+			height: 4em;
+			margin-bottom: 4em;
+			width: 70%;
+
+		}
+
+		.header {
+			background-color: $theme-green;
+			height: 2em;
+			width: 40%;
+		}
+
+		.text {
+			background-color: $theme-grey;
+			height: 6em;
+		}
+	}
 }
 
 @media screen and (max-width: 993px) {

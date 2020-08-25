@@ -4,10 +4,10 @@ import { useHistory, useParams } from "react-router";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
 import postService from "../../services/postService";
-import { formatDate, scrollToTop } from "../../utils/utils";
-import "./PostPage.css";
-import localization from "./localization";
 import Console from "../../utils/Console";
+import { formatDate, scrollToTop } from "../../utils/utils";
+import localization from "./localization";
+import "./PostPage.css";
 
 export const PostPage = () => {
 	const [locale] = useLocale();
@@ -32,12 +32,23 @@ export const PostPage = () => {
 	return (
 		<div id="post" className="container">
 			<button className={"btn btn-back"} onClick={history.goBack}>{localization[locale].back}</button>
-			<article className="animate__animated animate__fadeIn animate__slow">
-				<h2 className="title">{post?.postTitle}</h2>
-				<h5 className="author">{post?.postAuthor.toUpperCase()}</h5>
-				<h6 className="date">{formatDate(post?.postDatePosted ? post.postDatePosted : "", locale)}</h6>
-				<MarkdownContainer content={post?.postBody ? post?.postBody : ""}/>
-			</article>
+			{post ?
+				<article className="animate__animated animate__fadeIn animate__slow">
+					<h2 className="title">{post?.postTitle}</h2>
+					<h5 className="author">{post?.postAuthor.toUpperCase()}</h5>
+					<h6 className="date">{formatDate(post?.postDatePosted ? post.postDatePosted : "", locale)}</h6>
+					<MarkdownContainer content={post?.postBody ? post?.postBody : ""}/>
+				</article>
+				: <div className="post-placeholder">
+					<div className="title placeholder"/>
+					<div className="text placeholder"/>
+					<div className="header placeholder"/>
+					<div className="text placeholder"/>
+					<div className="header placeholder"/>
+					<div className="text placeholder"/>
+					<div className="header placeholder"/>
+					<div className="text placeholder"/>
+				</div>}
 		</div>
 	);
 };

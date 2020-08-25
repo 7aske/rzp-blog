@@ -13,6 +13,30 @@
 #post .title {
   color: #4ecca3;
 }
+#post .post-placeholder {
+  padding-top: 4em;
+}
+#post .post-placeholder .placeholder {
+  border-radius: 10px;
+  margin-bottom: 1em;
+  width: 100%;
+  margin-top: 1em;
+}
+#post .post-placeholder .title {
+  background-color: #4ecca3;
+  height: 4em;
+  margin-bottom: 4em;
+  width: 70%;
+}
+#post .post-placeholder .header {
+  background-color: #4ecca3;
+  height: 2em;
+  width: 40%;
+}
+#post .post-placeholder .text {
+  background-color: #393e46;
+  height: 6em;
+}
 
 @media screen and (max-width: 993px) {
   #post {
