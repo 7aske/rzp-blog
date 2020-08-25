@@ -8,6 +8,7 @@ import { PostPreviewList } from "../../components/postPreviewList/PostPreviewLis
 import useLocale from "../../hooks/useLocale";
 import categoryService from "../../services/categoryService";
 import postService from "../../services/postService";
+import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import Console from "../../utils/Console";
 
@@ -33,6 +34,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			Console.error(err);
 			setCategories([]);
 		});
+		scrollToTop();
 		// eslint-disable-next-line
 	}, []);
 
