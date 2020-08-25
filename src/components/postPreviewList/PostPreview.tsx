@@ -11,7 +11,7 @@ export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postT
 	const [locale] = useLocale();
 
 	return (
-		<li className="collection-item">
+		<li className="collection-item post-preview-item">
 			<div className="post-preview">
 				<div className="category">
 					<span><Link to={"/category/" + categoryName}>{categoryName}</Link></span>

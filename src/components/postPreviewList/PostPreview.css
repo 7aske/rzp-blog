@@ -74,3 +74,9 @@
   left: 0.25em;
   border-radius: 10px;
 }
+
+@media screen and (max-width: 993px) {
+  .post-preview-item {
+    padding-left: 0.1em !important;
+  }
+}

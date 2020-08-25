@@ -239,4 +239,9 @@ textarea {
   .modal, .modal .modal-content {
     height: 80vh;
   }
+
+  .container {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+  }
 }

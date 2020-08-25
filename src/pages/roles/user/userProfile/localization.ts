@@ -1,4 +1,5 @@
 type UserProfilePageLocalizationStrings = {
+	title: string;
 	sidebarInfo: string
 	sidebarSecurity: string
 	userUsername: string;
@@ -14,6 +15,7 @@ type UserProfilePageLocalizationStrings = {
 }
 
 const sr: UserProfilePageLocalizationStrings = {
+	title: "Profil",
 	userAbout: "Opis",
 	userAddress: "Adresa",
 	userDateCreated: "Datum kreiranja",
@@ -28,6 +30,7 @@ const sr: UserProfilePageLocalizationStrings = {
 };
 
 const en: UserProfilePageLocalizationStrings = {
+	title: "Profile",
 	userAbout: "About",
 	userAddress: "Address",
 	userDateCreated: "Date created",

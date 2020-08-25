@@ -4,7 +4,7 @@ nav#nav {
   transition: all 500ms;
   margin-left: 0;
   margin-right: 0;
-  z-index: 1000;
+  z-index: 998;
   background-color: #232931;
   height: 7em;
 }

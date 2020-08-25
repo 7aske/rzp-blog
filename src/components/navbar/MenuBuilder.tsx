@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { websiteUrl } from "../../globals";
 import routes from "../../router/localization";
 import { LocaleSwitch } from "../localization/LocaleSwitch";
-import MenuItem from "./MenuItem";
+import { MenuItem, MenuItemBuilder, MenuItemType } from "./MenuItem";
 
 class MenuBuilder {
 	private navItems: MenuItem[];
@@ -17,30 +16,22 @@ class MenuBuilder {
 		this.locale = locale;
 
 		this.navItems = [
-			// navigation
-			new MenuItem(<Link className="sidenav-close" to="/">{routes[this.locale].home}</Link>,
-				0, [], null),
-			new MenuItem(<a target="blank" href={websiteUrl}>{routes[this.locale].website}</a>,
-				1, [], null),
-			// navigation end
-			// user
-			new MenuItem(<Link className="sidenav-close" to="/user/profile">{routes[locale].profile}</Link>,
-				20, ["user"], true),
-			// user end
-			// admin
-			new MenuItem(<Link className="sidenav-close" to="/admin/posts">{routes[locale].posts}</Link>,
-				100, ["author", "admin"], true),
-			// admin end
-			// auth
-			new MenuItem(<Link className="sidenav-close" to="/login">{routes[this.locale].login}</Link>,
-				900, [], false),
-			new MenuItem(<Link className="sidenav-close" to="/register">{routes[this.locale].register}</Link>,
-				900, [], false),
-			new MenuItem(<Link className="sidenav-close" to="/logout">{routes[this.locale].logout}</Link>,
-				900, [], true),
-			// auth
+			new MenuItemBuilder("/", routes[this.locale].home)
+				.order(0).build(),
+			new MenuItemBuilder(websiteUrl, routes[this.locale].website, MenuItemType.ANCHOR)
+				.order(1).build(),
+			new MenuItemBuilder("/user/profile", routes[this.locale].profile)
+				.order(20).roles(["user"]).loggedIn(true).build(),
+			new MenuItemBuilder("/admin/posts", routes[this.locale].posts)
+				.order(100).roles(["author", "admin"]).loggedIn(true).build(),
+			new MenuItemBuilder("/login", routes[this.locale].login)
+				.order(900).loggedIn(false).build(),
+			new MenuItemBuilder("/register", routes[this.locale].register)
+				.order(901).loggedIn(false).build(),
+			new MenuItemBuilder("/logout", routes[this.locale].logout)
+				.order(902).loggedIn(true).build(),
 			new MenuItem(<LocaleSwitch/>,
-				999, [], null),
+				999),
 
 		];
 

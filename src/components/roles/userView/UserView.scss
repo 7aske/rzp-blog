@@ -15,6 +15,7 @@
 			a {
 				top: -5px;
 				position: relative;
+
 				&:hover {
 					color: $theme-green;
 					background-color: $theme-black;
@@ -29,11 +30,13 @@
 	}
 
 	.admin-post-list-item {
-		padding-left:  1em !important;
+		padding-left: 1em !important;
 		padding-right: 0 !important;
+
 		i {
 			margin-right: 0.5em;
 		}
+
 		&.collection-header {
 			background-color: $theme-grey;
 			border-bottom: 2px solid $theme-green-light;

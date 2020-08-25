@@ -22,7 +22,7 @@ export const GenericSelect = (props: GenericSelectProps) => {
 			selectInstance.current = M.FormSelect.init(selectRef.current,
 				{dropdownOptions: {closeOnClick: true, onCloseEnd: selectElement}});
 		}
-		M.updateTextFields();
+
 		props.onUpdate && props.onUpdate(props.list);
 		// eslint-disable-next-line
 	}, [props.list, props.value]);

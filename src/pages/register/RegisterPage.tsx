@@ -61,63 +61,63 @@ export const RegisterPage = (props: RegisterPageProps) => {
 			<div className="row">
 				<h2 className="theme-green-text title">{localization[locale].registerTitle}</h2>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userUsernameLabel}
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  value={user?.userUsername}
 							                  id="userUsername"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userUsernameLabel}
 							                  value={user?.userPassword}
 							                  id="userPassword"
 							                  type="password"
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userDisplayNameLabel}
 							                  value={user?.userDisplayName}
 							                  id="userDisplayName"
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userEmailLabel}
 							                  value={user?.userEmail}
 							                  id="userEmail"
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userFirstNameLabel}
 							                  value={user?.userFirstName}
 							                  id="userFirstName"
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userLastNameLabel}
 							                  value={user?.userLastName}
 							                  id="userLastName"
-							                  className="col s12 m12 l4"
+							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
-							<div className="col s12 m12 l4">
+							<div className="col s12 m12 l3 xl4"/>
+							<div className="col s12 m12 l6 xl4">
 								<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
 								<MessageList className="green accent-2 white-text" messages={messages}/>
 							</div>
 						</div>
 						<div className="row">
-							<div className="col l4"/>
+							<div className="col s12 m12 l3 xl4"/>
 							<div className="col s12">
 								<button onClick={register} className="btn"
 								        name="action">{localization[locale].registerButton}

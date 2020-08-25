@@ -16,7 +16,8 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	const {categoryName} = useParams();
 	const [category, setCategory] = useState<Category | null>(null);
 	const [categories, setCategories] = useState<Category[]>([]);
-	const [posts, setPosts] = useState<PostPreviewDTO[]>([]);
+	const postCount = 10;
+	const [posts, setPosts] = useState<PostPreviewDTO[]>(new Array(postCount).fill(null));
 	const [pageCount, setPageCount] = useState(0);
 	const [page, setPage] = useState(0);
 	const [locale] = useLocale();

@@ -62,26 +62,26 @@ export const UserView = (props: UserViewProps) => {
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
-						<div className="col s3">
+						<div className="col s5 m5 l3">
 							{localization[locale].headUsername}
 						</div>
-						<div className="col s2">
+						<div className="col s2 l2 hide-on-med-and-down">
 							{localization[locale].headDisplayName}
 						</div>
-						<div className="col s3">
+						<div className="col s5 m5 l3">
 							{localization[locale].headRoles}
 						</div>
-						<div className="col s3">
+						<div className="col s3 l3 hide-on-med-and-down">
 							{localization[locale].headEmail}
 						</div>
-						<div className="col s1 center">
+						<div className="col s2 m2 l1 center">
 							{localization[locale].headActive}
 						</div>
 					</div>
 				</li>
 				{users.map((user, i) => <UserViewListItem key={i} user={user} locale={locale}/>)}
 			</ul>
-			<Pagination className={"right"} onPageChange={setCurrentPage} pageCount={pageCount.current}/>
+			<Pagination className="right" onPageChange={setCurrentPage} pageCount={pageCount.current}/>
 		</div>
 	);
 };
@@ -96,21 +96,21 @@ const UserViewListItem = ({user, locale}: AdminPostListItemProps) => {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s3 truncate">
+					<div className="col s5 m5 l3 truncate">
 						<Link to={"/admin/users/edit/" + user.idUser}><i
 							className="material-icons">edit</i></Link>{user.userUsername}
 					</div>
-					<div className="col s2">
+					<div className="col s2 l2 hide-on-med-and-down">
 						{user.userDisplayName}
 					</div>
-					<div className="col s3">
+					<div className="col s5 m5 l3">
 						{user.userRoles.sort().map(role =>
 						<span className="blob theme-green black-text darken-2">{role}</span> )}
 					</div>
-					<div className="col s3">
+					<div className="col s3 l3 hide-on-med-and-down">
 						{user.userEmail}
 					</div>
-					<div className="col s1 center">
+					<div className="col s2 m2 l1 center">
 						{user.userActive?
 							<i className="material-icons">check</i> :
 							<i className="material-icons">do_not_disturb_on</i>}

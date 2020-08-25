@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
@@ -16,6 +16,8 @@ import { FloatingActionButton } from "../../floatingActionButton/FloatingActionB
 import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
+import MaterializeInput, { MaterializeCheckbox } from "../../materialize/input/MaterializeInput";
+import MaterializeTextarea from "../../materialize/textarea/MaterializeTextarea";
 import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./PostEdit.css";
@@ -39,7 +41,6 @@ export const PostEdit = (props: PostEditProps) => {
 	const [locale] = useLocale();
 	const [post, setPost] = useState<PostDTO>();
 	const [tags, setTags] = useState<Tag[]>([]);
-	const [textareaRef, setTextareaRef] = useState<HTMLTextAreaElement | null>(null);
 	const history = useHistory();
 	const {ctx} = useContext(AppContext);
 	const {postSlug} = useParams();
@@ -110,10 +111,14 @@ export const PostEdit = (props: PostEditProps) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const setProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		const value = ev.target.value;
+		const id = ev.target.id;
+
+		setPost({...(post as PostDTO), [id]: value, postPublished: value === "true"});
+	};
+
 	useEffect(() => {
-		if (textareaRef) {
-			M.textareaAutoResize(textareaRef);
-		}
 		Console.log(post);
 		// eslint-disable-next-line
 	}, [post]);
@@ -134,26 +139,20 @@ export const PostEdit = (props: PostEditProps) => {
 					<div className="row">
 						<div className="col s12 m12 l8">
 							<div className="row">
-								<div className="input-field col s12 m12 l6">
-									<input placeholder={localization[locale].postTitlePlaceholder} id="postTitle"
-									       type="text"
-									       value={post?.postTitle}
-									       onChange={(ev) => setPost({
-										       ...(post as PostDTO),
-										       postTitle: ev.target.value,
-									       })}/>
-									<label htmlFor="postTitle">{localization[locale].postTitleLabel}</label>
-								</div>
-								<div className="input-field col s12 m12 l6">
-									<input placeholder={localization[locale].postSlugPlaceholder} id="postSlug"
-									       type="text"
-									       value={post?.postSlug}
-									       onChange={(ev) => setPost({
-										       ...(post as PostDTO),
-										       postSlug: ev.target.value,
-									       })}/>
-									<label htmlFor="postSlug">{localization[locale].postSlugLabel}</label>
-								</div>
+								<MaterializeInput placeholder={localization[locale].postTitlePlaceholder}
+								                  className="col s12 m12 l6"
+								                  id="postTitle"
+								                  type="text"
+								                  value={post?.postTitle}
+								                  label={localization[locale].postTitleLabel}
+								                  onChange={setProp}/>
+								<MaterializeInput placeholder={localization[locale].postSlugPlaceholder}
+								                  className="col s12 m12 l6"
+								                  id="postSlug"
+								                  type="text"
+								                  value={post?.postSlug}
+								                  label={localization[locale].postSlugLabel}
+								                  onChange={setProp}/>
 							</div>
 							<div className="row">
 								<div className="col s12 m12 l6">
@@ -166,17 +165,11 @@ export const PostEdit = (props: PostEditProps) => {
 											idCategory: elem?.id,
 										})}/>
 								</div>
-								<div className="input-field col s12 m12 l6">
-									<label>
-										<input type="checkbox" className="filled-in"
-										       checked={post?.postPublished}
-										       onChange={(ev) => setPost({
-											       ...(post as PostDTO),
-											       postPublished: Boolean(ev.target.checked),
-										       })}/>
-										<span>{localization[locale].postPublishedLabel}</span>
-									</label>
-								</div>
+								<MaterializeCheckbox id="postPublished"
+								                     className="col s12 m12 l6"
+								                     label={localization[locale].postPublishedLabel}
+								                     value={post?.postPublished + ""}
+								                     onChange={setProp}/>
 							</div>
 							<div className="row">
 								<div className="col s12 m12 l8">
@@ -194,20 +187,14 @@ export const PostEdit = (props: PostEditProps) => {
 								</div>
 							</div>
 							<div className="row">
-								<div className="input-field col s12 m12 l8">
-									<textarea
-										id="postExcerpt"
-										ref={elem => setTextareaRef(elem)}
-										placeholder={localization[locale].postExcerptPlaceholder}
-										className="materialize-textarea"
-										spellCheck={false}
-										value={post?.postExcerpt}
-										onChange={(ev) => setPost({
-											...(post as PostDTO),
-											postExcerpt: ev.target.value,
-										})}/>
-									<label htmlFor="postExcerpt">{localization[locale].postExcerptLabel}</label>
-								</div>
+								<MaterializeTextarea
+									id="postExcerpt"
+									className="col s12 m12 l8"
+									placeholder={localization[locale].postExcerptPlaceholder}
+									spellCheck={false}
+									value={post?.postExcerpt}
+									label={localization[locale].postExcerptLabel}
+									onChange={setProp}/>
 							</div>
 							<div className="row">
 								<div className="col s12">

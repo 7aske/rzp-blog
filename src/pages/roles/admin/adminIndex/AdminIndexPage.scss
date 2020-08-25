@@ -1,4 +1,5 @@
 @import "../../../../assets/css/theme";
+
 #admin-index-page {
 	border-top: 2px solid $theme-green;
 	padding-top: 2em;
@@ -9,5 +10,12 @@
 @media screen and (max-width: 993px) {
 	#admin-index-page {
 		padding-top: .5em;
+		padding-left: .2em;
+		padding-right: .2em;
+
+		.container {
+			padding-left: .1em;
+			padding-right: .1em;
+		}
 	}
 }
