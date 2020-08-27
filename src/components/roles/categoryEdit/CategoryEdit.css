@@ -1,6 +1,10 @@
-#admin-category-list .row {
+#admin-category-edit h3 {
+  color: #4ecca3;
+}
+#admin-category-edit .row {
   margin-bottom: 0;
 }
-#admin-category-list form button {
+#admin-category-edit form button {
+  margin-bottom: 1em;
   background-color: #4ecca3;
 }

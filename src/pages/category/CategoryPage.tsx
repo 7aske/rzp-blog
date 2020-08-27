@@ -7,6 +7,7 @@ import { Pagination } from "../../components/pagination/Pagination";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
 import categoryService from "../../services/categoryService";
+import authorCategoryService from "../../services/modules/author/authorCategoryService";
 import postService from "../../services/postService";
 import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
@@ -34,6 +35,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			Console.error(err);
 			setCategories([]);
 		});
+
 		scrollToTop();
 		// eslint-disable-next-line
 	}, []);

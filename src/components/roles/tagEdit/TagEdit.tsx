@@ -100,7 +100,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 	};
 
 	return (
-		<div id="admin-tag-list">
+		<div id="admin-tag-edit">
 			<form onSubmit={saveTag}>
 				<div className="row">
 					<div className="input-field col s12 m8 l4">
@@ -131,16 +131,13 @@ export const TagEdit = (props: AdminTagListProps) => {
 					</div>
 				</div>
 				<div className="row">
-					<div className="input-field col s12">
-						<button className="btn btn-form" type="submit">
-							<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
-						</button>
-					</div>
-					<div className="input-field col s12">
-						<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
-							<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
-						</button>
-					</div>
+					<button className="btn btn-form" type="submit">
+						<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
+					</button>
+					<br/>
+					<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
+						<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
+					</button>
 				</div>
 			</form>
 		</div>

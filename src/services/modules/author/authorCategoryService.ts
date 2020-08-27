@@ -34,12 +34,20 @@ const deleteById = async (idCategory: number): Promise<boolean> => {
 	return retval;
 };
 
+const getStats = async (): Promise<CategoryStatsDTO> => {
+	const client = getClient();
+	const stats = (await client.get(`${backendUrl}/${submodule}/category/getStats`)).data;
+	Console.log(stats);
+	return stats;
+}
+
 
 const authorCategoryService: CategoryService = {
 	getAll,
 	deleteById,
 	save,
 	update,
+	getStats,
 };
 
 export default authorCategoryService;

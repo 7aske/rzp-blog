@@ -24,7 +24,11 @@ main {
   border-bottom: 2px solid #4ecca3;
 }
 
-.btn-form .theme-green {
+.btn-form {
+  width: 150px;
+}
+
+.theme-green {
   background-color: #4ecca3;
 }
 

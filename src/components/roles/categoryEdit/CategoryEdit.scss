@@ -1,6 +1,9 @@
 @import "../../../assets/css/theme";
 
-#admin-category-list {
+#admin-category-edit {
+	h3 {
+		color: $theme-green;
+	}
 	.row {
 		margin-bottom: 0;
 	}
@@ -8,6 +11,7 @@
 	form {
 		button {
 			//width: 100px !important;
+			margin-bottom: 1em;
 			background-color: $theme-green;
 		}
 	}

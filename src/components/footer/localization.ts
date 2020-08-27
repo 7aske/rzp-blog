@@ -21,7 +21,6 @@ const en: FooterLocalizationStrings = {
 	resources: "Resources",
 	text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At atque cupiditate in incidunt laudantium quasi quibusdam quod, sequi! Debitis eligendi illo inventore itaque pariatur quibusdam quisquam recusandae, sequi suscipit voluptatum.",
 	toTop: "Back to top",
-
 };
 
 const localization: Localized<FooterLocalizationStrings> = {en, sr};

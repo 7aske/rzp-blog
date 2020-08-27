@@ -105,7 +105,7 @@ const UserViewListItem = ({user, locale}: AdminPostListItemProps) => {
 					</div>
 					<div className="col s5 m5 l3">
 						{user.userRoles.sort().map(role =>
-						<span className="blob theme-green black-text darken-2">{role}</span> )}
+						<span key={role} className="blob theme-green black-text darken-2">{role}</span> )}
 					</div>
 					<div className="col s3 l3 hide-on-med-and-down">
 						{user.userEmail}

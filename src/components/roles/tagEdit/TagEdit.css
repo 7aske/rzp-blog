@@ -1,6 +1,7 @@
-#admin-tag-list .row {
+#admin-tag-edit .row {
   margin-bottom: 0;
 }
-#admin-tag-list form button {
+#admin-tag-edit form button {
+  margin-bottom: 1em;
   background-color: #4ecca3;
 }

@@ -1,6 +1,6 @@
 @import "../../../assets/css/theme";
 
-#admin-tag-list {
+#admin-tag-edit {
 	.row {
 		margin-bottom: 0;
 	}
@@ -8,6 +8,7 @@
 	form {
 		button {
 			//width: 100px !important;
+			margin-bottom: 1em;
 			background-color: $theme-green;
 		}
 	}
