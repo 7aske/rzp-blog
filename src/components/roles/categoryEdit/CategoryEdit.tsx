@@ -6,7 +6,7 @@ import adminCategoryService from "../../../services/modules/admin/adminCategoryS
 import authorCategoryService from "../../../services/modules/author/authorCategoryService";
 import Console from "../../../utils/Console";
 import { hasRole } from "../../../utils/utils";
-import { CategoryStats } from "../../categoryStats/CategoryStats";
+import { Stats } from "../../stats/Stats";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
@@ -20,7 +20,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 	const categoryServices =
 		hasRole(props.roles, "admin") ? adminCategoryService : authorCategoryService;
 
-	const [stats, setStats] = useState<CategoryStatsDTO>();
+	const [stats, setStats] = useState<StatsDTO>();
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
@@ -153,7 +153,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 					</div>
 				</div>
 				<div className="col s12 m6">
-					<CategoryStats locale={locale} stats={stats!}/>
+					<Stats locale={locale} stats={stats!}/>
 				</div>
 			</form>
 		</div>

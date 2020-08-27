@@ -3,5 +3,5 @@ interface CategoryService {
 	deleteById: (idCategory: number) => Promise<boolean>,
 	save: (_category: Category) => Promise<Category>,
 	update: (_category: Category) => Promise<Category>
-	getStats: () => Promise<CategoryStatsDTO>
+	getStats: () => Promise<StatsDTO>
 }

@@ -34,12 +34,19 @@ const deleteById = async (idTag: number): Promise<boolean> => {
 	return data;
 };
 
+const getStats = async (): Promise<StatsDTO> => {
+	const client = getClient();
+	const stats = (await client.get(`${backendUrl}/${submodule}/tag/getStats`)).data;
+	Console.log(stats);
+	return stats;
+}
 
 const authorTagService: TagService = {
 	getAll,
 	deleteById,
 	save,
 	update,
+	getStats
 };
 
 export default authorTagService;

@@ -1,6 +1,9 @@
 @import "../../../assets/css/theme";
 
 #admin-tag-edit {
+	h3 {
+		color: $theme-green;
+	}
 	.row {
 		margin-bottom: 0;
 	}

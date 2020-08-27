@@ -34,7 +34,7 @@ const deleteById = async (idCategory: number): Promise<boolean> => {
 	return retval;
 };
 
-const getStats = async (): Promise<CategoryStatsDTO> => {
+const getStats = async (): Promise<StatsDTO> => {
 	const client = getClient();
 	const stats = (await client.get(`${backendUrl}/${submodule}/category/getStats`)).data;
 	Console.log(stats);

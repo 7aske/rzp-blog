@@ -1,3 +1,3 @@
-type CategoryStatsDTO = {
+type StatsDTO = {
 	stats: Record<string, number>;
 }

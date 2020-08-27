@@ -1,4 +1,5 @@
 type AdminPostsListLocalizationStrings = {
+	title: string;
 	tagSelectLabel: string;
 	tagNewOption: string;
 	tagSaveButton: string;
@@ -12,6 +13,7 @@ type AdminPostsListLocalizationStrings = {
 }
 
 const sr: AdminPostsListLocalizationStrings = {
+	title: "Tagovi",
 	tagSelectLabel: "Tagovi",
 	tagDeleteButton: "Obriši",
 	tagNewOption: "Novi tag",
@@ -24,6 +26,7 @@ const sr: AdminPostsListLocalizationStrings = {
 };
 
 const en: AdminPostsListLocalizationStrings = {
+	title: "Tags",
 	tagSelectLabel: "Tags",
 	tagDeleteButton: "Remove",
 	tagNewOption: "New tag",

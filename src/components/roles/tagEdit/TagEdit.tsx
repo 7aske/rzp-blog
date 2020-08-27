@@ -9,6 +9,7 @@ import { hasRole } from "../../../utils/utils";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
+import { Stats } from "../../stats/Stats";
 import localization from "./localization";
 import "./TagEdit.css";
 
@@ -19,6 +20,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 	const tagServices =
 		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
 	const [tagList, setTagList] = useState<Tag[]>([]);
+	const [stats, setStats] = useState<StatsDTO>();
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
@@ -32,12 +34,16 @@ export const TagEdit = (props: AdminTagListProps) => {
 
 
 	const getTags = () => {
-		tagServices.getAll().then(_tags => {
-			setTagList(_tags);
-		}).catch(err => {
-			Console.error(err);
-			setTagList([]);
-		});
+		tagServices.getAll()
+			.then(_tags => setTagList(_tags))
+			.catch(err => {
+				Console.error(err);
+				setTagList([]);
+			});
+
+		tagServices.getStats()
+			.then(_stats => setStats(_stats))
+			.catch(err => Console.log(err));
 	};
 
 	const setTag = (tag: Tag) => {
@@ -101,45 +107,51 @@ export const TagEdit = (props: AdminTagListProps) => {
 
 	return (
 		<div id="admin-tag-edit">
-			<form onSubmit={saveTag}>
-				<div className="row">
-					<div className="input-field col s12 m8 l4">
-						<GenericSelect list={tagList.map(elem =>
-							new GenericElement<Tag>(elem, elem.idTag, elem.tagName))}
-						               create={true}
-						               onSelect={elem => setTag(elem?.element)}
-						               newOptionText={localization[locale].tagNewOption}
-						               labelText={localization[locale].tagSelectLabel}/>
+			<div className="row">
+				<form onSubmit={saveTag} className="col s12 m6">
+					<h3>{localization[locale].title}</h3>
+					<div className="row">
+						<div className="input-field col s12 m8">
+							<GenericSelect list={tagList.map(elem =>
+								new GenericElement<Tag>(elem, elem.idTag, elem.tagName))}
+							               create={true}
+							               onSelect={elem => setTag(elem?.element)}
+							               newOptionText={localization[locale].tagNewOption}
+							               labelText={localization[locale].tagSelectLabel}/>
+						</div>
 					</div>
-				</div>
-				<div className="row">
-					<div className="input-field col s12 m8 l4">
-						<input ref={elem => setIdRef(elem)} id="idTag" name="idTag" type="text" disabled={true}/>
-						<label htmlFor="idTag">ID</label>
+					<div className="row">
+						<div className="input-field col s12 m8">
+							<input ref={elem => setIdRef(elem)} id="idTag" name="idTag" type="text" disabled={true}/>
+							<label htmlFor="idTag">ID</label>
+						</div>
 					</div>
-				</div>
-				<div className="row">
-					<div className="input-field col s12 m8 l4">
-						<input ref={elem => setNameRef(elem)} id="tagName" name="tag-name" type="text"/>
-						<label htmlFor="tag-name">{localization[locale].tagNameLabel}</label>
+					<div className="row">
+						<div className="input-field col s12 m8">
+							<input ref={elem => setNameRef(elem)} id="tagName" name="tag-name" type="text"/>
+							<label htmlFor="tag-name">{localization[locale].tagNameLabel}</label>
+						</div>
 					</div>
-				</div>
-				<div className="row">
-					<div className="col s12 m8 l4">
-						<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
-						<MessageList className="green accent-2 white-text" timeout={3000} messages={messages}/>
+					<div className="row">
+						<div className="col s12 m8">
+							<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
+							<MessageList className="green accent-2 white-text" timeout={3000} messages={messages}/>
+						</div>
 					</div>
+					<div className="row">
+						<button className="btn btn-form" type="submit">
+							<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
+						</button>
+						<br/>
+						<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
+							<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
+						</button>
+					</div>
+				</form>
+				<div className="col s12 m6">
+					<Stats stats={stats} locale={locale}/>
 				</div>
-				<div className="row">
-					<button className="btn btn-form" type="submit">
-						<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
-					</button>
-					<br/>
-					<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
-						<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
-					</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	);
 };
