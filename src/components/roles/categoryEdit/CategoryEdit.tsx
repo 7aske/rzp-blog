@@ -6,10 +6,10 @@ import adminCategoryService from "../../../services/modules/admin/adminCategoryS
 import authorCategoryService from "../../../services/modules/author/authorCategoryService";
 import Console from "../../../utils/Console";
 import { hasRole } from "../../../utils/utils";
-import { Stats } from "../../stats/Stats";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
+import { Stats } from "../../stats/Stats";
 import "./CategoryEdit.css";
 import localization from "./localization";
 
@@ -142,14 +142,16 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 						</div>
 					</div>
 					<div className="row">
-						<button className="btn btn-form" type="submit"><i
-							className="material-icons left">save</i>{localization[locale].categorySaveButton}
-						</button>
-						<br/>
-						<button onClick={deleteCategory} className="btn btn-form red accent-2"
-						        type="button"><i
-							className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
-						</button>
+						<div className="col s12">
+							<button className="btn btn-form" type="submit"><i
+								className="material-icons left">save</i>{localization[locale].categorySaveButton}
+							</button>
+							<br/>
+							<button onClick={deleteCategory} className="btn btn-form red accent-2"
+							        type="button"><i
+								className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
+							</button>
+						</div>
 					</div>
 				</div>
 				<div className="col s12 m6">

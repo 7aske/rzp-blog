@@ -135,7 +135,7 @@ export const PostEdit = (props: PostEditProps) => {
 				onClick: scrollToTop,
 			}]}/>
 			<div className="row">
-				<div className="s12 m12 l8">
+				<div className="col s12 m12 l8">
 					<div className="row">
 						<div className="col s12 m12 l8">
 							<div className="row">

@@ -139,13 +139,15 @@ export const TagEdit = (props: AdminTagListProps) => {
 						</div>
 					</div>
 					<div className="row">
-						<button className="btn btn-form" type="submit">
-							<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
-						</button>
-						<br/>
-						<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
-							<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
-						</button>
+						<div className="col s12">
+							<button className="btn btn-form" type="submit">
+								<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
+							</button>
+							<br/>
+							<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
+								<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
+							</button>
+						</div>
 					</div>
 				</form>
 				<div className="col s12 m6">

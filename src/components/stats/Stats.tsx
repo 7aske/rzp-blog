@@ -15,16 +15,20 @@ export const Stats = ({locale, stats}: CategoryStatsProps) => {
 			{stats ?
 				<div>
 					<h5>{localization[locale].total}: {total}</h5>
-					{Object.keys(stats.stats).map(s => <StatBar name={s} value={stats.stats[s]} total={total}/>)}
+					{Object.keys(stats.stats).length > 0 ?
+						Object.keys(stats.stats).map(s => <StatBar name={s} value={stats.stats[s]} total={total}/>)
+						: <h5>{localization[locale].noData}</h5>}
 				</div> :
-				<h4>{localization[locale].noData}</h4>}
+				<div className="progress">
+					<div className="indeterminate"/>
+				</div>
+			}
 		</div>
 	);
 };
 
 
-
-type StatBarProps= {
+type StatBarProps = {
 	total: number;
 	name: string;
 	value: number;
@@ -33,7 +37,8 @@ const StatBar = ({name, total, value}: StatBarProps) => {
 	return (<div key={name}>
 		<span className="theme-green-light-text">{name}</span>: {value}
 		<div key={name} className="progress">
-			<div className="determinate animate__animated animate__slow animate__lightSpeedInLeft" style={{width: `${value/total * 100}%`}}/>
+			<div className="determinate animate__animated animate__slow animate__lightSpeedInLeft"
+			     style={{width: `${value / total * 100}%`}}/>
 		</div>
 	</div>);
 };

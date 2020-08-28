@@ -90,7 +90,7 @@ export const UserEdit = (props: UserEditProps) => {
 	return (
 		<div id="user-edit">
 			<div className="row">
-				<div className="s12 m12 l8">
+				<div className="col s12 m12 l8">
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8"
 						                  disabled={true}

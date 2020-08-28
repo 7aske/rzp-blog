@@ -1,10 +1,11 @@
 import "easymde/dist/easymde.min.css";
+import hljs from "highlight.js";
 import marked from "marked";
 import * as React from "react";
 import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
+import authorMediaService from "../../../../services/modules/author/authorMediaService";
 import { MessageList } from "../../../messageList/MessageList";
-import { backendUrl } from "../../../../globals";
 import localization from "./localization";
 import "./PostEditor.css";
 
@@ -26,21 +27,6 @@ export const PostEditor = (props: PostEditorProps) => {
 			<br/>
 			<SimpleMDE onChange={props.onChange}
 			           options={{
-				           // autosave: {
-					       //     enabled: true,
-					       //     uniqueId: props.id ? props.id.toString() : "newPost",
-					       //     delay: 1000,
-					       //     submit_delay: 5000,
-					       //     timeFormat: {
-						   //         locale,
-						   //         format: {
-							//            hour: "2-digit",
-							//            minute: "2-digit",
-							//            second: "numeric",
-						   //         },
-					       //     },
-					       //     text: localization[locale].autosaved,
-				           // },
 				           initialValue: props.value,
 				           sideBySideFullscreen: true,
 				           previewRender: function (plainText) {
@@ -48,9 +34,15 @@ export const PostEditor = (props: PostEditorProps) => {
 				           },
 				           uploadImage: true,
 				           showIcons: ["strikethrough", "code", "table", "redo", "heading", "undo", "horizontal-rule"],
-				           imageUploadEndpoint: `${backendUrl}/media/mdeupload`,
+				           // imageUploadEndpoint: `${backendUrl}/author/media/mdeupload`,
+				           imageUploadFunction: (file, onSuccess, onError) => {
+					           authorMediaService.mdeUpload(file)
+						           .then(filePath => onSuccess(filePath))
+						           .catch(err => onError(err));
+				           },
 				           renderingConfig: {
 					           codeSyntaxHighlighting: true,
+					           hljs: hljs,
 					           markedOptions: {
 						           gfm: true,
 					           },
