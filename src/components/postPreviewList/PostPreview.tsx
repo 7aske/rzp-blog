@@ -21,7 +21,7 @@ export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postT
 				<h6>{formatDate(postDatePosted, locale)}</h6>
 				<p>{postExcerpt}</p>
 				<div className="tags">
-					{tags.map(tag => <span key={tag.tagName} className="tag">{tag.tagName}</span>)}
+					{tags.map(tag => <span key={tag.tagName} className="tag"><Link replace={true} className="theme-green-lightest-text" to={`/tag/${tag.tagName}`}>{tag.tagName}</Link></span>)}
 				</div>
 			</div>
 		</li>

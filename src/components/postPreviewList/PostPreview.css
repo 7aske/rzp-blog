@@ -23,6 +23,12 @@
   background-color: #4ecca3;
   text-align: center;
 }
+.post-preview .tags .tag:hover {
+  background-color: #c2eddf;
+}
+.post-preview .tags .tag:hover a {
+  color: #232931;
+}
 .post-preview h4 {
   display: inline;
   color: #4ecca3;

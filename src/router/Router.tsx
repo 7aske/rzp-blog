@@ -11,6 +11,7 @@ import { Error404 } from "../pages/errors/Error404";
 import { IndexPage } from "../pages/index/IndexPage";
 import { PostPage } from "../pages/post/PostPage";
 import { UserProfilePage } from "../pages/roles/user/userProfile/UserProfilePage";
+import { TagPage } from "../pages/tag/TagPage";
 
 export const Router = () => {
 	return (
@@ -20,6 +21,7 @@ export const Router = () => {
 			<Route exact path="/404" component={Error404}/>
 			<Route path="/posts/:slug" component={PostPage}/>
 			<Route path="/category/:categoryName" component={CategoryPage}/>
+			<Route path="/tag/:tagName" component={TagPage}/>
 			<Route path="/register" component={RegisterPage}/>
 			<AuthGuard>
 				<Route exact path="/logout" component={LogoutPage}/>

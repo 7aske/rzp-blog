@@ -27,6 +27,12 @@
 			border-radius: 15px;
 			background-color: $theme-green;
 			text-align: center;
+			&:hover {
+				background-color: $theme-green-lightest;
+				a {
+					color: $theme-black;
+				}
+			}
 		}
 	}
 

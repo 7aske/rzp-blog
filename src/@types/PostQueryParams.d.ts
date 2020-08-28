@@ -4,5 +4,6 @@ type PostQueryParams = {
 	idUser?: number;
 	category?: string;
 	page?: number;
+	tag?: string;
 	published?: boolean;
 }
