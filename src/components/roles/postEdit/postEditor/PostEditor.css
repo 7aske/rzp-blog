@@ -5,11 +5,6 @@
   border-radius: 0;
   border: none;
 }
-#post-editor .EasyMDEContainer .editor-toolbar.fullscreen,
-#post-editor .EasyMDEContainer .editor-toolbar.fullscreen + .CodeMirror,
-#post-editor .EasyMDEContainer .editor-preview {
-  margin-top: 7em;
-}
 #post-editor .EasyMDEContainer .CodeMirror {
   border-radius: 0;
   border: none;

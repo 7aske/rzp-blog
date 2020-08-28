@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createRef, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Route } from "react-router";
 import "../../assets/img/logo.png";
 // @ts-ignore
@@ -16,8 +16,8 @@ export const Navbar = () => {
 	const [locale] = useLocale();
 	const {ctx} = useContext(AppContext);
 
-	const navRef = createRef<HTMLElement>();
-	const progRef = createRef<HTMLDivElement>();
+	const [navRef, setNavRef] = useState<HTMLElement | null>(null);
+	const [progRef, setProgRef] = useState<HTMLDivElement | null>(null);
 
 	const loggedIn = ctx.user !== null;
 
@@ -40,32 +40,35 @@ export const Navbar = () => {
 		.withNavTrigger()
 		.build();
 
+	const onScroll = () => {
+		const {scrollY} = window;
+		const offset = parseFloat(getComputedStyle(document.body, null).fontSize) * 3;
+
+		if (navRef) {
+			if (scrollY > navRef.offsetHeight + offset) {
+				navRef.classList.add("fixed");
+			} else {
+				navRef.classList.remove("fixed");
+			}
+		}
+
+		if (progRef) {
+			const {innerHeight} = window;
+			const {innerWidth} = window;
+			const height = document.body.offsetHeight - innerHeight;
+
+			progRef.style.width = `${Number(innerWidth * (scrollY / height))}px`;
+		}
+	}
 
 	useEffect(() => {
-		window.addEventListener("scroll", () => {
-			if (!navRef.current) return;
-
-			const scroll = window.scrollY;
-			const offset = parseFloat(getComputedStyle(document.body, null).fontSize) * 3;
-
-			if (scroll > navRef.current!.offsetHeight + offset) {
-				navRef.current.classList.add("fixed");
-			} else if (scroll <= offset) {
-				navRef.current.classList.remove("fixed");
-			}
-
-			if (progRef.current) {
-				const height = document.body.offsetHeight - window.innerHeight;
-				const width: number = window.innerWidth;
-
-				progRef.current.style.width = `${Number(width * (scroll / height))}px`;
-			}
-		});
+		window.removeEventListener("scroll", onScroll);
+		window.addEventListener("scroll", onScroll);
 		// eslint-disable-next-line
-	}, []);
+	}, [progRef, navRef]);
 
 	return (
-		<nav ref={navRef} id="nav">
+		<nav ref={elem => setNavRef(elem)} id="nav">
 			<div className="spacer"/>
 			<div className="menu container">
 
@@ -79,7 +82,7 @@ export const Navbar = () => {
 			</div>
 			<Sidenav menuItems={sidenavItems}/>
 			<Route path="/posts/*">
-				<div ref={progRef} className="prog"/>
+				<div ref={elem => setProgRef(elem)} className="prog"/>
 			</Route>
 		</nav>);
 };
