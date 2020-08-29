@@ -8,7 +8,6 @@ type GenericAutocompleteProps = {
 	onUpdate?: (value: string) => void
 	type?: string;
 	value?: any;
-	create?: boolean;
 	newOptionText?: string;
 	label?: string;
 	className?: string;

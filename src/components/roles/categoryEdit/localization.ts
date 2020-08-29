@@ -4,6 +4,7 @@ type AdminPostsListLocalizationStrings = {
 	categoryNewOption: string;
 	categorySaveButton: string;
 	categoryDeleteButton: string;
+	categoryResetButton: string;
 	categoryUpdateButton: string;
 	categorySavedMessage: string;
 	categoryDeletedMessage: string;
@@ -16,6 +17,7 @@ const sr: AdminPostsListLocalizationStrings = {
 	title: "Kategorije",
 	categorySelectLabel: "Kategorije",
 	categoryDeleteButton: "Obriši",
+	categoryResetButton: "Resetuj",
 	categoryNewOption: "Nova kategorija",
 	categoryUpdateButton: "Ažuriraj",
 	categorySaveButton: "Sačuvaj",
@@ -29,6 +31,7 @@ const en: AdminPostsListLocalizationStrings = {
 	title: "Categories",
 	categorySelectLabel: "Categories",
 	categoryDeleteButton: "Remove",
+	categoryResetButton: "Reset",
 	categoryNewOption: "New category",
 	categoryUpdateButton: "Update",
 	categorySaveButton: "Save",

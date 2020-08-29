@@ -151,6 +151,10 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 							        type="button"><i
 								className="material-icons left">delete</i>{localization[locale].categoryDeleteButton}
 							</button>
+							<br/>
+							<button className="btn btn-form grey" type="reset">
+								<i className="material-icons left">clear</i>{localization[locale].categoryResetButton}
+							</button>
 						</div>
 					</div>
 				</div>

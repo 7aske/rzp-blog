@@ -1,0 +1,26 @@
+@import "../../assets/css/theme";
+
+.stats-scroll {
+	max-height: 40vh;
+	padding-right: 1em;
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: $theme-grey;
+		border-radius: 5px;
+	}
+
+	.stat-bar {
+		.progress {
+			background-color: #232931;
+		}
+
+		.determinate {
+			border-radius: 5px;
+		}
+	}
+}

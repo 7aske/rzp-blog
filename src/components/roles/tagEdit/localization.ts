@@ -4,6 +4,7 @@ type AdminPostsListLocalizationStrings = {
 	tagNewOption: string;
 	tagSaveButton: string;
 	tagDeleteButton: string;
+	tagResetButton: string;
 	tagUpdateButton: string;
 	tagSavedMessage: string;
 	tagDeletedMessage: string;
@@ -16,6 +17,7 @@ const sr: AdminPostsListLocalizationStrings = {
 	title: "Tagovi",
 	tagSelectLabel: "Tagovi",
 	tagDeleteButton: "Obriši",
+	tagResetButton: "Resetuj",
 	tagNewOption: "Novi tag",
 	tagUpdateButton: "Ažuriraj",
 	tagSaveButton: "Sačuvaj",
@@ -29,6 +31,7 @@ const en: AdminPostsListLocalizationStrings = {
 	title: "Tags",
 	tagSelectLabel: "Tags",
 	tagDeleteButton: "Remove",
+	tagResetButton: "Reset",
 	tagNewOption: "New tag",
 	tagUpdateButton: "Update",
 	tagSaveButton: "Save",

@@ -3,6 +3,7 @@
 .post-preview {
 	padding-top: 1em;
 	padding-bottom: 1em;
+
 	.category {
 		span {
 			position: absolute;
@@ -13,22 +14,29 @@
 			a {
 				color: $theme-green-light;
 			}
+
 			&:hover a {
 				border-bottom: 2px solid $theme-green-lightest;
 				color: $theme-white;
 			}
 		}
 	}
+
 	.tags {
 		.tag {
 			margin-right: .5em;
-			color: $theme-white;
 			padding: .25em 1em .5em 1em;
 			border-radius: 15px;
 			background-color: $theme-green;
 			text-align: center;
+
+			a {
+				 color: $theme-black;
+			}
+
 			&:hover {
 				background-color: $theme-green-lightest;
+
 				a {
 					color: $theme-black;
 				}
@@ -39,7 +47,8 @@
 	h4 {
 		display: inline;
 		color: $theme-green;
-		&:hover{
+
+		&:hover {
 			color: $theme-green-lightest;
 			border-bottom: 2px solid $theme-green-lightest;
 		}

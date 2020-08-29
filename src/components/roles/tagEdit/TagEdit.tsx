@@ -6,6 +6,7 @@ import adminTagService from "../../../services/modules/admin/adminTagService";
 import authorTagService from "../../../services/modules/author/authorTagService";
 import Console from "../../../utils/Console";
 import { hasRole } from "../../../utils/utils";
+import { GenericAutocomplete } from "../../genericSelect/GenericAutocomplete";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
@@ -19,7 +20,7 @@ type AdminTagListProps = {
 export const TagEdit = (props: AdminTagListProps) => {
 	const tagServices =
 		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
-	const [tagList, setTagList] = useState<Tag[]>([]);
+	const [tags, setTags] = useState<Tag[]>([]);
 	const [stats, setStats] = useState<StatsDTO>();
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
@@ -35,10 +36,10 @@ export const TagEdit = (props: AdminTagListProps) => {
 
 	const getTags = () => {
 		tagServices.getAll()
-			.then(_tags => setTagList(_tags))
+			.then(_tags => setTags(_tags))
 			.catch(err => {
 				Console.error(err);
-				setTagList([]);
+				setTags([]);
 			});
 
 		tagServices.getStats()
@@ -112,7 +113,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 					<h3>{localization[locale].title}</h3>
 					<div className="row">
 						<div className="input-field col s12 m8">
-							<GenericSelect list={tagList.map(elem =>
+							<GenericSelect list={tags.map(elem =>
 								new GenericElement<Tag>(elem, elem.idTag, elem.tagName))}
 							               create={true}
 							               onSelect={elem => setTag(elem?.element)}
@@ -146,6 +147,10 @@ export const TagEdit = (props: AdminTagListProps) => {
 							<br/>
 							<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
 								<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
+							</button>
+							<br/>
+							<button className="btn btn-form grey" type="reset">
+								<i className="material-icons left">clear</i>{localization[locale].tagResetButton}
 							</button>
 						</div>
 					</div>

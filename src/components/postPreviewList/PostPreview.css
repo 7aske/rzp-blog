@@ -17,11 +17,13 @@
 }
 .post-preview .tags .tag {
   margin-right: 0.5em;
-  color: #eeeeee;
   padding: 0.25em 1em 0.5em 1em;
   border-radius: 15px;
   background-color: #4ecca3;
   text-align: center;
+}
+.post-preview .tags .tag a {
+  color: #232931;
 }
 .post-preview .tags .tag:hover {
   background-color: #c2eddf;
