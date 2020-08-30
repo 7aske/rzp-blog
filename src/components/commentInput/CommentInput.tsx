@@ -1,11 +1,13 @@
 import * as React from "react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
 import userCommentService from "../../services/modules/user/userCommentService";
 import Console from "../../utils/Console";
 import MaterializeTextarea from "../materialize/textarea/MaterializeTextarea";
 import localization from "./localization";
+import routes from "../../router/localization";
 
 type CommentInputProps = {
 	idPost: number;
@@ -51,7 +53,11 @@ export const CommentInput = (props: CommentInputProps) => {
 						<button onClick={submit} className="btn theme-green"
 						        type="button">{localization[locale].buttonText}</button>
 					</div>
-				</div> : <div/>}
+				</div> : <div>
+					{localization[locale].loginText}
+					<br/>
+					<Link className="theme-green-text" to="/login">{routes[locale].login}</Link>
+				</div>}
 		</div>
 	);
 };

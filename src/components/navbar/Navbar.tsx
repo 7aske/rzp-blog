@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Route } from "react-router";
 import "../../assets/img/logo.png";
+import { Link } from "react-router-dom";
 // @ts-ignore
 import logo from "../../assets/img/logo.png";
 import { AppContext } from "../../context/AppContext";
@@ -72,7 +73,7 @@ export const Navbar = () => {
 			<div className="spacer"/>
 			<div className="menu container">
 
-				<a className="nav-logo"><img src={logo} alt="Logo"/></a>
+				<Link to="/" className="nav-logo"><img src={logo} alt="Logo"/></Link>
 				<ul className="menu right hide-on-large-only">
 					{mobileNav.map((item, i) => <li key={i}>{item}</li>)}
 				</ul>
