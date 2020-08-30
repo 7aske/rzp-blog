@@ -1,5 +1,5 @@
 interface CommentService {
-	getAllByIdPost: (idPost: number) => Promise<CommentDTO[]>;
+	getAllByIdPost: (idPost: number, page: number, count?: number) => Promise<CommentDTO[]>;
 }
 
 interface UserCommentService {
