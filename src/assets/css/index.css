@@ -84,6 +84,10 @@ main {
   color: #eeeeee;
 }
 
+.hr {
+  border-color: #4ecca3;
+}
+
 .theme {
   background-color: #4ecca3 !important;
 }

@@ -1,0 +1,11 @@
+.comment-list {
+  margin-bottom: 3em;
+}
+.comment-list .comment-list-item {
+  padding: 0 1em;
+  margin-bottom: 1em;
+  border-left: 2px solid #4ecca3;
+}
+.comment-list .comment-list-item .btn:hover {
+  color: #eeeeee;
+}

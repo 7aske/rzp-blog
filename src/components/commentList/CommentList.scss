@@ -1,0 +1,15 @@
+@import "../../assets/css/theme";
+
+.comment-list {
+	margin-bottom: 3em;
+	.comment-list-item {
+		padding: 0 1em;
+		margin-bottom: 1em;
+		border-left: 2px solid $theme-green;
+		.btn {
+			&:hover {
+				color: $theme-white;
+			}
+		}
+	}
+}
