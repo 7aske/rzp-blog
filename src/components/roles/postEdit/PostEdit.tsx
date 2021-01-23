@@ -4,12 +4,6 @@ import { useHistory, useParams } from "react-router";
 import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
 import { getErrorText } from "../../../pages/errors/localization";
-import adminCategoryService from "../../../services/modules/admin/adminCategoryService";
-import adminPostService from "../../../services/modules/admin/adminPostService";
-import adminTagService from "../../../services/modules/admin/adminTagService";
-import authorCategoryService from "../../../services/modules/author/authorCategoryService";
-import authorPostService from "../../../services/modules/author/authorPostService";
-import authorTagService from "../../../services/modules/author/authorTagService";
 import Console from "../../../utils/Console";
 import { hasRole, scrollToTop } from "../../../utils/utils";
 import { FloatingActionButton } from "../../floatingActionButton/FloatingActionButton";
@@ -22,31 +16,35 @@ import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./PostEdit.css";
 import { PostEditor } from "./postEditor/PostEditor";
+import PostService from "../../../services/Post.service";
+import TagService from "../../../services/Tag.service";
+import CategoryService from "../../../services/Category.service";
+import { Post } from "../../../@types/Post";
+import { Tag } from "../../../@types/Tag";
+import PostPreviewService from "../../../services/PostPreview.service";
+import { Category } from "../../../@types/Category";
+
+const postService = new PostService();
+const tagService = new TagService();
+const categoryService = new CategoryService()
+const postPreviewService = new PostPreviewService()
 
 type PostEditProps = {
 	roles: string[];
 };
 export const PostEdit = (props: PostEditProps) => {
-
-	const postServices: PostService =
-		hasRole(props.roles, "admin") ? adminPostService : authorPostService;
-	const tagServices =
-		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
-	const categoryServices =
-		hasRole(props.roles, "admin") ? adminCategoryService : authorCategoryService;
-
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [locale] = useLocale();
-	const [post, setPost] = useState<PostDTO>();
+	const [post, setPost] = useState<Post>();
 	const [tags, setTags] = useState<Tag[]>([]);
 	const history = useHistory();
 	const {ctx} = useContext(AppContext);
 	const {postSlug} = useParams();
 
 	const getCategories = () => {
-		categoryServices.getAll().then(_categories => {
+		categoryService.getAll().then(_categories => {
 			setCategories(_categories);
 		}).catch(err => {
 			Console.error(err);
@@ -55,14 +53,14 @@ export const PostEdit = (props: PostEditProps) => {
 	};
 
 	useEffect(() => {
-		if (post && !post.idCategory)
-			setPost({...(post as PostDTO), idCategory: categories[0].idCategory});
+		if (post && !post.category)
+			setPost({...(post as Post), category: categories[0]});
 		// eslint-disable-next-line
 	}, [categories]);
 
 
 	const getTags = () => {
-		tagServices.getAll().then(_tags => {
+		tagService.getAll().then(_tags => {
 			setTags(_tags);
 		}).catch(err => {
 			Console.error(err);
@@ -71,19 +69,29 @@ export const PostEdit = (props: PostEditProps) => {
 	};
 
 	const savePost = () => {
-		const service = post?.idPost ? postServices.update : postServices.save;
-		service(post!).then(_post => {
-			setMessages([localization[locale].postSavedText]);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			}
-		});
+		if (isNaN(post?.id!)){
+			postService.save(post!).then(_post => {
+				setMessages([localization[locale].postSavedText]);
+			}).catch(err => {
+				Console.error(err);
+				if (err.response && err.response.data) {
+					setErrors([getErrorText(err.response.data.error, locale)]);
+				}
+			});
+		} else {
+			postService.update(post!).then(_post => {
+				setMessages([localization[locale].postSavedText]);
+			}).catch(err => {
+				Console.error(err);
+				if (err.response && err.response.data) {
+					setErrors([getErrorText(err.response.data.error, locale)]);
+				}
+			});
+		}
 	};
 
 	const deletePost = () => {
-		postServices.deleteById(post!.idPost).then(_post => {
+		postService.deleteById(post!.id!).then(_post => {
 			setMessages([localization[locale].postDeletedText]);
 			setTimeout(() => {
 				history.replace("/admin/posts");
@@ -98,7 +106,7 @@ export const PostEdit = (props: PostEditProps) => {
 
 	useEffect(() => {
 		if (postSlug) {
-			postServices.getByPostSlug(postSlug).then(_post => {
+			postService.getByPostSlug(postSlug).then(_post => {
 				setPost(_post);
 			}).catch(err => {
 				Console.error(err);
@@ -107,7 +115,7 @@ export const PostEdit = (props: PostEditProps) => {
 
 		getCategories();
 		getTags();
-		setPost({...(post as PostDTO), postPublished: false, idUser: ctx.user!.idUser});
+		setPost({...(post as Post), published: false, user: ctx.user!});
 		// eslint-disable-next-line
 	}, []);
 
@@ -115,7 +123,7 @@ export const PostEdit = (props: PostEditProps) => {
 		const value = ev.target.value;
 		const id = ev.target.id;
 
-		setPost({...(post as PostDTO), [id]: value, postPublished: value === "true"});
+		setPost({...(post as Post), [id]: value, published: value === "true"});
 	};
 
 	useEffect(() => {
@@ -135,7 +143,7 @@ export const PostEdit = (props: PostEditProps) => {
 				onClick: scrollToTop,
 			}]}/>
 			<div className="row">
-				<div className="col s12 m12 l8">
+				<div className="col s12 m12 l10">
 					<div className="row">
 						<div className="col s12 m12 l8">
 							<div className="row">
@@ -143,56 +151,56 @@ export const PostEdit = (props: PostEditProps) => {
 								                  className="col s12 m12 l6"
 								                  id="postTitle"
 								                  type="text"
-								                  value={post?.postTitle}
+								                  value={post?.title}
 								                  label={localization[locale].postTitleLabel}
 								                  onChange={setProp}/>
 								<MaterializeInput placeholder={localization[locale].postSlugPlaceholder}
 								                  className="col s12 m12 l6"
 								                  id="postSlug"
 								                  type="text"
-								                  value={post?.postSlug}
+								                  value={post?.slug}
 								                  label={localization[locale].postSlugLabel}
 								                  onChange={setProp}/>
 							</div>
 							<div className="row">
 								<div className="col s12 m12 l6">
 									<GenericSelect
-										value={post?.idCategory}
-										list={categories.map(categ => new GenericElement<Category>(categ, categ.idCategory, categ.categoryName))}
+										value={post?.category?.id}
+										list={categories.map(categ => new GenericElement<Category>(categ, categ.id!, categ.name))}
 										labelText={localization[locale].postCategoryLabel}
 										onSelect={elem => elem?.id && setPost({
-											...(post as PostDTO),
-											idCategory: elem?.id,
+											...(post as Post),
+											category: elem,
 										})}/>
 								</div>
 								<MaterializeCheckbox id="postPublished"
 								                     className="col s12 m12 l6"
 								                     label={localization[locale].postPublishedLabel}
-								                     value={post?.postPublished + ""}
+								                     value={post?.published + ""}
 								                     onChange={setProp}/>
 							</div>
 							<div className="row">
-								<div className="col s12 m12 l8">
+								<div className="col s12 m12 l12">
 									<GenericChipSelect
 										labelText={localization[locale].postTagsLabel}
-										list={tags.map(tag => new GenericElement<Tag>(tag, tag.idTag, tag.tagName))}
+										list={tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name))}
 										onUpdate={elems => setPost({
-											...(post as PostDTO),
+											...(post as Post),
 											tags: elems.map(elem => ({
-												idTag: elem.id,
-												tagName: elem.name,
+												id: elem.id,
+												name: elem.name,
 											})),
 										})}
-										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.idTag, tag.tagName)) : []}/>
+										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name)) : []}/>
 								</div>
 							</div>
 							<div className="row">
 								<MaterializeTextarea
 									id="postExcerpt"
-									className="col s12 m12 l8"
+									className="col s12 m12 l12"
 									placeholder={localization[locale].postExcerptPlaceholder}
 									spellCheck={false}
-									value={post?.postExcerpt}
+									value={post?.excerpt}
 									label={localization[locale].postExcerptLabel}
 									onChange={setProp}/>
 							</div>
@@ -222,9 +230,9 @@ export const PostEdit = (props: PostEditProps) => {
 					</div>
 					<div className="row">
 						<PostEditor locale={locale}
-						            id={post ? post.idPost : undefined}
-						            value={post ? post.postBody : undefined}
-						            onChange={(postBody) => setPost({...(post as PostDTO), postBody: postBody})}/>
+						            id={post ? post.id : undefined}
+						            value={post ? post.body : undefined}
+						            onChange={(postBody) => setPost({...(post as Post), body: postBody})}/>
 					</div>
 				</div>
 			</div>

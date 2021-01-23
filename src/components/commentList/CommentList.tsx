@@ -1,11 +1,14 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
-import commentService from "../../services/commentService";
 import Console from "../../utils/Console";
 import { CommentInput } from "../commentInput/CommentInput";
 import "./CommentList.css";
 import localization from "./localization";
+import CommentService from "../../services/Comment.service";
+import { User } from "../../@types/User";
+
+const commentService = new CommentService();
 
 type CommentListProps = {
 	idPost: number;
@@ -78,7 +81,7 @@ const CommentListItem = ({comment: {commentBody, commentDatePosted, idComment, i
 
 	return (
 		<div key={idComment} className="comment-list-item">
-			<h6 className="theme-green-text">{(idUser as UserDTO).userUsername}</h6>
+			<h6 className="theme-green-text">{(idUser as User).username}</h6>
 			<Moment className="theme-grey-light-text" locale={locale} fromNow>{commentDatePosted}</Moment>
 			<p ref={elem => setBodyRef(elem)} className={longComment ? "truncate" : ""}>
 				{commentBody}

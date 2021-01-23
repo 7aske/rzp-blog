@@ -1,56 +1,44 @@
 import * as moment from "moment";
 import "moment/locale/sr";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
-import adminPostService from "../../../services/modules/admin/adminPostService";
-import authorPostService from "../../../services/modules/author/authorPostService";
 import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./PostView.css";
+import { PostPreview } from "../../../@types/PostPreview";
+import PostService from "../../../services/Post.service";
+import PostPreviewService from "../../../services/PostPreview.service";
+import { usePageable } from "../../../hooks/usePageable";
+
+const postService = new PostService();
+const postPreviewService = new PostPreviewService();
 
 type AdminPostListProps = {};
 export const PostView = (props: AdminPostListProps) => {
-	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
-	const itemsPerPage = 10;
+	const {page, perPage, setPage} = usePageable();
 	const pageCount = useRef<number>(0);
-	const [currentPage, setCurrentPage] = useState(0);
-	const [posts, setPosts] = useState<PostPreviewDTO[]>([]);
+	const [posts, setPosts] = useState<PostPreview[]>([]);
 	moment.locale(locale);
 
 	useEffect(() => {
-		let action;
-		if (ctx.user && ctx.user.userRoles.indexOf("admin") !== -1) {
-			action = adminPostService.getPageCount;
-		} else {
-			action = authorPostService.getPageCount;
-		}
-		action(itemsPerPage).then(_count => {
+		postService.getPageCount({page, count: perPage}).then(_count => {
 			pageCount.current = _count;
 		});
 		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		let action;
-		if (ctx.user && ctx.user.userRoles.indexOf("admin") !== -1) {
-			action = adminPostService.getAllPreview;
-		} else {
-			action = authorPostService.getAllPreview;
-		}
-		action(currentPage, itemsPerPage).then(_posts => {
-			_posts = new Array(itemsPerPage).fill(null).map((_, i) => _posts[i]);
+		postPreviewService.getAll({page, count: perPage}).then(_posts => {
 			setPosts(_posts);
-		}).catch(err => {
+		}).catch(() => {
 			setPosts([]);
-			Console.error(err);
 		});
 		// eslint-disable-next-line
-	}, [currentPage]);
+	}, [page]);
 
 	return (
 		<div className="admin-post-list">
@@ -88,47 +76,41 @@ export const PostView = (props: AdminPostListProps) => {
 				</li>
 				{posts.map((post, i) => <AdminPostListItem key={i} post={post} locale={locale}/>)}
 			</ul>
-			<Pagination className={"right"} onPageChange={setCurrentPage} pageCount={pageCount.current}/>
+			<Pagination className={"right"} onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
 	);
 };
 
 
 type AdminPostListItemProps = {
-	post: PostPreviewDTO | null;
+	post: PostPreview;
 	locale: string;
 };
 const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
-	if (post !== undefined && post !== null) {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
 					<div className="col s6 m6 l2 truncate">
-						<Link to={"/admin/posts/edit/" + post.postSlug}><i
+						<Link to={"/admin/posts/edit/" + post.slug}><i
 							className="material-icons">edit</i></Link>
-						<Link to={"/posts/" + post.postSlug}>{post.postTitle}</Link>
+						<Link to={"/posts/" + post.slug}>{post.title}</Link>
 					</div>
 					<div className="col s2 hide-on-med-and-down truncate">
-						<Link to={"/posts/" + post.postSlug}>{post.postSlug}</Link>
+						<Link to={"/posts/" + post.slug}>{post.slug}</Link>
 					</div>
 					<div className="col s2 hide-on-med-and-down">
-						{post.postAuthor}
+						{post.user.displayName}
 					</div>
 					<div className="col s2 hide-on-med-and-down">
-						<span className="blob grey darken-2">{post.categoryName}</span>
+						<span className="blob grey darken-2">{post.category.name}</span>
 					</div>
 					<div className="col s3 m3 l2 truncate">
-						{post.postPublished ? localization[locale].published : ""}
+						{post.recordStatus === 1 ? localization[locale].published : ""}
 					</div>
 					<div className="col s3 m3 l2">
-						<Moment locale={locale} fromNow>{post.postDateUpdated}</Moment>
+						<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>
 					</div>
 				</div>
 			</li>
 		);
-	} else {
-		return (
-			<li style={{border: "none"}} className="admin-post-list-item collection-item">&nbsp;</li>
-		);
-	}
 };

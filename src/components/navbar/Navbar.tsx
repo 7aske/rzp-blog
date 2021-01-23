@@ -22,7 +22,7 @@ export const Navbar = () => {
 
 	const loggedIn = ctx.user !== null;
 
-	const roles = ctx.user ? ctx.user.userRoles : [];
+	const roles = ctx.user ? ctx.user.roles : [];
 	Console.log(roles);
 
 

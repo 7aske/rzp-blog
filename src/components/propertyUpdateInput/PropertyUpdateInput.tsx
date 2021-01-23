@@ -2,11 +2,13 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { getErrorText } from "../../pages/errors/localization";
-import userUserService from "../../services/modules/user/userUserService";
 import Console from "../../utils/Console";
 import { MessageList } from "../messageList/MessageList";
 import localization from "./localization";
 import "./PropertyUpdateInput.css";
+import UserService from "../../services/User.service";
+
+const userService = new UserService();
 
 type PropertyUpdateInputProps = {
 	labelText: string;
@@ -50,8 +52,8 @@ export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 
 	const updateProperty = () => {
 		if (inputRef)
-			userUserService.updateProperty(props.property, inputRef.value).then(user => {
-				inputRef.value = user[props.property] as string;
+			userService.updateProperty(props.property, inputRef.value).then(user => {
+				inputRef.value = (user as any)[props.property] as string;
 				setCtx({user});
 				setMessages([localization[props.locale || "en"].success]);
 			}).catch(err => {

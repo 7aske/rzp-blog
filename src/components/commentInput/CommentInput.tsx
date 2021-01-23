@@ -3,11 +3,13 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
-import userCommentService from "../../services/modules/user/userCommentService";
 import Console from "../../utils/Console";
 import MaterializeTextarea from "../materialize/textarea/MaterializeTextarea";
 import localization from "./localization";
 import routes from "../../router/localization";
+import CommentService from "../../services/Comment.service";
+
+const commentService = new CommentService();
 
 type CommentInputProps = {
 	idPost: number;
@@ -19,7 +21,7 @@ export const CommentInput = (props: CommentInputProps) => {
 	const [comment, setComment] = useState<CommentDTO>({
 		commentBody: "",
 		idPost: props.idPost,
-		idUser: {idUser: ctx.user ? ctx.user.idUser : undefined},
+		idUser: {idUser: ctx.user ? ctx.user.id: undefined},
 	});
 
 	useEffect(()=>{
@@ -27,7 +29,7 @@ export const CommentInput = (props: CommentInputProps) => {
 	}, [comment])
 
 	const submit = () => {
-		userCommentService.save(comment)
+		commentService.save(comment)
 			.then(_comment => {
 				if(props.onCommentSubmit) props.onCommentSubmit(_comment);
 				setComment({...comment, commentBody: ""});

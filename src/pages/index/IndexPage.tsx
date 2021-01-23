@@ -3,31 +3,36 @@ import { useEffect, useState } from "react";
 import { Pagination } from "../../components/pagination/Pagination";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
-import postService from "../../services/postService";
 import Console from "../../utils/Console";
 import "./IndexPage.css";
 import localization from "./localization";
+import PostService from "../../services/Post.service";
+import PostPreviewService from "../../services/PostPreview.service";
+import { usePageable } from "../../hooks/usePageable";
+
+const postService = new PostService();
+const postPreviewService = new PostPreviewService();
 
 type IndexPageProps = {};
 export const IndexPage = (props: IndexPageProps) => {
 	const [locale] = useLocale();
-	const postCount = 10;
-	const [posts, setPosts] = useState(new Array(postCount).fill(null));
+	const {page, perPage, setPage} = usePageable();
+	const [posts, setPosts] = useState(new Array(perPage).fill(null));
 	const [pageCount, setPageCount] = useState(1);
-	const [page, setPage] = useState(0);
 
 
 	useEffect(() => {
-		postService.getPageCount({count: postCount, published: true}).then(setPageCount);
+		postService.getPageCount({page, count: perPage})
+			.then(setPageCount);
 	}, []);
 
 	useEffect(() => {
-		postService.getAllPreview({count: postCount, page: page, published: true}).then(newPosts => {
-			setPosts(newPosts);
-		}).catch(err => {
-			Console.error(err);
-			setPosts([]);
-		});
+		postPreviewService.getAll({page, count: perPage})
+			.then(setPosts)
+			.catch(err => {
+				Console.error(err);
+				setPosts([]);
+			});
 	}, [page]);
 
 

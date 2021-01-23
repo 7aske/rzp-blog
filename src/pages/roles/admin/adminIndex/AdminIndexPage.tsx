@@ -35,7 +35,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 		</NavLink>,
 	];
 
-	if (!hasRole(ctx.user?.userRoles!, "admin")) menuItems.pop();
+	if (!hasRole(ctx.user?.roles!, "admin")) menuItems.pop();
 	return (
 		<div id="admin-index-page" className="white-text">
 			<div className="row">
@@ -48,25 +48,25 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							<PostView/>
 						</Route>
 						<Route exact path="/admin/categories">
-							<CategoryEdit roles={ctx.user?.userRoles || []}/>
+							<CategoryEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route exact path="/admin/tags">
-							<TagEdit roles={ctx.user?.userRoles || []}/>
+							<TagEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route exact path="/admin/users">
 							<UserView/>
 						</Route>
 						<Route exact path="/admin/posts/edit">
-							<PostEdit roles={ctx.user?.userRoles || []}/>
+							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route path="/admin/posts/edit/:postSlug">
-							<PostEdit roles={ctx.user?.userRoles || []}/>
+							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route exact path="/admin/users/edit">
-							<UserEdit roles={ctx.user?.userRoles || []}/>
+							<UserEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route path="/admin/users/edit/:idUser">
-							<UserEdit roles={ctx.user?.userRoles || []}/>
+							<UserEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route>
 							<UserProfilePage/>

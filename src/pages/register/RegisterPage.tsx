@@ -4,29 +4,32 @@ import { useHistory } from "react-router";
 import MaterializeInput from "../../components/materialize/input/MaterializeInput";
 import { MessageList } from "../../components/messageList/MessageList";
 import useLocale from "../../hooks/useLocale";
-import userService from "../../services/userService";
 import Console from "../../utils/Console";
 import { getErrorText } from "../errors/localization";
 import localization from "./localization";
 import "./RegisterPage.css";
+import { User } from "../../@types/User";
+import UserService from "../../services/User.service";
+
+const userService = new UserService();
 
 type RegisterPageProps = {};
 export const RegisterPage = (props: RegisterPageProps) => {
 	const history = useHistory();
 	const [locale] = useLocale();
 	const [user, setUser] = useState<User>({
-		idUser: 0,
-		userAbout: "",
-		userActive: true,
-		userAddress: "",
-		userDateCreated: "",
-		userDisplayName: "",
-		userEmail: "",
-		userFirstName: "",
-		userLastName: "",
-		userPassword: "",
-		userRoles: [],
-		userUsername: "",
+		id: undefined,
+		about: "",
+		active: true,
+		address: "",
+		dateCreated: "",
+		displayName: "",
+		email: "",
+		firstName: "",
+		lastName: "",
+		password: "",
+		roles: [],
+		username: "",
 	});
 
 	const [errors, setErrors] = useState<string[]>([]);
@@ -64,14 +67,14 @@ export const RegisterPage = (props: RegisterPageProps) => {
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userUsernameLabel}
 							                  className="col s12 m12 l6 xl4"
-							                  value={user?.userUsername}
+							                  value={user?.username}
 							                  id="userUsername"
 							                  onChange={updateProp}/>
 						</div>
 						<div className="row">
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userUsernameLabel}
-							                  value={user?.userPassword}
+							                  value={user?.password}
 							                  id="userPassword"
 							                  type="password"
 							                  className="col s12 m12 l6 xl4"
@@ -80,7 +83,7 @@ export const RegisterPage = (props: RegisterPageProps) => {
 						<div className="row">
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userDisplayNameLabel}
-							                  value={user?.userDisplayName}
+							                  value={user?.displayName}
 							                  id="userDisplayName"
 							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
@@ -88,7 +91,7 @@ export const RegisterPage = (props: RegisterPageProps) => {
 						<div className="row">
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userEmailLabel}
-							                  value={user?.userEmail}
+							                  value={user?.email}
 							                  id="userEmail"
 							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
@@ -96,7 +99,7 @@ export const RegisterPage = (props: RegisterPageProps) => {
 						<div className="row">
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userFirstNameLabel}
-							                  value={user?.userFirstName}
+							                  value={user?.firstName}
 							                  id="userFirstName"
 							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>
@@ -104,7 +107,7 @@ export const RegisterPage = (props: RegisterPageProps) => {
 						<div className="row">
 							<div className="col s12 m12 l3 xl4"/>
 							<MaterializeInput label={localization[locale].userLastNameLabel}
-							                  value={user?.userLastName}
+							                  value={user?.lastName}
 							                  id="userLastName"
 							                  className="col s12 m12 l6 xl4"
 							                  onChange={updateProp}/>

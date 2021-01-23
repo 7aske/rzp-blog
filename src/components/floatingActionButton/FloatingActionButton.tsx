@@ -17,7 +17,7 @@ export const FloatingActionButton = (props: FloatingActionButtonProps) => {
 			<ToolbarButton className={props.className} onClick={props.onClick} icon={props.icon}/>
 			<ul>
 				{props.toolbar ? props.toolbar.map(tool =>
-						<li><ToolbarButton icon={tool.icon} onClick={tool.onClick} className={tool.className}/></li>)
+						<li key={tool.icon}><ToolbarButton icon={tool.icon} onClick={tool.onClick} className={tool.className}/></li>)
 					: ""}
 			</ul>
 		</div>

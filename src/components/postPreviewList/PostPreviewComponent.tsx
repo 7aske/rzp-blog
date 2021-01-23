@@ -2,26 +2,27 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import useLocale from "../../hooks/useLocale";
 import { formatDate } from "../../utils/utils";
+import {PostPreview} from "../../@types/PostPreview";
 import "./PostPreview.css";
 
 type PostPreviewProps = {
-	post: PostPreviewDTO
+	post: PostPreview
 };
-export const PostPreview = ({post: {postDatePosted, postExcerpt, postSlug, postTitle, postAuthor, categoryName, tags}}: PostPreviewProps) => {
+export const PostPreviewComponent = ({post: {createdDate, excerpt, slug, title, user, category, tags}}: PostPreviewProps) => {
 	const [locale] = useLocale();
 
 	return (
 		<li className="collection-item post-preview-item">
 			<div className="post-preview">
 				<div className="category">
-					<span><Link to={"/category/" + categoryName}>{categoryName}</Link></span>
+					<span><Link to={"/category/" + category.name}>{category.name}</Link></span>
 				</div>
-				<Link to={"/posts/" + postSlug}><h4>{postTitle}</h4></Link>
-				<h5>{postAuthor.toLocaleUpperCase()}</h5>
-				<h6>{formatDate(postDatePosted, locale)}</h6>
-				<p>{postExcerpt}</p>
+				<Link to={"/posts/" + slug}><h4>{title}</h4></Link>
+				<h5>{user.displayName.toLocaleUpperCase()}</h5>
+				<h6>{formatDate(createdDate!, locale)}</h6>
+				<p>{excerpt}</p>
 				<div className="tags">
-					{tags.map(tag => <span key={tag.tagName} className="tag"><Link replace={true} className="theme-green-lightest-text" to={`/tag/${tag.tagName}`}>{tag.tagName}</Link></span>)}
+					{tags.map(tag => <span key={tag.name} className="tag"><Link replace={true} className="theme-green-lightest-text" to={`/tag/${tag.name}`}>{tag.name}</Link></span>)}
 				</div>
 			</div>
 		</li>

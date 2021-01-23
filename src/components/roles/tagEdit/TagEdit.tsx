@@ -2,26 +2,23 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import useLocale from "../../../hooks/useLocale";
 import { getErrorText } from "../../../pages/errors/localization";
-import adminTagService from "../../../services/modules/admin/adminTagService";
-import authorTagService from "../../../services/modules/author/authorTagService";
 import Console from "../../../utils/Console";
-import { hasRole } from "../../../utils/utils";
-import { GenericAutocomplete } from "../../genericSelect/GenericAutocomplete";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
-import { Stats } from "../../stats/Stats";
 import localization from "./localization";
 import "./TagEdit.css";
+import { Tag } from "../../../@types/Tag";
+import { Role } from "../../../@types/Role";
+import TagService from "../../../services/Tag.service";
+
+const tagService = new TagService();
 
 type AdminTagListProps = {
-	roles: string[];
+	roles: Role[];
 };
 export const TagEdit = (props: AdminTagListProps) => {
-	const tagServices =
-		hasRole(props.roles, "admin") ? adminTagService : authorTagService;
 	const [tags, setTags] = useState<Tag[]>([]);
-	const [stats, setStats] = useState<StatsDTO>();
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
@@ -35,16 +32,12 @@ export const TagEdit = (props: AdminTagListProps) => {
 
 
 	const getTags = () => {
-		tagServices.getAll()
-			.then(_tags => setTags(_tags))
+		tagService.getAll()
+			.then(setTags)
 			.catch(err => {
 				Console.error(err);
 				setTags([]);
 			});
-
-		tagServices.getStats()
-			.then(_stats => setStats(_stats))
-			.catch(err => Console.log(err));
 	};
 
 	const setTag = (tag: Tag) => {
@@ -53,8 +46,8 @@ export const TagEdit = (props: AdminTagListProps) => {
 				idRef.value = "";
 				nameRef.value = "";
 			} else {
-				idRef.value = tag.idTag.toString();
-				nameRef.value = tag.tagName;
+				idRef.value = tag.id!.toString();
+				nameRef.value = tag.name;
 			}
 			M.updateTextFields();
 		}
@@ -63,21 +56,26 @@ export const TagEdit = (props: AdminTagListProps) => {
 	const saveTag = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		const form = ev.target as HTMLFormElement;
-		const tag: Tag = {
-			idTag: parseInt(form["idTag"].value),
-			tagName: form["tag-name"].value,
+		const categ: Tag = {
+			id: parseInt(form["idTag"].value),
+			name: form["tag-name"].value,
 		};
-		const service = isNaN(tag.idTag) ? tagServices.save : tagServices.update;
 
-		service(tag).then(() => {
-			getTags();
-			setMessages([localization[locale].tagSavedMessage]);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			}
-		});
+		if (isNaN(categ.id!)) {
+			tagService.save(categ).then(_tag => {
+				setTags([...tags, _tag]);
+				setMessages([localization[locale].tagSavedMessage]);
+			}).catch(err => {
+				setErrors([getErrorText(err, locale)]);
+			});
+		} else {
+			tagService.update(categ).then(_tag => {
+				setTags(tags.map(t => t.id === _tag.id ? _tag : t));
+				setMessages([localization[locale].tagSavedMessage]);
+			}).catch(err => {
+				setErrors([getErrorText(err, locale)]);
+			});
+		}
 	};
 
 	const deleteTag = () => {
@@ -91,7 +89,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 			return;
 		}
 
-		tagServices.deleteById(tagId).then(() => {
+		tagService.deleteById(tagId).then(() => {
 			getTags();
 			setMessages([localization[locale].tagDeletedMessage]);
 			if (nameRef && idRef) {
@@ -114,7 +112,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 					<div className="row">
 						<div className="input-field col s12 m8">
 							<GenericSelect list={tags.map(elem =>
-								new GenericElement<Tag>(elem, elem.idTag, elem.tagName))}
+								new GenericElement<Tag>(elem, elem.id!, elem.name))}
 							               create={true}
 							               onSelect={elem => setTag(elem?.element)}
 							               newOptionText={localization[locale].tagNewOption}
@@ -155,9 +153,6 @@ export const TagEdit = (props: AdminTagListProps) => {
 						</div>
 					</div>
 				</form>
-				<div className="col s12 m6">
-					<Stats stats={stats} locale={locale}/>
-				</div>
 			</div>
 		</div>
 	);

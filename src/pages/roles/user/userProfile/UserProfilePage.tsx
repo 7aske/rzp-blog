@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { NavLink, Redirect, Route, Switch, useParams } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import { PasswordChangeInput } from "../../../../components/propertyUpdateInput/PasswordChangeInput";
 import { PropertyUpdateInput } from "../../../../components/propertyUpdateInput/PropertyUpdateInput";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
@@ -9,12 +9,13 @@ import useLocale from "../../../../hooks/useLocale";
 import Console from "../../../../utils/Console";
 import localization from "./localization";
 import "./UserProfilePage.css";
+import { User } from "../../../../@types/User";
 
 type UserProfilePageProps = {};
 export const UserProfilePage = (props: UserProfilePageProps) => {
 	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
-	const [user, setUser] = useState<UserDTO | null>();
+	const [user, setUser] = useState<User | null>();
 
 	useEffect(() => {
 		setUser(ctx.user);
@@ -60,12 +61,12 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 										<div className={p.className}>
 											<PropertyUpdateInput
 												locale={locale}
-												onChange={val => setUser({...(user as UserDTO), [p.prop]: val})}
+												onChange={val => setUser({...(user as User), [p.prop]: val})}
 												labelText={localization[locale][p.prop]}
 												property={p.prop}
 												element={p.element}
 												disabled={p.disabled}
-												value={user ? user![p.prop] : ""}/>
+												value={user ? (user as any)[p.prop] : ""}/>
 										</div>
 									);
 								})}
@@ -74,7 +75,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 						<Route exact path={"/user/profile/security"}>
 							<div className="row">
 								<div className="col s12 m12 l8">
-									<PasswordChangeInput locale={locale} />
+									<PasswordChangeInput locale={locale}/>
 								</div>
 							</div>
 						</Route>

@@ -135,9 +135,13 @@ const en: ErrorLocalizationStrings = {
 	"user.update.password-not-matching": "Passwords do not match",
 };
 
-export const getErrorText = (error: string, locale: string) => {
-	if (Object.keys(localization[locale]).indexOf(error) !== -1) {
-		return localization[locale][error];
+export const getErrorText = (error: any, locale: string) => {
+	let errKey = "generic";
+	if (error.response && error.response.data) {
+		errKey = error.response.data.error
+	}
+	if (Object.keys(localization[locale]).indexOf(errKey) !== -1) {
+		return localization[locale][errKey];
 	} else {
 		return localization[locale].generic;
 	}

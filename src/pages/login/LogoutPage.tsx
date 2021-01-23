@@ -9,7 +9,7 @@ export const LogoutPage = (props: LogoutPageProps) => {
 	const history = useHistory();
 	const {ctx, setCtx} = useContext(AppContext);
 	useEffect(() => {
-		Cookies.set("auth", "");
+		Cookies.remove("auth" );
 		history.replace("/login");
 		setCtx({...ctx, user: null});
 		// eslint-disable-next-line

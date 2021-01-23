@@ -1,18 +1,23 @@
+import "./UserEdit.css";
 import * as React from "react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useParams } from "react-router";
-import useLocale from "../../../hooks/useLocale";
-import { getErrorText } from "../../../pages/errors/localization";
-import adminRoleService from "../../../services/modules/admin/adminRoleService";
-import adminUserService from "../../../services/modules/admin/adminUserService";
 import Console from "../../../utils/Console";
-import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
 import GenericElement from "../../genericSelect/GenericElement";
 import MaterializeInput from "../../materialize/input/MaterializeInput";
 import MaterializeTextarea from "../../materialize/textarea/MaterializeTextarea";
-import { MessageList } from "../../messageList/MessageList";
+import RoleService from "../../../services/Role.service";
 import localization from "./localization";
-import "./UserEdit.css";
+import useLocale from "../../../hooks/useLocale";
+import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
+import { MessageList } from "../../messageList/MessageList";
+import { Role } from "../../../@types/Role";
+import { User } from "../../../@types/User";
+import { getErrorText } from "../../../pages/errors/localization";
+import { useParams } from "react-router";
+import UserService from "../../../services/User.service";
+
+const roleService = new RoleService();
+const userService = new UserService();
 
 type UserEditProps = {
 	roles: string[];
@@ -21,29 +26,27 @@ export const UserEdit = (props: UserEditProps) => {
 	const [locale] = useLocale();
 	const {idUser} = useParams();
 	const [user, setUser] = useState<User>({
-		idUser: 0,
-		userAbout: "",
-		userActive: true,
-		userAddress: "",
-		userDateCreated: "",
-		userDisplayName: "",
-		userEmail: "",
-		userFirstName: "",
-		userLastName: "",
-		userPassword: "",
-		userRoles: [],
-		userUsername: "",
+		id: undefined,
+		about: "",
+		active: true,
+		address: "",
+		dateCreated: "",
+		displayName: "",
+		email: "",
+		firstName: "",
+		lastName: "",
+		password: "",
+		roles: [],
+		username: "",
 	});
 	const [roles, setRoles] = useState<Role[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 
 	useEffect(() => {
-		adminRoleService.getAll().then(_roles => {
-			setRoles(_roles);
-		}).catch(err => {
-			Console.error(err);
-		});
+		roleService.getAll()
+			.then(setRoles)
+			.catch(Console.error);
 	}, []);
 
 	useEffect(() => {
@@ -52,27 +55,22 @@ export const UserEdit = (props: UserEditProps) => {
 	}, [user]);
 
 	useEffect(() => {
-		adminUserService.getById(idUser).then(_user => {
-			const u: User = {
-				..._user,
-				userPassword: "",
-				userRoles: _user.userRoles.filter(r => roles.find(r1 => r1.roleName !== r)).map(r => roles.find(r1 => r1.roleName === r)!),
-			};
-			setUser(u);
-		}).catch(err => {
-			Console.error(err);
-			setUser({...(user as User), userRoles: []});
-		});
+		userService.getById(idUser)
+			.then(setUser)
+			.catch(err => {
+				Console.error(err);
+				setUser({...(user as User), roles: []});
+			});
 	}, [idUser, roles]);
 
 	const updateProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		setUser({...(user as User), [ev.target.id]: ev.target.value, userActive: !(ev.target as any).checked});
+		setUser({...(user as User), [ev.target.id]: ev.target.value, active: !(ev.target as any).checked});
 	};
 
 	const save = () => {
 		const _user: User = {...(user as User)};
 
-		let action = _user.idUser ? adminUserService.update : adminUserService.save;
+		let action = _user.id ? userService.update : userService.save;
 
 		action(_user as any).then(() => {
 			setMessages([localization[locale].userSavedText]);
@@ -94,52 +92,52 @@ export const UserEdit = (props: UserEditProps) => {
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8"
 						                  disabled={true}
-						                  value={user?.idUser}
+						                  value={user?.id}
 						                  id="idUser"
 						                  type="text"
 						                  onChange={updateProp} label={localization[locale].idUserLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userUsername}
+						<MaterializeInput className="col s12 m12 l8" value={user?.username}
 						                  id="userUsername" type="text"
 						                  onChange={updateProp} label={localization[locale].userUsernameLabel}/>
 					</div>
-					{!user?.idUser ?
+					{!user?.id ?
 						<div className="row">
-							<MaterializeInput className="col s12 m12 l8" value={user?.userPassword}
+							<MaterializeInput className="col s12 m12 l8" value={user?.password}
 							                  id="userPassword" type="password"
 							                  onChange={updateProp} label={localization[locale].userPasswordLabel}/>
 						</div>
 						: ""}
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userDisplayName}
+						<MaterializeInput className="col s12 m12 l8" value={user?.displayName}
 						                  id="userDisplayName" type="text"
 						                  onChange={updateProp} label={localization[locale].userDisplayNameLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userEmail}
+						<MaterializeInput className="col s12 m12 l8" value={user?.email}
 						                  id="userEmail" type="text"
 						                  onChange={updateProp} label={localization[locale].userEmailLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userFirstName}
+						<MaterializeInput className="col s12 m12 l8" value={user?.firstName}
 						                  id="userFirstName" type="text"
 						                  onChange={updateProp} label={localization[locale].userFirstNameLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userLastName}
+						<MaterializeInput className="col s12 m12 l8" value={user?.lastName}
 						                  id="userLastName" type="text"
 						                  onChange={updateProp} label={localization[locale].userLastNameLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.userAddress}
+						<MaterializeInput className="col s12 m12 l8" value={user?.address}
 						                  id="userAddress" type="text"
 						                  onChange={updateProp} label={localization[locale].userAddressLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeTextarea
 							className="col s12 m12 l10"
-							value={user?.userAbout}
+							value={user?.about}
 							id="userAbout"
 							onChange={updateProp}
 							label={localization[locale].userAboutLabel}/>
@@ -149,14 +147,14 @@ export const UserEdit = (props: UserEditProps) => {
 							className="col s12 m12 l10"
 							onUpdate={elems => setUser({
 								...(user as User),
-								userRoles: elems.map(elem => ({
-									idRole: elem.id,
-									roleName: elem.name,
+								roles: elems.map(elem => ({
+									id: elem.id,
+									name: elem.name,
 								})),
 							})}
 							labelText={localization[locale].userRolesLabel}
-							value={user?.userRoles ? user?.userRoles.map(role => new GenericElement<Role>(role, role.idRole, role.roleName)) : []}
-							list={roles.map(r => new GenericElement<Role>(r, r.idRole, r.roleName))}/>
+							value={user?.roles ? user?.roles.map(role => new GenericElement<Role>(role, role.idRole, role.roleName)) : []}
+							list={roles.map(r => new GenericElement<Role>(r, r.id!, r.name))}/>
 					</div>
 					<div className="row">
 						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>

@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { getErrorText } from "../../pages/errors/localization";
-import userUserService from "../../services/modules/user/userUserService";
 import Console from "../../utils/Console";
 import { MessageList } from "../messageList/MessageList";
 import localization from "./localization";
+import UserService from "../../services/User.service";
+
+const userService = new UserService();
 
 type PasswordChangeInputProps = {
 	locale?: string;
@@ -20,7 +22,7 @@ export const PasswordChangeInput = (props: PasswordChangeInputProps) => {
 		const confirmPassword = form["confirmPassword"].value;
 		const newPassword = form["newPassword"].value;
 
-		userUserService.updatePassword(password, confirmPassword, newPassword).then(() => {
+		userService.updatePassword(password, confirmPassword, newPassword).then(() => {
 			setMessages([localization[props.locale || "en"].success]);
 		}).catch(err => {
 			Console.error(err);

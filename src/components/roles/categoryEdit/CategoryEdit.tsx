@@ -2,25 +2,21 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import useLocale from "../../../hooks/useLocale";
 import { getErrorText } from "../../../pages/errors/localization";
-import adminCategoryService from "../../../services/modules/admin/adminCategoryService";
-import authorCategoryService from "../../../services/modules/author/authorCategoryService";
 import Console from "../../../utils/Console";
-import { hasRole } from "../../../utils/utils";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
-import { Stats } from "../../stats/Stats";
 import "./CategoryEdit.css";
 import localization from "./localization";
+import CategoryService from "../../../services/Category.service";
+import { Category } from "../../../@types/Category";
+
+const categoryService = new CategoryService();
 
 type CategoryEditProps = {
 	roles: string[];
 };
 export const CategoryEdit = (props: CategoryEditProps) => {
-	const categoryServices =
-		hasRole(props.roles, "admin") ? adminCategoryService : authorCategoryService;
-
-	const [stats, setStats] = useState<StatsDTO>();
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
@@ -29,7 +25,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 
 	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const getCategories = () => {
-		categoryServices.getAll().then(_categories => {
+		categoryService.getAll().then(_categories => {
 			setCategoryList(_categories);
 		}).catch(err => {
 			Console.error(err);
@@ -42,7 +38,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 
 	useEffect(() => {
 		getCategories();
-		categoryServices.getStats().then(res => setStats(res)).catch(err => Console.error(err));
+		// eslint-disable-next-line
 	}, []);
 
 	const setCategory = (categ?: Category) => {
@@ -51,8 +47,8 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 				idRef.value = "";
 				nameRef.value = "";
 			} else {
-				idRef.value = categ.idCategory.toString();
-				nameRef.value = categ.categoryName;
+				idRef.value = categ.id!.toString();
+				nameRef.value = categ.name;
 			}
 			M.updateTextFields();
 		}
@@ -62,20 +58,25 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 		ev.preventDefault();
 		const form = ev.target as HTMLFormElement;
 		const categ: Category = {
-			idCategory: parseInt(form["idCategory"].value),
-			categoryName: form["categoryName"].value,
+			id: parseInt(form["idCategory"].value),
+			name: form["categoryName"].value,
 		};
-		const service = isNaN(categ.idCategory) ? categoryServices.save : categoryServices.update;
 
-		service(categ).then(() => {
-			getCategories();
-			setMessages([localization[locale].categorySavedMessage]);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			}
-		});
+		if (isNaN(categ.id!)) {
+			categoryService.save(categ).then(_categ => {
+				setCategoryList([...categoryList, _categ]);
+				setMessages([localization[locale].categorySavedMessage]);
+			}).catch(err => {
+				setErrors([getErrorText(err, locale)]);
+			});
+		} else {
+			categoryService.update(categ).then(_categ => {
+				setCategoryList(categoryList.map(c => c.id === _categ.id ? _categ : c));
+				setMessages([localization[locale].categorySavedMessage]);
+			}).catch(err => {
+				setErrors([getErrorText(err, locale)]);
+			});
+		}
 	};
 
 	const deleteCategory = () => {
@@ -89,7 +90,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 			return;
 		}
 
-		categoryServices.deleteById(categId).then(() => {
+		categoryService.deleteById(categId).then(() => {
 			getCategories();
 			setMessages([localization[locale].categoryDeletedMessage]);
 			if (nameRef && idRef) {
@@ -117,8 +118,8 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 								create={true}
 								list={categoryList.map(elem => new GenericElement<Category>(
 									elem,
-									elem.idCategory,
-									elem.categoryName,
+									elem.id!,
+									elem.name,
 								))} onSelect={(elem) => setCategory(elem?.element)}/>
 						</div>
 					</div>
@@ -157,9 +158,6 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 							</button>
 						</div>
 					</div>
-				</div>
-				<div className="col s12 m6">
-					<Stats locale={locale} stats={stats!}/>
 				</div>
 			</form>
 		</div>

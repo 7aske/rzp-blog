@@ -4,17 +4,20 @@ import { useHistory, useParams } from "react-router";
 import { CommentList } from "../../components/commentList/CommentList";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
-import postService from "../../services/postService";
 import Console from "../../utils/Console";
 import { formatDate, scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import "./PostPage.css";
+import PostService from "../../services/Post.service";
+import { Post } from "../../@types/Post";
+
+const postService = new PostService();
 
 export const PostPage = () => {
 	const [locale] = useLocale();
 	const {slug} = useParams();
 	const history = useHistory();
-	const [post, setPost] = useState<PostDTO>();
+	const [post, setPost] = useState<Post>();
 
 	useEffect(() => {
 		Console.log(slug);
@@ -38,15 +41,15 @@ export const PostPage = () => {
 			<button className={"btn btn-back"} onClick={history.goBack}>{localization[locale].back}</button>
 			{post ?
 				<article className="animate__animated animate__fadeIn animate__slow">
-					<h2 className="title">{post?.postTitle}</h2>
-					<h5 className="author">{post?.postAuthor.toUpperCase()}</h5>
-					<h6 className="date">{formatDate(post?.postDatePosted ? post.postDatePosted : "", locale)}</h6>
-					<MarkdownContainer content={post?.postBody ? post?.postBody : ""}/>
+					<h2 className="title">{post?.title}</h2>
+					<h5 className="author">{post?.user?.displayName?.toUpperCase()}</h5>
+					<h6 className="date">{formatDate(post?.createdDate ? post.createdDate : "", locale)}</h6>
+					<MarkdownContainer content={post?.body ? post?.body : ""}/>
 					<hr/>
 					<h4 className="theme-green-text">{localization[locale].commentTitle}</h4>
 					<div className="row">
 						<div className="col s12 m12 l6">
-							<CommentList idPost={post.idPost} locale={locale}/>
+							<CommentList idPost={post.id!} locale={locale}/>
 						</div>
 					</div>
 				</article>
@@ -63,3 +66,4 @@ export const PostPage = () => {
 		</div>
 	);
 };
+

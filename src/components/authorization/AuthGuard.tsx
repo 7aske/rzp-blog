@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import authService from "../../services/authService";
 import Console from "../../utils/Console";
+import AuthService from "../../services/Auth.service";
+
+const authService = new AuthService();
 
 type AuthGuardProps = {
 	children?: JSX.Element[] | JSX.Element | never[];

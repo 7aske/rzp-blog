@@ -1,18 +1,20 @@
-import Cookies from "js-cookie";
-import jwtDecode from "jwt-decode";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { MessageList } from "../../components/messageList/MessageList";
 import { AppContext } from "../../context/AppContext";
-import { backendUrl } from "../../globals";
 import useLocale from "../../hooks/useLocale";
-import authService from "../../services/authService";
-import userService from "../../services/userService";
-import { getHistoryErrors } from "../../utils/utils";
+import { getHistoryErrors, hasRole } from "../../utils/utils";
 import { getErrorText } from "../errors/localization";
 import "./LoginPage.css";
 import Console from "../../utils/Console";
+import UserService from "../../services/User.service";
+import { environment } from "../../environment";
+import AuthService from "../../services/Auth.service";
+import { User } from "../../@types/User";
+
+const userService = new UserService();
+const authService = new AuthService();
 
 export const LoginPage = () => {
 	const [locale] = useLocale();
@@ -20,26 +22,36 @@ export const LoginPage = () => {
 	const {ctx, setCtx} = useContext(AppContext);
 	const [errors, setErrors] = useState<string[]>([]);
 
-	const success = () => {
-		setErrors([]);
-		const idUser = (jwtDecode(Cookies.get("auth")!) as any).idUser;
+	const postLogin = (user: User) => {
+		if (hasRole(user.roles, "admin")) {
+			history.replace("/admin/users");
+		} else if (hasRole(user.roles, "user")) {
+			history.replace("/user/profile");
+		} else {
+			history.replace("/");
+		}
+	};
 
-		userService.getById(idUser).then(_user => {
-			setCtx({...ctx, user: _user});
-			if (_user.userRoles.indexOf("admin") !== -1) {
-				history.replace("/admin/users");
-			} else if (_user.userRoles.indexOf("user") !== -1) {
-				history.replace("/user/profile");
-			} else {
-				history.replace("/");
+	const success = (token: any) => {
+		(async () => {
+			setErrors([]);
+			try {
+				const user = await userService.getByUsername(token.user);
+				user.roles = await userService.getRoles(user);
+				setCtx({...ctx, user: user});
+				postLogin(user);
+			} catch (e) {
+				failure(e);
 			}
-		}).catch(failure);
+		})();
 	};
 
 	const failure = (err: any) => {
 		Console.error(err);
 		if (err.response && err.response.data) {
 			setErrors([getErrorText(err.response.data.error, locale)]);
+		} else {
+			setErrors([err.message]);
 		}
 	};
 
@@ -49,14 +61,16 @@ export const LoginPage = () => {
 		const username = form["username"].value;
 		const password = form["password"].value;
 
-		authService.login(username, password)
+		authService.login({username, password})
 			.then(success)
 			.catch(failure);
 	};
 
 	useEffect(() => {
 		M.updateTextFields();
-		authService.verify().then(success);
+		authService.verify()
+			.then(success)
+			.catch(failure);
 		setErrors(getHistoryErrors(history));
 
 		// eslint-disable-next-line
@@ -64,7 +78,7 @@ export const LoginPage = () => {
 
 	return (
 		<div id="login-page" className="container">
-			<form className="col s12" method="post" onSubmit={login} action={backendUrl + "/auth/login"}>
+			<form className="col s12" method="post" onSubmit={login}>
 				<div className="row">
 					<div className="col s12 m3 l3 xl4"/>
 					<div className="input-field col s12 m6 l6 xl4">

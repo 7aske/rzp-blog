@@ -1,4 +1,5 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useState, useEffect } from "react";
+import { User } from "../@types/User";
 
 interface AppContext {
 	ctx: AppState,
@@ -6,7 +7,7 @@ interface AppContext {
 }
 
 type AppState = {
-	user: UserDTO | null;
+	user: User | null;
 }
 
 const initialAppState: AppState = {
@@ -20,6 +21,7 @@ export const AppContext = createContext<AppContext>({
 
 export const AppContextProvider = (props: any) => {
 	const [appState, setAppState] = useState(initialAppState);
+	useEffect(()=>console.log(appState), [appState])
 
 	return <AppContext.Provider value={{ctx: appState, setCtx: setAppState}}>
 		{props.children}

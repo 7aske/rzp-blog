@@ -1,18 +1,16 @@
-interface UserUserService {
-	updateProperty: (property: string, value: any) => Promise<UserDTO>;
-	updatePassword: (password: string, confirmPassword: string, newPassword: string) => Promise<UserDTO>;
-	register: (user: UserDTO) => Promise<UserDTO>;
-}
+import { User } from "../User";
+import { Role } from "../Role";
 
-interface AdminUserService {
-	getAll: () => Promise<UserDTO[]>;
-	getById: (idUser: number) => Promise<UserDTO>;
-	save: (user: User) => Promise<UserDTO>;
-	update: (user: UserDTO) => Promise<UserDTO>;
-	deleteById: (idUser: number) => Promise<boolean>;
-}
-
-interface UserService {
-	register: (user: User) => Promise<UserDTO>;
-	getById: (idUser: number) => Promise<UserDTO>;
+interface IUserService {
+	getAll: () => Promise<User[]>;
+	getById: (id: number) => Promise<User>;
+	getByUsername: (id: string) => Promise<User>;
+	save: (user: User) => Promise<User>;
+	update: (user: User) => Promise<User>;
+	deleteById: (id: number) => Promise<void>;
+	register: (user: User) => Promise<User>;
+	updatePassword: (password:string, confirmPassword: string, newPassword: string) => Promise<void>;
+	updateProperty: (prop: string, value: string) => Promise<User>;
+	getPageCount: (params?: PostQueryParams) => Promise<number>,
+	getRoles: (user: User) => Promise<Role[]>
 }

@@ -4,7 +4,6 @@ import marked from "marked";
 import * as React from "react";
 import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
-import authorMediaService from "../../../../services/modules/author/authorMediaService";
 import { MessageList } from "../../../messageList/MessageList";
 import localization from "./localization";
 import "./PostEditor.css";
@@ -36,9 +35,10 @@ export const PostEditor = (props: PostEditorProps) => {
 				           showIcons: ["strikethrough", "code", "table", "redo", "heading", "undo", "horizontal-rule"],
 				           // imageUploadEndpoint: `${backendUrl}/author/media/mdeupload`,
 				           imageUploadFunction: (file, onSuccess, onError) => {
-					           authorMediaService.mdeUpload(file)
-						           .then(filePath => onSuccess(filePath))
-						           .catch(err => onError(err));
+								// TODO
+					           // authorMediaService.mdeUpload(file)
+						       //     .then(filePath => onSuccess(filePath))
+						       //     .catch(err => onError(err));
 				           },
 				           renderingConfig: {
 					           codeSyntaxHighlighting: true,

@@ -1,8 +1,8 @@
 import React from "react";
-import { websiteUrl } from "../../globals";
 import routes from "../../router/localization";
 import { LocaleSwitch } from "../localization/LocaleSwitch";
 import { MenuItem, MenuItemBuilder, MenuItemType } from "./MenuItem";
+import { environment } from "../../environment";
 
 class MenuBuilder {
 	private navItems: MenuItem[];
@@ -13,12 +13,13 @@ class MenuBuilder {
 	private locale: string;
 
 	constructor(locale: string) {
+		const {websiteUrl} = environment;
 		this.locale = locale;
 
 		this.navItems = [
 			new MenuItemBuilder("/", routes[this.locale].home)
 				.order(0).build(),
-			new MenuItemBuilder(websiteUrl, routes[this.locale].website, MenuItemType.ANCHOR)
+			new MenuItemBuilder(websiteUrl!, routes[this.locale].website, MenuItemType.ANCHOR)
 				.order(1).build(),
 			new MenuItemBuilder("/user/profile", routes[this.locale].profile)
 				.order(20).roles(["user"]).loggedIn(true).build(),
