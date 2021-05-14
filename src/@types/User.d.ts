@@ -1,18 +1,7 @@
-import { Identifiable } from "./generic/Identifiable";
-import { Auditable } from "./generic/Auditable";
+import { User as ApiUser, Role } from "../api/api";
 
-export interface User extends Identifiable, Auditable {
-	username: string;
-	displayName: string;
-	email: string;
-	firstName: string;
-	lastName: string;
-	password: string;
-	address: string;
-	about: string;
-	dateCreated: string;
+export interface User extends ApiUser {
 	roles: Role[];
-	active: boolean;
 }
 
 export interface UserCommentDTO {

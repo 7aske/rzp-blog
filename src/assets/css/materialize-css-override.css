@@ -73,6 +73,7 @@ label {
 }
 
 ul.pagination li {
+  user-select: none;
   height: 100%;
 }
 ul.pagination li.active {

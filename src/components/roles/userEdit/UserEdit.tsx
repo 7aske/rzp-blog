@@ -10,17 +10,17 @@ import localization from "./localization";
 import useLocale from "../../../hooks/useLocale";
 import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
 import { MessageList } from "../../messageList/MessageList";
-import { Role } from "../../../@types/Role";
-import { User } from "../../../@types/User";
 import { getErrorText } from "../../../pages/errors/localization";
 import { useParams } from "react-router";
 import UserService from "../../../services/User.service";
+import { RoleControllerApi, Role } from "../../../api/api";
+import { User } from "../../../@types/User";
 
-const roleService = new RoleService();
+const roleService = new RoleControllerApi();
 const userService = new UserService();
 
 type UserEditProps = {
-	roles: string[];
+	roles: Role[];
 };
 export const UserEdit = (props: UserEditProps) => {
 	const [locale] = useLocale();
@@ -28,24 +28,24 @@ export const UserEdit = (props: UserEditProps) => {
 	const [user, setUser] = useState<User>({
 		id: undefined,
 		about: "",
-		active: true,
-		address: "",
-		dateCreated: "",
 		displayName: "",
 		email: "",
 		firstName: "",
 		lastName: "",
-		password: "",
+		createdDate: "",
+		lastModifiedDate: "",
+		recordStatus: 1,
 		roles: [],
-		username: "",
+		password: "",
+		username: ""
 	});
 	const [roles, setRoles] = useState<Role[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 
 	useEffect(() => {
-		roleService.getAll()
-			.then(setRoles)
+		roleService.getAllRoles()
+			.then(res => setRoles(res.data))
 			.catch(Console.error);
 	}, []);
 
@@ -56,7 +56,7 @@ export const UserEdit = (props: UserEditProps) => {
 
 	useEffect(() => {
 		userService.getById(idUser)
-			.then(setUser)
+			.then(res => setUser({...res.data} as User))
 			.catch(err => {
 				Console.error(err);
 				setUser({...(user as User), roles: []});
@@ -64,7 +64,7 @@ export const UserEdit = (props: UserEditProps) => {
 	}, [idUser, roles]);
 
 	const updateProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		setUser({...(user as User), [ev.target.id]: ev.target.value, active: !(ev.target as any).checked});
+		setUser({...(user as User), [ev.target.id]: ev.target.value});
 	};
 
 	const save = () => {
@@ -130,11 +130,6 @@ export const UserEdit = (props: UserEditProps) => {
 						                  onChange={updateProp} label={localization[locale].userLastNameLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.address}
-						                  id="userAddress" type="text"
-						                  onChange={updateProp} label={localization[locale].userAddressLabel}/>
-					</div>
-					<div className="row">
 						<MaterializeTextarea
 							className="col s12 m12 l10"
 							value={user?.about}
@@ -153,8 +148,8 @@ export const UserEdit = (props: UserEditProps) => {
 								})),
 							})}
 							labelText={localization[locale].userRolesLabel}
-							value={user?.roles ? user?.roles.map(role => new GenericElement<Role>(role, role.idRole, role.roleName)) : []}
-							list={roles.map(r => new GenericElement<Role>(r, r.id!, r.name))}/>
+							value={user?.roles ? user?.roles.map(role => new GenericElement<Role>(role, role.id!, role.name!)) : []}
+							list={roles.map(r => new GenericElement<Role>(r, r.id!, r.name!))}/>
 					</div>
 					<div className="row">
 						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>

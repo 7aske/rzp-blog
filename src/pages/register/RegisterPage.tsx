@@ -20,9 +20,6 @@ export const RegisterPage = (props: RegisterPageProps) => {
 	const [user, setUser] = useState<User>({
 		id: undefined,
 		about: "",
-		active: true,
-		address: "",
-		dateCreated: "",
 		displayName: "",
 		email: "",
 		firstName: "",

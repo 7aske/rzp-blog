@@ -7,11 +7,9 @@ import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.css";
-import { User } from "../../../@types/User";
-import UserService from "../../../services/User.service";
-import { Role } from "../../../@types/Role";
+import { UserControllerApi, User, Role } from "../../../api/api";
 
-const userService = new UserService();
+const service = new UserControllerApi();
 
 type UserViewProps = {};
 export const UserView = (props: UserViewProps) => {
@@ -24,15 +22,15 @@ export const UserView = (props: UserViewProps) => {
 	moment.locale(locale);
 
 	useEffect(() => {
-		userService.getPageCount({count: itemsPerPage}).then(_count => {
-			pageCount.current = _count;
-		});
 		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		userService.getAll().then(_users => {
-			// _users = new Array(itemsPerPage).fill(null).map((_, i) => _users[i]);
+		service.getAllUsers(String(currentPage)).then(res => {
+			const _users = new Array(itemsPerPage).fill(null).map((_, i) => res.data[i]);
+
+			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / itemsPerPage);
+			console.log(pageCount.current);
 			setUsers(_users);
 		}).catch(err => {
 			setUsers([]);
@@ -88,9 +86,11 @@ type AdminPostListItemProps = {
 const UserViewListItem = ({user}: AdminPostListItemProps) => {
 	const [roles, setRoles] = useState<Role[]>([]);
 	useEffect(() => {
-		userService.getRoles(user)
-			.then(setRoles);
+		if (user)
+			service.getAllUserRoles(user.id!)
+				.then(res => setRoles(res.data));
 	}, [user]);
+	if (user)
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
@@ -116,4 +116,7 @@ const UserViewListItem = ({user}: AdminPostListItemProps) => {
 				</div>
 			</li>
 		);
+	else
+		return (<li className="admin-post-list-item collection-item"/>);
+
 };

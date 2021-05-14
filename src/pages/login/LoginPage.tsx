@@ -9,7 +9,6 @@ import { getErrorText } from "../errors/localization";
 import "./LoginPage.css";
 import Console from "../../utils/Console";
 import UserService from "../../services/User.service";
-import { environment } from "../../environment";
 import AuthService from "../../services/Auth.service";
 import { User } from "../../@types/User";
 
@@ -23,9 +22,9 @@ export const LoginPage = () => {
 	const [errors, setErrors] = useState<string[]>([]);
 
 	const postLogin = (user: User) => {
-		if (hasRole(user.roles, "admin")) {
+		if (hasRole(user!.roles.map(r => r.name!), "admin")) {
 			history.replace("/admin/users");
-		} else if (hasRole(user.roles, "user")) {
+		} else if (hasRole(user!.roles.map(r => r.name!), "user")) {
 			history.replace("/user/profile");
 		} else {
 			history.replace("/");
@@ -36,8 +35,9 @@ export const LoginPage = () => {
 		(async () => {
 			setErrors([]);
 			try {
-				const user = await userService.getByUsername(token.user);
-				user.roles = await userService.getRoles(user);
+				const res = await userService.getByUsername(token.user);
+				const user: User = res.data as User;
+				user.roles = (await userService.getRoles(user)).data;
 				setCtx({...ctx, user: user});
 				postLogin(user);
 			} catch (e) {

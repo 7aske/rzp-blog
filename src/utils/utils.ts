@@ -1,7 +1,7 @@
 import * as H from "history";
 import React from "react";
-import { Role } from "../@types/Role";
 import { PageRequest } from "../@types/RequestQuery";
+import { Role } from "../api/api";
 
 export const scrollToTop = (ev?: React.MouseEvent<any, any>) => {
 	if (ev) ev.preventDefault();

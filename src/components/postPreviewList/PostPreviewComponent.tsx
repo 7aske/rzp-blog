@@ -18,7 +18,7 @@ export const PostPreviewComponent = ({post: {createdDate, excerpt, slug, title, 
 					<span><Link to={"/category/" + category.name}>{category.name}</Link></span>
 				</div>
 				<Link to={"/posts/" + slug}><h4>{title}</h4></Link>
-				<h5>{user.displayName.toLocaleUpperCase()}</h5>
+				<h5>{user.displayName?.toLocaleUpperCase()}</h5>
 				<h6>{formatDate(createdDate!, locale)}</h6>
 				<p>{excerpt}</p>
 				<div className="tags">

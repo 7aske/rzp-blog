@@ -34,7 +34,7 @@ export const Navbar = () => {
 
 	const sidenavItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
-		.withRoles(roles)
+		.withRoles(roles.map(r => r.name!))
 		.build();
 
 	const mobileNav = new MenuBuilder(locale)

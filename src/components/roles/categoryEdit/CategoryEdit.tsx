@@ -10,11 +10,12 @@ import "./CategoryEdit.css";
 import localization from "./localization";
 import CategoryService from "../../../services/Category.service";
 import { Category } from "../../../@types/Category";
+import { Role } from "../../../api/api";
 
 const categoryService = new CategoryService();
 
 type CategoryEditProps = {
-	roles: string[];
+	roles: Role[];
 };
 export const CategoryEdit = (props: CategoryEditProps) => {
 	const [errors, setErrors] = useState<string[]>([]);

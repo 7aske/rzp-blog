@@ -7,6 +7,7 @@ import { MessageList } from "../messageList/MessageList";
 import localization from "./localization";
 import "./PropertyUpdateInput.css";
 import UserService from "../../services/User.service";
+import { User } from "../../@types/User";
 
 const userService = new UserService();
 
@@ -54,7 +55,7 @@ export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 		if (inputRef)
 			userService.updateProperty(props.property, inputRef.value).then(user => {
 				inputRef.value = (user as any)[props.property] as string;
-				setCtx({user});
+				setCtx({user: user as User});
 				setMessages([localization[props.locale || "en"].success]);
 			}).catch(err => {
 				Console.error(err);

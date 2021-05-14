@@ -23,6 +23,7 @@ import { Post } from "../../../@types/Post";
 import { Tag } from "../../../@types/Tag";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { Category } from "../../../@types/Category";
+import { Role } from "../../../api/api";
 
 const postService = new PostService();
 const tagService = new TagService();
@@ -30,7 +31,7 @@ const categoryService = new CategoryService()
 const postPreviewService = new PostPreviewService()
 
 type PostEditProps = {
-	roles: string[];
+	roles: Role[];
 };
 export const PostEdit = (props: PostEditProps) => {
 	const [categories, setCategories] = useState<Category[]>([]);

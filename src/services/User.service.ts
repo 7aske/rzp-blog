@@ -1,55 +1,47 @@
-import AbstractHttpClient from "./client/AbstractHttpClient";
-import { IUserService } from "../@types/services/UserService";
-import { User } from "../@types/User";
+import { UserControllerApi, Role, User } from "../api/api";
+import {User as AppUser} from "../@types/User";
+import { AxiosResponse } from "axios";
 
-export default class UserService extends AbstractHttpClient implements IUserService {
+export default class UserService {
+	private service = new UserControllerApi();
 
-
-	constructor() {
-		super("/users");
+	public async getRoles(user: User|AppUser): Promise<AxiosResponse<Role[]>> {
+		return  this.service.getAllUserRoles(user.id!);
 	}
 
-	getPageCount(params: PostQueryParams | undefined): Promise<number> {
-		return Promise.resolve(0);
+	public deleteById(id: number): Promise<AxiosResponse<void>> {
+		return this.service.deleteUserById(id);
 	}
 
-	public async getRoles(user: User) {
-		return (await this.get(`/${user.id}/roles`)).data;
+	public async getAll(): Promise<AxiosResponse<Array<User>>> {
+		return this.service.getAllUsers()
 	}
 
-	public deleteById(id: number): Promise<void> {
-		return this.delete(`/${id}`);
+	public async getById(id: number): Promise<AxiosResponse<User>> {
+		return this.service.getUserById(String(id));
 	}
 
-	public async getAll(): Promise<User[]> {
-		return (await this.get("")).data;
-	}
-
-	public async getById(id: number): Promise<User> {
-		return (await this.get(`/${id}`)).data;
-	}
-
-	public async getByUsername(username: string): Promise<User> {
-		return (await this.get(`/${username}`)).data;
+	public async getByUsername(username: string): Promise<AxiosResponse<User>> {
+		return this.service.getUserById(username);
 	}
 
 	public register(user: User): Promise<User> {
-		return this.post("/register", user);
+		throw new Error("Not Implemented");
 	}
 
-	public save(user: User): Promise<User> {
-		return this.post("", user);
+	public save(user: User): Promise<AxiosResponse<User>> {
+		return this.service.saveUser(user)
 	}
 
-	public update(user: User): Promise<User> {
-		return this.put("", user);
+	public update(user: User): Promise<AxiosResponse<User>> {
+		return this.service.updateUser(user)
 	}
 
 	updatePassword(password: string, confirmPassword: string, newPassword: string): Promise<void> {
-		return this.put("/update-password", {password, confirmPassword, newPassword});
+		throw new Error("Not Implemented");
 	}
 
 	updateProperty(prop: string, value: string): Promise<User> {
-		throw new Error("not implemented")
+		throw new Error("Not Implemented");
 	}
 }
