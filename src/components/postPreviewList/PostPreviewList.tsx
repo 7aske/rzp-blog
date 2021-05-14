@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PostPreviewComponent, PostPreviewPlaceholder } from "./PostPreviewComponent";
-import { PostPreview } from "../../@types/PostPreview";
+import { PostPreview } from "../../api/api";
 
 type PostPreviewListProps = {
 	posts: PostPreview[];

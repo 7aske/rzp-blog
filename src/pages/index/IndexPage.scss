@@ -13,6 +13,9 @@
 	.no-posts {
 		min-height: 30vh;
 	}
+	input::placeholder {
+		text-align: right;
+	}
 }
 
 @media screen and (max-width: 993px) {

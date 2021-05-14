@@ -16,13 +16,14 @@ import UserService from "../../../services/User.service";
 import { RoleControllerApi, Role } from "../../../api/api";
 import { User } from "../../../@types/User";
 
-const roleService = new RoleControllerApi();
-const userService = new UserService();
 
 type UserEditProps = {
 	roles: Role[];
 };
 export const UserEdit = (props: UserEditProps) => {
+	const roleService = new RoleControllerApi();
+	const userService = new UserService();
+
 	const [locale] = useLocale();
 	const {idUser} = useParams();
 	const [user, setUser] = useState<User>({
@@ -56,11 +57,18 @@ export const UserEdit = (props: UserEditProps) => {
 
 	useEffect(() => {
 		userService.getById(idUser)
-			.then(res => setUser({...res.data} as User))
+			.then(res => {
+				setUser({...res.data} as User);
+				userService.getRoles(res.data)
+					.then(res => setUser({...user, roles: res.data}))
+					.catch(Console.error);
+			})
 			.catch(err => {
 				Console.error(err);
 				setUser({...(user as User), roles: []});
+
 			});
+		// eslint-disable-next-line
 	}, [idUser, roles]);
 
 	const updateProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,18 +78,30 @@ export const UserEdit = (props: UserEditProps) => {
 	const save = () => {
 		const _user: User = {...(user as User)};
 
-		let action = _user.id ? userService.update : userService.save;
+		if (_user.id) {
+			userService.update(_user as any).then(() => {
+				setMessages([localization[locale].userSavedText]);
+			}).catch(err => {
+				Console.error(err);
+				if (err.response && err.response.data) {
+					setErrors([getErrorText(err.response.data.error, locale)]);
+				} else {
+					setErrors([getErrorText("generic", locale)]);
+				}
+			});
+		} else {
+			userService.save(_user as any).then(() => {
+				setMessages([localization[locale].userSavedText]);
+			}).catch(err => {
+				Console.error(err);
+				if (err.response && err.response.data) {
+					setErrors([getErrorText(err.response.data.error, locale)]);
+				} else {
+					setErrors([getErrorText("generic", locale)]);
+				}
+			});
+		}
 
-		action(_user as any).then(() => {
-			setMessages([localization[locale].userSavedText]);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			} else {
-				setErrors([getErrorText("generic", locale)]);
-			}
-		});
 	};
 
 

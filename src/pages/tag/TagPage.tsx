@@ -10,10 +10,10 @@ import localization from "./localization";
 import Console from "../../utils/Console";
 import PostPreviewService from "../../services/PostPreview.service";
 import { Tag } from "../../@types/Tag";
-import { PostPreview } from "../../@types/PostPreview";
 import TagService from "../../services/Tag.service";
 import PostService from "../../services/Post.service";
 import { usePageable } from "../../hooks/usePageable";
+import { PostPreview } from "../../api/api";
 
 const postPreviewService = new PostPreviewService();
 const postService = new PostService();
@@ -46,18 +46,20 @@ export const TagPage = (props: TagPageProps) => {
 	}, [tagName]);
 
 	const getTags = () => {
-		postPreviewService.getAll({page, count: perPage}, {tag: tag?.name}).then(_posts => {
-			setPosts(_posts);
-			if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
-		}).catch(err => {
-			Console.error(err);
-			setPosts([]);
-		});
+		postPreviewService.getAllByTagName(page, tag?.name!)
+			.then(res => {
+				setPosts(res.data);
+				if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
+			})
+			.catch(err => {
+				Console.error(err);
+				setPosts([]);
+			});
 	};
 
 	useEffect(() => {
 		getTags();
-		postService.getPageCount({page, count:perPage}, {tag: tag?.name, published: true}).then(_pageCount => {
+		postService.getPageCount({page, count: perPage}, {tag: tag?.name, published: true}).then(_pageCount => {
 			setPageCount(_pageCount);
 		});
 		if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);

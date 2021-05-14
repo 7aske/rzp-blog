@@ -171,7 +171,7 @@ export const PostEdit = (props: PostEditProps) => {
 										labelText={localization[locale].postCategoryLabel}
 										onSelect={elem => elem?.id && setPost({
 											...(post as Post),
-											category: elem,
+											category: {id: elem.id, name: elem.name},
 										})}/>
 								</div>
 								<MaterializeCheckbox id="postPublished"

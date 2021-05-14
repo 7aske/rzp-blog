@@ -19,21 +19,30 @@ export const IndexPage = (props: IndexPageProps) => {
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState(new Array(perPage).fill(null));
 	const [pageCount, setPageCount] = useState(1);
+	const [search, setSearch] = useState("");
 
 
 	useEffect(() => {
-		postService.getPageCount({page, count: perPage})
-			.then(setPageCount);
-	}, []);
-
-	useEffect(() => {
-		postPreviewService.getAll({page, count: perPage})
-			.then(setPosts)
-			.catch(err => {
-				Console.error(err);
-				setPosts([]);
-			});
-	}, [page]);
+		if (search !== "") {
+			console.log(search);
+			postPreviewService.getAll(page, search.split(/\s+/))
+				.then(res => {
+					setPosts(res.data)
+				})
+				.catch(err => {
+					Console.error(err);
+					setPosts([]);
+				});
+		} else {
+			postPreviewService.getAll(page)
+				.then(res => setPosts(res.data))
+				.catch(err => {
+					Console.error(err);
+					setPosts([]);
+				});
+		}
+		M.updateTextFields();
+	}, [page, search]);
 
 
 	return (
@@ -42,6 +51,12 @@ export const IndexPage = (props: IndexPageProps) => {
 				<div className="col s12">
 					<h2 className="title">{localization[locale].title}</h2>
 					<p className="text">{localization[locale].text}</p>
+				</div>
+			</div>
+			<div className="row">
+				<div className="input-field col s12 m12 l6 xl6 right">
+					<input onChange={ev => setSearch(ev.target.value)} placeholder={localization[locale].search}
+					       id="search" type="text" autoComplete="off"/>
 				</div>
 			</div>
 			<div className="row">

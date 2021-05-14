@@ -10,11 +10,11 @@ import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import Console from "../../utils/Console";
 import { Category } from "../../@types/Category";
-import { PostPreview } from "../../@types/PostPreview";
 import CategoryService from "../../services/Category.service";
 import PostService from "../../services/Post.service";
 import PostPreviewService from "../../services/PostPreview.service";
 import { usePageable } from "../../hooks/usePageable";
+import { PostPreview } from "../../api/api";
 
 const categoryService = new CategoryService();
 const postService = new PostService();
@@ -27,7 +27,6 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState<PostPreview[]>(new Array(perPage).fill(null));
-	const [pageCount, setPageCount] = useState(0);
 	const [locale] = useLocale();
 
 	useEffect(() => {
@@ -47,20 +46,20 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	}, []);
 
 	const getPosts = () => {
-		postPreviewService.getAll({page}, {"category.name": category?.name, published: "1"}).then(_posts => {
-			setPosts(_posts);
-			if (category) window.history.replaceState(null, null!, "/#/category/" + category?.name);
-		}).catch(err => {
-			Console.error(err);
-			setPosts([]);
-		});
+		postPreviewService.getAllByCategoryName(page, category?.name!)
+			.then(res => {
+				console.log(res);
+				setPosts(res.data);
+				if (category) window.history.replaceState(null, null!, "/#/category/" + category?.name);
+			})
+			.catch(err => {
+				Console.error(err);
+				setPosts([]);
+			});
 	};
 
 	useEffect(() => {
 		getPosts();
-		postService.getPageCount({page, count:perPage},{"category.name": category?.name, published: "1"}).then(_pageCount => {
-			setPageCount(_pageCount);
-		});
 		// eslint-disable-next-line
 	}, [category]);
 
@@ -88,7 +87,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			</div>
 			<div className="row">
 				<PostPreviewList posts={posts}/>
-				<Pagination onPageChange={setPage} pageCount={pageCount}/>
+				<Pagination onPageChange={setPage} pageCount={page}/>
 			</div>
 		</div>
 	);

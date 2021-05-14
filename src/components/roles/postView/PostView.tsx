@@ -4,20 +4,18 @@ import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import useLocale from "../../../hooks/useLocale";
-import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./PostView.css";
-import { PostPreview } from "../../../@types/PostPreview";
 import PostService from "../../../services/Post.service";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { usePageable } from "../../../hooks/usePageable";
+import { PostPreview } from "../../../api/api";
 
 const postService = new PostService();
 const postPreviewService = new PostPreviewService();
 
-type AdminPostListProps = {};
-export const PostView = (props: AdminPostListProps) => {
+export const PostView = () => {
 	const [locale] = useLocale();
 	const {page, perPage, setPage} = usePageable();
 	const pageCount = useRef<number>(0);
@@ -32,11 +30,13 @@ export const PostView = (props: AdminPostListProps) => {
 	}, []);
 
 	useEffect(() => {
-		postPreviewService.getAll({page, count: perPage}).then(_posts => {
-			setPosts(_posts);
-		}).catch(() => {
-			setPosts([]);
-		});
+		postPreviewService.getAll(pageCount.current)
+			.then(res => {
+				setPosts(res.data);
+			})
+			.catch(() => {
+				setPosts([]);
+			});
 		// eslint-disable-next-line
 	}, [page]);
 
@@ -87,30 +87,30 @@ type AdminPostListItemProps = {
 	locale: string;
 };
 const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
-		return (
-			<li className="admin-post-list-item collection-item">
-				<div className="row">
-					<div className="col s6 m6 l2 truncate">
-						<Link to={"/admin/posts/edit/" + post.slug}><i
-							className="material-icons">edit</i></Link>
-						<Link to={"/posts/" + post.slug}>{post.title}</Link>
-					</div>
-					<div className="col s2 hide-on-med-and-down truncate">
-						<Link to={"/posts/" + post.slug}>{post.slug}</Link>
-					</div>
-					<div className="col s2 hide-on-med-and-down">
-						{post.user.displayName}
-					</div>
-					<div className="col s2 hide-on-med-and-down">
-						<span className="blob grey darken-2">{post.category.name}</span>
-					</div>
-					<div className="col s3 m3 l2 truncate">
-						{post.recordStatus === 1 ? localization[locale].published : ""}
-					</div>
-					<div className="col s3 m3 l2">
-						<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>
-					</div>
+	return (
+		<li className="admin-post-list-item collection-item">
+			<div className="row">
+				<div className="col s6 m6 l2 truncate">
+					<Link to={"/admin/posts/edit/" + post.slug}><i
+						className="material-icons">edit</i></Link>
+					<Link to={"/posts/" + post.slug}>{post.title}</Link>
 				</div>
-			</li>
-		);
+				<div className="col s2 hide-on-med-and-down truncate">
+					<Link to={"/posts/" + post.slug}>{post.slug}</Link>
+				</div>
+				<div className="col s2 hide-on-med-and-down">
+					{post?.user?.displayName}
+				</div>
+				<div className="col s2 hide-on-med-and-down">
+					<span className="blob grey darken-2">{post.category?.name}</span>
+				</div>
+				<div className="col s3 m3 l2 truncate">
+					{post.recordStatus === 1 ? localization[locale].published : ""}
+				</div>
+				<div className="col s3 m3 l2">
+					<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>
+				</div>
+			</div>
+		</li>
+	);
 };
