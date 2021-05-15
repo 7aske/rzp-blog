@@ -14,7 +14,11 @@ export default class PostPreviewService {
 			return b;
 		});
 
-		return this.service.getAllPostPreviews(String(page), builder.build());
+		return this.service.getAllPostPreviewsNotDeleted(String(page), builder.build());
+	}
+
+	public async getAllForAdmin(page = 0) {
+		return this.service.getAllPostPreviews(String(page));
 	}
 
 	public async getAllByCategoryName(page = 0, categoryName: string) {

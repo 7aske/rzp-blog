@@ -31,6 +31,7 @@
 	.admin-post-list-item {
 		padding-left:  1em !important;
 		padding-right: 0 !important;
+		padding-top: 1em;
 		height: 3.5em;
 		i {
 			margin-right: 0.5em;
@@ -42,6 +43,14 @@
 
 		.row {
 			margin-bottom: 0 !important;
+		}
+
+		.btn-post-edit {
+			position: absolute;
+		}
+
+		.post-edit-container a:not(.btn-post-edit) {
+			padding-left: 2em;
 		}
 
 		a {

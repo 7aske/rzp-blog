@@ -90,9 +90,10 @@ const UserViewListItem = ({user}: AdminPostListItemProps) => {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s5 m5 l3 truncate">
-						<Link to={"/admin/users/edit/" + user.id}><i
-							className="material-icons">edit</i></Link>{user.username}
+					<div className="col s5 m5 l3 truncate user-edit-container">
+						<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
+							className="material-icons">edit</i></Link>
+						<span>{user.username}</span>
 					</div>
 					<div className="col s2 l2 hide-on-med-and-down">
 						{user.displayName}

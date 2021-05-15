@@ -2474,6 +2474,51 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         getAllPosts: async (page?: string, q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/posts/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getAllPostsNotDeleted
+         * @param {string} [page] page
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllPostsNotDeleted: async (page?: string, q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2685,6 +2730,19 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary getAllPostsNotDeleted
+         * @param {string} [page] page
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllPostsNotDeleted(page?: string, q?: string, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPostsNotDeleted(page, q, sort, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary getPostById
          * @param {string} identifier identifier
          * @param {*} [options] Override http request option.
@@ -2758,6 +2816,18 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
          */
         getAllPosts(page?: string, q?: string, sort?: string, options?: any): AxiosPromise<Array<Post>> {
             return localVarFp.getAllPosts(page, q, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getAllPostsNotDeleted
+         * @param {string} [page] page
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllPostsNotDeleted(page?: string, q?: string, sort?: string, options?: any): AxiosPromise<Array<Post>> {
+            return localVarFp.getAllPostsNotDeleted(page, q, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2837,6 +2907,20 @@ export class PostControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary getAllPostsNotDeleted
+     * @param {string} [page] page
+     * @param {string} [q] q
+     * @param {string} [sort] sort
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostControllerApi
+     */
+    public getAllPostsNotDeleted(page?: string, q?: string, sort?: string, options?: any) {
+        return PostControllerApiFp(this.configuration).getAllPostsNotDeleted(page, q, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary getPostById
      * @param {string} identifier identifier
      * @param {*} [options] Override http request option.
@@ -2893,14 +2977,59 @@ export const PostPreviewControllerApiAxiosParamCreator = function (configuration
     return {
         /**
          * 
-         * @summary getAll
+         * @summary getAllPostPreviews
+         * @param {string} [page] page
+         * @param {string} [sort] sort
+         * @param {string} [specification] specification
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllPostPreviews: async (page?: string, sort?: string, specification?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/previews/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (specification !== undefined) {
+                localVarQueryParameter['specification'] = specification;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getAllPostPreviewsNotDeleted
          * @param {string} [page] page
          * @param {string} [q] q
          * @param {string} [sort] sort
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllPostPreviews: async (page?: string, q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
+        getAllPostPreviewsNotDeleted: async (page?: string, q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/previews`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2948,15 +3077,28 @@ export const PostPreviewControllerApiFp = function(configuration?: Configuration
     return {
         /**
          * 
-         * @summary getAll
+         * @summary getAllPostPreviews
+         * @param {string} [page] page
+         * @param {string} [sort] sort
+         * @param {string} [specification] specification
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllPostPreviews(page?: string, sort?: string, specification?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PostPreview>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPostPreviews(page, sort, specification, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary getAllPostPreviewsNotDeleted
          * @param {string} [page] page
          * @param {string} [q] q
          * @param {string} [sort] sort
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllPostPreviews(page?: string, q?: string, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PostPreview>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPostPreviews(page, q, sort, options);
+        async getAllPostPreviewsNotDeleted(page?: string, q?: string, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PostPreview>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPostPreviewsNotDeleted(page, q, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2971,15 +3113,27 @@ export const PostPreviewControllerApiFactory = function (configuration?: Configu
     return {
         /**
          * 
-         * @summary getAll
+         * @summary getAllPostPreviews
+         * @param {string} [page] page
+         * @param {string} [sort] sort
+         * @param {string} [specification] specification
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllPostPreviews(page?: string, sort?: string, specification?: string, options?: any): AxiosPromise<Array<PostPreview>> {
+            return localVarFp.getAllPostPreviews(page, sort, specification, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getAllPostPreviewsNotDeleted
          * @param {string} [page] page
          * @param {string} [q] q
          * @param {string} [sort] sort
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllPostPreviews(page?: string, q?: string, sort?: string, options?: any): AxiosPromise<Array<PostPreview>> {
-            return localVarFp.getAllPostPreviews(page, q, sort, options).then((request) => request(axios, basePath));
+        getAllPostPreviewsNotDeleted(page?: string, q?: string, sort?: string, options?: any): AxiosPromise<Array<PostPreview>> {
+            return localVarFp.getAllPostPreviewsNotDeleted(page, q, sort, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2993,7 +3147,21 @@ export const PostPreviewControllerApiFactory = function (configuration?: Configu
 export class PostPreviewControllerApi extends BaseAPI {
     /**
      * 
-     * @summary getAll
+     * @summary getAllPostPreviews
+     * @param {string} [page] page
+     * @param {string} [sort] sort
+     * @param {string} [specification] specification
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostPreviewControllerApi
+     */
+    public getAllPostPreviews(page?: string, sort?: string, specification?: string, options?: any) {
+        return PostPreviewControllerApiFp(this.configuration).getAllPostPreviews(page, sort, specification, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getAllPostPreviewsNotDeleted
      * @param {string} [page] page
      * @param {string} [q] q
      * @param {string} [sort] sort
@@ -3001,8 +3169,8 @@ export class PostPreviewControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PostPreviewControllerApi
      */
-    public getAllPostPreviews(page?: string, q?: string, sort?: string, options?: any) {
-        return PostPreviewControllerApiFp(this.configuration).getAllPostPreviews(page, q, sort, options).then((request) => request(this.axios, this.basePath));
+    public getAllPostPreviewsNotDeleted(page?: string, q?: string, sort?: string, options?: any) {
+        return PostPreviewControllerApiFp(this.configuration).getAllPostPreviewsNotDeleted(page, q, sort, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

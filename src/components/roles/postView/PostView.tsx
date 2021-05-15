@@ -24,7 +24,7 @@ export const PostView = () => {
 
 
 	useEffect(() => {
-		postPreviewService.getAll(pageCount.current)
+		postPreviewService.getAllForAdmin(pageCount.current)
 			.then(res => {
 				const _posts = new Array(perPage).fill(null).map((_, i) => res.data[i]);
 				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
@@ -87,8 +87,8 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s6 m6 l2 truncate">
-						<Link to={"/admin/posts/edit/" + post.slug}><i
+					<div className="col s6 m6 l2 truncate post-edit-container">
+						<Link className="btn-post-edit" to={"/admin/posts/edit/" + post.slug}><i
 							className="material-icons">edit</i></Link>
 						<Link to={"/posts/" + post.slug}>{post.title}</Link>
 					</div>
