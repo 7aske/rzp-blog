@@ -3,7 +3,7 @@ import * as React from "react";
 import { createRef, useEffect, useRef } from "react";
 // @ts-ignore
 import logo from "../../../assets/img/logo.png";
-import "./Sidenav.css";
+import "./Sidenav.scss";
 
 type SidenavProps = {
 	menuItems: JSX.Element[];

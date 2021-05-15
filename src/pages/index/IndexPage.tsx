@@ -4,7 +4,7 @@ import { Pagination } from "../../components/pagination/Pagination";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
-import "./IndexPage.css";
+import "./IndexPage.scss";
 import localization from "./localization";
 import PostService from "../../services/Post.service";
 import PostPreviewService from "../../services/PostPreview.service";

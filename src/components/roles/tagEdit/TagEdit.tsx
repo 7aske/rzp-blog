@@ -7,7 +7,7 @@ import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
-import "./TagEdit.css";
+import "./TagEdit.scss";
 import { Tag } from "../../../@types/Tag";
 import TagService from "../../../services/Tag.service";
 import { Role } from "../../../api/api";

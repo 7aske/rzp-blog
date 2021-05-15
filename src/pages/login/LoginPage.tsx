@@ -6,7 +6,7 @@ import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
 import { getHistoryErrors, hasRole } from "../../utils/utils";
 import { getErrorText } from "../errors/localization";
-import "./LoginPage.css";
+import "./LoginPage.scss";
 import Console from "../../utils/Console";
 import UserService from "../../services/User.service";
 import AuthService from "../../services/Auth.service";

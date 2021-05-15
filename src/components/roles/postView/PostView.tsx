@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import useLocale from "../../../hooks/useLocale";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
-import "./PostView.css";
+import "./PostView.scss";
 import PostService from "../../../services/Post.service";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { usePageable } from "../../../hooks/usePageable";

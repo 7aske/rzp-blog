@@ -27,9 +27,10 @@
   "scripts": {
     "start": "PORT=3000 BROWSER=none react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy-dev": "rsync -have ssh build/ root@viking:/srv/http/rzp/blog/"
+    "deploy:prod": "rsync -have ssh build/ root@digitize.rs:/srv/http/rzp/blog/",
+    "predeploy:prod": "npm run build",
+    "deploy:staging": "rsync -have ssh build/ root@viking.lan:/srv/http/rzp/blog/",
+    "predeploy:staging": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,6 +65,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-highlight-words": "^0.16.2",
     "@types/react-router": "^5.1.8",
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "node-sass": "^4.14.1"
   }
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import Console from "../../utils/Console";
 import { CommentInput } from "../commentInput/CommentInput";
-import "./CommentList.css";
+import "./CommentList.scss";
 import localization from "./localization";
 import CommentService from "../../services/Comment.service";
 import { User } from "../../@types/User";

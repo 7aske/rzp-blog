@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import useLocale from "../../hooks/useLocale";
 import { formatDate } from "../../utils/utils";
-import "./PostPreview.css";
+import "./PostPreview.scss";
 import { PostPreview } from "../../api/api";
 import Highlighter from "react-highlight-words";
 

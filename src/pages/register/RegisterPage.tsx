@@ -7,7 +7,7 @@ import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
 import { getErrorText } from "../errors/localization";
 import localization from "./localization";
-import "./RegisterPage.css";
+import "./RegisterPage.scss";
 import { User } from "../../@types/User";
 import UserService from "../../services/User.service";
 

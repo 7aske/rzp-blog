@@ -1,7 +1,7 @@
 import * as React from "react";
 import { defaultLocale } from "../../hooks/useLocale";
 import localization from "./localization";
-import "./Stats.css";
+import "./Stats.scss";
 
 type CategoryStatsProps = {
 	stats?: StatsDTO;

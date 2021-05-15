@@ -1,7 +1,4 @@
 import AbstractHttpClient from "./client/AbstractHttpClient";
-import { IUserService } from "../@types/services/UserService";
-import { User } from "../@types/User";
-import Interceptors from "./interceptors/Interceptors";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 

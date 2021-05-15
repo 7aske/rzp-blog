@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import useLocale from "../../hooks/useLocale";
 import routes from "../../router/localization";
-import "./Footer.css";
+import "./Footer.scss";
 import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import { environment } from "../../environment";

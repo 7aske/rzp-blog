@@ -1,4 +1,4 @@
-import "./UserEdit.css";
+import "./UserEdit.scss";
 import * as React from "react";
 import { ChangeEvent, useEffect, useState } from "react";
 import Console from "../../../utils/Console";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./Error.css";
+import "./Error.scss";
 
 type Error404Props = {};
 export const Error404 = (props: Error404Props) => {

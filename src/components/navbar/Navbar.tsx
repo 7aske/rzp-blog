@@ -9,7 +9,7 @@ import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
 import MenuBuilder from "./MenuBuilder";
-import "./Navbar.css";
+import "./Navbar.scss";
 import { Sidenav } from "./sidenav/Sidenav";
 
 

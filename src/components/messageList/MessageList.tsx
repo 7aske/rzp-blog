@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import "./MessageList.css";
+import "./MessageList.scss";
 
 type MessageListProps = {
 	messages: string[];

@@ -8,8 +8,9 @@ import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
 import Console from "../../../../utils/Console";
 import localization from "./localization";
-import "./UserProfilePage.css";
+import "./UserProfilePage.scss";
 import { User } from "../../../../@types/User";
+import { UserInfoPage } from "../userInfo/UserInfoPage";
 
 type UserProfilePageProps = {};
 export const UserProfilePage = (props: UserProfilePageProps) => {
@@ -55,22 +56,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 				<div className="col s12 m12 l8 xl9">
 					<Switch>
 						<Route exact path={"/user/profile/info"}>
-							<div className="row">
-								{infoProps.map(p => {
-									return (
-										<div className={p.className}>
-											<PropertyUpdateInput
-												locale={locale}
-												onChange={val => setUser({...(user as User), [p.prop]: val})}
-												labelText={localization[locale][p.prop]}
-												property={p.prop}
-												element={p.element}
-												disabled={p.disabled}
-												value={user ? (user as any)[p.prop] : ""}/>
-										</div>
-									);
-								})}
-							</div>
+							<UserInfoPage/>
 						</Route>
 						<Route exact path={"/user/profile/security"}>
 							<div className="row">

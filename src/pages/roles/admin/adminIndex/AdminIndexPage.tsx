@@ -12,7 +12,7 @@ import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
 import { hasRole } from "../../../../utils/utils";
 import { UserProfilePage } from "../../user/userProfile/UserProfilePage";
-import "./AdminIndexPage.css";
+import "./AdminIndexPage.scss";
 import localization from "./localization";
 
 type AdminIndexPageProps = {};

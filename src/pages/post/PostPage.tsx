@@ -7,7 +7,7 @@ import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
 import { formatDate, scrollToTop } from "../../utils/utils";
 import localization from "./localization";
-import "./PostPage.css";
+import "./PostPage.scss";
 import PostService from "../../services/Post.service";
 import { Post } from "../../api/api";
 

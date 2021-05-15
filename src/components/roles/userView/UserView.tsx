@@ -5,7 +5,7 @@ import useLocale from "../../../hooks/useLocale";
 import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
-import "./UserView.css";
+import "./UserView.scss";
 import { UserControllerApi, User, Role } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
 

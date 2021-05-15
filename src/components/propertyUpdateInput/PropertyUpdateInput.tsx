@@ -5,7 +5,7 @@ import { getErrorText } from "../../pages/errors/localization";
 import Console from "../../utils/Console";
 import { MessageList } from "../messageList/MessageList";
 import localization from "./localization";
-import "./PropertyUpdateInput.css";
+import "./PropertyUpdateInput.scss";
 import UserService from "../../services/User.service";
 import { User } from "../../@types/User";
 
@@ -70,8 +70,7 @@ export const PropertyUpdateInput = (props: PropertyUpdateInputProps) => {
 			<div className="input-field">
 				{props.element === "textarea" ?
 					<textarea disabled={!!props.disabled} className="materialize-textarea" ref={elem => setInputRef(elem)} id={props.property}
-					          value={value}
-					          onChange={ev => setValue(ev.target.value)}/> :
+					          value={value} onChange={ev => setValue(ev.target.value)}/> :
 					<input disabled={!!props.disabled} ref={elem => setInputRef(elem)} id={props.property} value={value}
 					       onChange={ev => setValue(ev.target.value)} type={props.type ? props.type : "text"}/>}
 				<label htmlFor={props.property}>{props.labelText}</label>

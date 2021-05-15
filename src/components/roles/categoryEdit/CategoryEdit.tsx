@@ -6,7 +6,7 @@ import Console from "../../../utils/Console";
 import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
-import "./CategoryEdit.css";
+import "./CategoryEdit.scss";
 import localization from "./localization";
 import CategoryService from "../../../services/Category.service";
 import { Category } from "../../../@types/Category";

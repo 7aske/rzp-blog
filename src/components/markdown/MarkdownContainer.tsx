@@ -1,6 +1,6 @@
 import marked from "marked";
 import * as React from "react";
-import "./MarkdownContainer.css"
+import "./MarkdownContainer.scss"
 
 type MarkdownContainerProps = {
 	content: string;

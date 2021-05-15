@@ -6,7 +6,7 @@ import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import { MessageList } from "../../../messageList/MessageList";
 import localization from "./localization";
-import "./PostEditor.css";
+import "./PostEditor.scss";
 
 
 type PostEditorProps = {

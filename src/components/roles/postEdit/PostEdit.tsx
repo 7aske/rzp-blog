@@ -14,7 +14,7 @@ import MaterializeInput, { MaterializeCheckbox } from "../../materialize/input/M
 import MaterializeTextarea from "../../materialize/textarea/MaterializeTextarea";
 import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
-import "./PostEdit.css";
+import "./PostEdit.scss";
 import { PostEditor } from "./postEditor/PostEditor";
 import PostService from "../../../services/Post.service";
 import TagService from "../../../services/Tag.service";
