@@ -26,6 +26,7 @@
   },
   "scripts": {
     "start": "PORT=3000 BROWSER=none react-scripts start",
+    "generate:api": "./scripts/generate-services.sh",
     "build": "sh -ac '. ./.env.${REACT_APP_ENV}; react-scripts build'",
     "deploy:prod": "rsync --delete --progress -havz build/ root@digitize.rs:/srv/http/rzp/blog/",
     "predeploy:prod": "REACT_APP_ENV=production npm run build",
