@@ -22,6 +22,7 @@ import Interceptors from "../services/interceptors/Interceptors";
 // globalAxios.interceptors.request.use(Interceptors.authorizationOnFulfilled);
 
 export const BASE_PATH = process.env.REACT_APP_BACKEND_URL!;
+globalAxios.interceptors.request.use(Interceptors.authorizationOnFulfilled)
 
 /**
  *

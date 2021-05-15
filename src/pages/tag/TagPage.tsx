@@ -9,11 +9,10 @@ import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import Console from "../../utils/Console";
 import PostPreviewService from "../../services/PostPreview.service";
-import { Tag } from "../../@types/Tag";
 import TagService from "../../services/Tag.service";
 import PostService from "../../services/Post.service";
 import { usePageable } from "../../hooks/usePageable";
-import { PostPreview } from "../../api/api";
+import { PostPreview, Tag } from "../../api/api";
 
 const postPreviewService = new PostPreviewService();
 const postService = new PostService();
@@ -30,16 +29,18 @@ export const TagPage = (props: TagPageProps) => {
 	const [locale] = useLocale();
 
 	useEffect(() => {
-		tagService.getAll().then(_tags => {
-			setTags(_tags);
-			const tag = _tags.find(c => c.name === tagName);
-			if (tag) {
-				setTag(tag);
-			}
-		}).catch(err => {
-			Console.error(err);
-			setTags([]);
-		});
+		tagService.getAll()
+			.then(res => {
+				setTags(res.data);
+				const tag = res.data.find(t => t.name === tagName);
+				if (tag) {
+					setTag(tag);
+				}
+			})
+			.catch(err => {
+				Console.error(err);
+				setTags([]);
+			});
 
 		scrollToTop();
 		// eslint-disable-next-line
@@ -82,7 +83,7 @@ export const TagPage = (props: TagPageProps) => {
 					<GenericAutocomplete value={tagName}
 					                     label={localization[locale].choosePageText}
 					                     onUpdate={val => setTag(tags.find(t => t.name === val)!)}
-					                     autocompleteData={tags.map(t => t.name)}/>
+					                     autocompleteData={tags.map(t => t.name!)}/>
 				</div>
 			</div>
 			<div className="row">

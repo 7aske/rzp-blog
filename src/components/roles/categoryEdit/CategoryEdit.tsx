@@ -9,8 +9,7 @@ import { MessageList } from "../../messageList/MessageList";
 import "./CategoryEdit.scss";
 import localization from "./localization";
 import CategoryService from "../../../services/Category.service";
-import { Category } from "../../../@types/Category";
-import { Role } from "../../../api/api";
+import { Role, Category } from "../../../api/api";
 
 const categoryService = new CategoryService();
 
@@ -26,15 +25,17 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 
 	const [categoryList, setCategoryList] = useState<Category[]>([]);
 	const getCategories = () => {
-		categoryService.getAll().then(_categories => {
-			setCategoryList(_categories);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			}
-			setCategoryList([]);
-		});
+		categoryService.getAll()
+			.then(res => {
+				setCategoryList(res.data);
+			})
+			.catch(err => {
+				Console.error(err);
+				if (err.response && err.response.data) {
+					setErrors([getErrorText(err.response.data.error, locale)]);
+				}
+				setCategoryList([]);
+			});
 	};
 
 	useEffect(() => {
@@ -49,7 +50,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 				nameRef.value = "";
 			} else {
 				idRef.value = categ.id!.toString();
-				nameRef.value = categ.name;
+				nameRef.value = categ.name!;
 			}
 			M.updateTextFields();
 		}
@@ -64,15 +65,17 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 		};
 
 		if (isNaN(categ.id!)) {
-			categoryService.save(categ).then(_categ => {
-				setCategoryList([...categoryList, _categ]);
-				setMessages([localization[locale].categorySavedMessage]);
-			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
-			});
+			categoryService.save(categ)
+				.then(res => {
+					setCategoryList([...categoryList, res.data]);
+					setMessages([localization[locale].categorySavedMessage]);
+				})
+				.catch(err => {
+					setErrors([getErrorText(err, locale)]);
+				});
 		} else {
-			categoryService.update(categ).then(_categ => {
-				setCategoryList(categoryList.map(c => c.id === _categ.id ? _categ : c));
+			categoryService.update(categ).then(res => {
+				setCategoryList(categoryList.map(c => c.id === res.data.id ? res.data : c));
 				setMessages([localization[locale].categorySavedMessage]);
 			}).catch(err => {
 				setErrors([getErrorText(err, locale)]);
@@ -120,7 +123,7 @@ export const CategoryEdit = (props: CategoryEditProps) => {
 								list={categoryList.map(elem => new GenericElement<Category>(
 									elem,
 									elem.id!,
-									elem.name,
+									elem.name!,
 								))} onSelect={(elem) => setCategory(elem?.element)}/>
 						</div>
 					</div>

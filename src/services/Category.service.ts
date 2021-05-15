@@ -1,26 +1,23 @@
-import { ICategoryService } from "../@types/services/CategoryService";
-import AbstractHttpClient from "./client/AbstractHttpClient";
-import { Category } from "../@types/Category";
+import { Category, CategoryControllerApi } from "../api/api";
+import { AxiosResponse } from "axios";
 
-export default class CategoryService extends AbstractHttpClient implements ICategoryService {
-	constructor() {
-		super("/categories")
+export default class CategoryService  {
+	private service = new CategoryControllerApi();
+
+	public async deleteById(id: number): Promise<AxiosResponse<void>> {
+		return this.service.deleteCategoryById(id);
 	}
 
-	public async deleteById(id: number): Promise<boolean> {
-		return (await this.delete(`/${id}`)).data;
+	public async getAll(): Promise<AxiosResponse<Array<Category>>> {
+		return this.service.getAllCategories();
 	}
 
-	public async getAll(): Promise<Category[]> {
-		return (await this.get("")).data;
+	public async save(_category: Category): Promise<AxiosResponse<Category>> {
+		return this.service.saveCategory(_category);
 	}
 
-	public async save(_category: Category): Promise<Category> {
-		return (await this.post("", _category)).data;
-	}
-
-	public async update(_category: Category): Promise<Category> {
-		return (await this.put("", _category)).data;
+	public async update(_category: Category): Promise<AxiosResponse<Category>> {
+		return this.service.updateCategory(_category);
 	}
 
 }

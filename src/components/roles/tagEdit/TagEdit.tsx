@@ -8,9 +8,8 @@ import { GenericSelect } from "../../genericSelect/GenericSelect";
 import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./TagEdit.scss";
-import { Tag } from "../../../@types/Tag";
 import TagService from "../../../services/Tag.service";
-import { Role } from "../../../api/api";
+import { Role, Tag } from "../../../api/api";
 
 const tagService = new TagService();
 
@@ -33,7 +32,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 
 	const getTags = () => {
 		tagService.getAll()
-			.then(setTags)
+			.then(res => setTags(res.data))
 			.catch(err => {
 				Console.error(err);
 				setTags([]);
@@ -47,7 +46,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 				nameRef.value = "";
 			} else {
 				idRef.value = tag.id!.toString();
-				nameRef.value = tag.name;
+				nameRef.value = tag.name!;
 			}
 			M.updateTextFields();
 		}
@@ -56,25 +55,29 @@ export const TagEdit = (props: AdminTagListProps) => {
 	const saveTag = (ev: React.FormEvent) => {
 		ev.preventDefault();
 		const form = ev.target as HTMLFormElement;
-		const categ: Tag = {
+		const tag: Tag = {
 			id: parseInt(form["idTag"].value),
 			name: form["tag-name"].value,
 		};
 
-		if (isNaN(categ.id!)) {
-			tagService.save(categ).then(_tag => {
-				setTags([...tags, _tag]);
-				setMessages([localization[locale].tagSavedMessage]);
-			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
-			});
+		if (isNaN(tag.id!)) {
+			tagService.save(tag)
+				.then(res => {
+					setTags([...tags, res.data]);
+					setMessages([localization[locale].tagSavedMessage]);
+				})
+				.catch(err => {
+					setErrors([getErrorText(err, locale)]);
+				});
 		} else {
-			tagService.update(categ).then(_tag => {
-				setTags(tags.map(t => t.id === _tag.id ? _tag : t));
-				setMessages([localization[locale].tagSavedMessage]);
-			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
-			});
+			tagService.update(tag)
+				.then(res => {
+					setTags(tags.map(t => t.id === res.data.id ? res.data : t));
+					setMessages([localization[locale].tagSavedMessage]);
+				})
+				.catch(err => {
+					setErrors([getErrorText(err, locale)]);
+				});
 		}
 	};
 
@@ -112,7 +115,7 @@ export const TagEdit = (props: AdminTagListProps) => {
 					<div className="row">
 						<div className="input-field col s12 m8">
 							<GenericSelect list={tags.map(elem =>
-								new GenericElement<Tag>(elem, elem.id!, elem.name))}
+								new GenericElement<Tag>(elem, elem.id!, elem.name!))}
 							               create={true}
 							               onSelect={elem => setTag(elem?.element)}
 							               newOptionText={localization[locale].tagNewOption}

@@ -37,29 +37,10 @@ export const getHistoryErrors = (history: H.History<any>): string[] => {
 };
 
 export const hasRole = (roles: Role[]|string[], role: string): boolean => {
+	console.log(roles, role);
 	return (roles as any[]).find(r => r.name ? r.name.toUpperCase() === role.toUpperCase() : r.toUpperCase() === role.toUpperCase()) !== undefined;
 };
 
 export const capitalize = (str: string): string => {
 	return str.charAt(0).toUpperCase() + str.substring(1);
-};
-
-export const paramsToQuery = (params: PostQueryParams) => {
-	const query: any[] = [];
-	Object.keys(params).forEach(key => {
-		query.push({
-			key,
-			value: (params as any)[key],
-			op: "EQ",
-		});
-	});
-	return query;
-};
-
-export const pageRequestToQuery = (pageRequest: PageRequest) => {
-	let query = `${pageRequest.page}`
-	if (pageRequest.count) {
-		query += `,${pageRequest.count}`
-	}
-	return query;
 };

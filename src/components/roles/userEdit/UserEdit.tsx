@@ -5,7 +5,6 @@ import Console from "../../../utils/Console";
 import GenericElement from "../../genericSelect/GenericElement";
 import MaterializeInput from "../../materialize/input/MaterializeInput";
 import MaterializeTextarea from "../../materialize/textarea/MaterializeTextarea";
-import RoleService from "../../../services/Role.service";
 import localization from "./localization";
 import useLocale from "../../../hooks/useLocale";
 import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
@@ -13,7 +12,7 @@ import { MessageList } from "../../messageList/MessageList";
 import { getErrorText } from "../../../pages/errors/localization";
 import { useParams } from "react-router";
 import UserService from "../../../services/User.service";
-import { RoleControllerApi, Role } from "../../../api/api";
+import { RoleControllerApi, Role, UserRecordStatusEnum } from "../../../api/api";
 import { User } from "../../../@types/User";
 
 
@@ -35,7 +34,7 @@ export const UserEdit = (props: UserEditProps) => {
 		lastName: "",
 		createdDate: "",
 		lastModifiedDate: "",
-		recordStatus: 1,
+		recordStatus: UserRecordStatusEnum.Active,
 		roles: [],
 		password: "",
 		username: ""

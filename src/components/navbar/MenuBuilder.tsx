@@ -3,6 +3,7 @@ import routes from "../../router/localization";
 import { LocaleSwitch } from "../localization/LocaleSwitch";
 import { MenuItem, MenuItemBuilder, MenuItemType } from "./MenuItem";
 import { environment } from "../../environment";
+import Roles from "../../utils/Roles";
 
 class MenuBuilder {
 	private navItems: MenuItem[];
@@ -22,9 +23,9 @@ class MenuBuilder {
 			new MenuItemBuilder(websiteUrl!, routes[this.locale].website, MenuItemType.ANCHOR)
 				.order(1).build(),
 			new MenuItemBuilder("/user/profile", routes[this.locale].profile)
-				.order(20).roles(["user"]).loggedIn(true).build(),
+				.order(20).roles([Roles.USER_ROLE]).loggedIn(true).build(),
 			new MenuItemBuilder("/admin/posts", routes[this.locale].posts)
-				.order(100).roles(["author", "admin"]).loggedIn(true).build(),
+				.order(100).roles([Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE]).loggedIn(true).build(),
 			new MenuItemBuilder("/login", routes[this.locale].login)
 				.order(900).loggedIn(false).build(),
 			new MenuItemBuilder("/register", routes[this.locale].register)

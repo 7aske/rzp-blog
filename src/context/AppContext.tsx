@@ -21,7 +21,6 @@ export const AppContext = createContext<AppContext>({
 
 export const AppContextProvider = (props: any) => {
 	const [appState, setAppState] = useState(initialAppState);
-	useEffect(()=>console.log(appState), [appState])
 
 	return <AppContext.Provider value={{ctx: appState, setCtx: setAppState}}>
 		{props.children}

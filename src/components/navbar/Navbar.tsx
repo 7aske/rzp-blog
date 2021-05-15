@@ -11,6 +11,7 @@ import Console from "../../utils/Console";
 import MenuBuilder from "./MenuBuilder";
 import "./Navbar.scss";
 import { Sidenav } from "./sidenav/Sidenav";
+import Roles from "../../utils/Roles";
 
 
 export const Navbar = () => {
@@ -28,7 +29,7 @@ export const Navbar = () => {
 
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
-		.withRoles(["user"])
+		.withRoles([Roles.USER_ROLE])
 		.withNavTrigger()
 		.build();
 

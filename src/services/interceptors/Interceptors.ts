@@ -15,7 +15,9 @@ export default class Interceptors {
 	}
 
 	public static authorizationOnFulfilled(config: AxiosRequestConfig) {
-		config.headers["Authorization"] = `Bearer ${Cookies.get("auth")}`;
+		const auth = Cookies.get("auth")
+		if (auth)
+			config.headers["Authorization"] = `Bearer ${auth}`;
 		return config;
 	}
 

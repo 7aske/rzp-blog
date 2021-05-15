@@ -53,11 +53,24 @@ export interface Category {
     name?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Category
      */
-    recordStatus?: number;
+    recordStatus?: CategoryRecordStatusEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CategoryRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -96,10 +109,10 @@ export interface Comment {
     post?: Post;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Comment
      */
-    recordStatus?: number;
+    recordStatus?: CommentRecordStatusEnum;
     /**
      * 
      * @type {User}
@@ -107,55 +120,19 @@ export interface Comment {
      */
     user?: User;
 }
+
 /**
- * 
- * @export
- * @interface Contact
- */
-export interface Contact {
-    /**
-     * 
-     * @type {string}
-     * @memberof Contact
-     */
-    contactType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Contact
-     */
-    createdDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Contact
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Contact
-     */
-    lastModifiedDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Contact
-     */
-    recordStatus?: number;
-    /**
-     * 
-     * @type {User}
-     * @memberof Contact
-     */
-    user?: User;
-    /**
-     * 
-     * @type {string}
-     * @memberof Contact
-     */
-    value?: string;
+    * @export
+    * @enum {string}
+    */
+export enum CommentRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
 }
+
 /**
  * 
  * @export
@@ -182,10 +159,10 @@ export interface Media {
     lastModifiedDate?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Media
      */
-    recordStatus?: number;
+    recordStatus?: MediaRecordStatusEnum;
     /**
      * 
      * @type {string}
@@ -193,6 +170,19 @@ export interface Media {
      */
     uri?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MediaRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -350,12 +340,6 @@ export interface Post {
     datePosted?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof Post
-     */
-    deleted?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof Post
      */
@@ -380,10 +364,10 @@ export interface Post {
     published?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Post
      */
-    recordStatus?: number;
+    recordStatus?: PostRecordStatusEnum;
     /**
      * 
      * @type {string}
@@ -415,6 +399,19 @@ export interface Post {
      */
     views?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PostRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -453,10 +450,16 @@ export interface PostPreview {
     lastModifiedDate?: string;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof PostPreview
      */
-    recordStatus?: number;
+    published?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostPreview
+     */
+    recordStatus?: PostPreviewRecordStatusEnum;
     /**
      * 
      * @type {string}
@@ -488,6 +491,19 @@ export interface PostPreview {
      */
     views?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PostPreviewRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -520,11 +536,24 @@ export interface Role {
     name?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Role
      */
-    recordStatus?: number;
+    recordStatus?: RoleRecordStatusEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RoleRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -557,11 +586,24 @@ export interface Tag {
     name?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Tag
      */
-    recordStatus?: number;
+    recordStatus?: TagRecordStatusEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TagRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -624,10 +666,10 @@ export interface User {
     password?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof User
      */
-    recordStatus?: number;
+    recordStatus?: UserRecordStatusEnum;
     /**
      * 
      * @type {Array<Role>}
@@ -641,6 +683,19 @@ export interface User {
      */
     username?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UserRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED'
+}
+
 /**
  * 
  * @export
@@ -1984,392 +2039,6 @@ export class CommentControllerApi extends BaseAPI {
 
 
 /**
- * ContactControllerApi - axios parameter creator
- * @export
- */
-export const ContactControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary deleteContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteContactById: async (contactId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contactId' is not null or undefined
-            assertParamExists('deleteContactById', 'contactId', contactId)
-            const localVarPath = `/contacts/{contactId}`
-                .replace(`{${"contactId"}}`, encodeURIComponent(String(contactId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getAllContacts
-         * @param {string} [q] q
-         * @param {string} [sort] sort
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllContacts: async (q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/contacts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContactById: async (contactId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contactId' is not null or undefined
-            assertParamExists('getContactById', 'contactId', contactId)
-            const localVarPath = `/contacts/{contactId}`
-                .replace(`{${"contactId"}}`, encodeURIComponent(String(contactId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary saveContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveContact: async (contact: Contact, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contact' is not null or undefined
-            assertParamExists('saveContact', 'contact', contact)
-            const localVarPath = `/contacts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(contact, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary updateContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateContact: async (contact: Contact, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contact' is not null or undefined
-            assertParamExists('updateContact', 'contact', contact)
-            const localVarPath = `/contacts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(contact, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ContactControllerApi - functional programming interface
- * @export
- */
-export const ContactControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ContactControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary deleteContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteContactById(contactId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContactById(contactId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary getAllContacts
-         * @param {string} [q] q
-         * @param {string} [sort] sort
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAllContacts(q?: string, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Contact>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContacts(q, sort, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary getContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContactById(contactId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContactById(contactId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary saveContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async saveContact(contact: Contact, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.saveContact(contact, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary updateContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateContact(contact: Contact, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateContact(contact, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ContactControllerApi - factory interface
- * @export
- */
-export const ContactControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ContactControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary deleteContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteContactById(contactId: number, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteContactById(contactId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary getAllContacts
-         * @param {string} [q] q
-         * @param {string} [sort] sort
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllContacts(q?: string, sort?: string, options?: any): AxiosPromise<Array<Contact>> {
-            return localVarFp.getAllContacts(q, sort, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary getContactById
-         * @param {number} contactId contactId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContactById(contactId: number, options?: any): AxiosPromise<Contact> {
-            return localVarFp.getContactById(contactId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary saveContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveContact(contact: Contact, options?: any): AxiosPromise<Contact> {
-            return localVarFp.saveContact(contact, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary updateContact
-         * @param {Contact} contact contact
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateContact(contact: Contact, options?: any): AxiosPromise<Contact> {
-            return localVarFp.updateContact(contact, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ContactControllerApi - object-oriented interface
- * @export
- * @class ContactControllerApi
- * @extends {BaseAPI}
- */
-export class ContactControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary deleteContactById
-     * @param {number} contactId contactId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactControllerApi
-     */
-    public deleteContactById(contactId: number, options?: any) {
-        return ContactControllerApiFp(this.configuration).deleteContactById(contactId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary getAllContacts
-     * @param {string} [q] q
-     * @param {string} [sort] sort
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactControllerApi
-     */
-    public getAllContacts(q?: string, sort?: string, options?: any) {
-        return ContactControllerApiFp(this.configuration).getAllContacts(q, sort, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary getContactById
-     * @param {number} contactId contactId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactControllerApi
-     */
-    public getContactById(contactId: number, options?: any) {
-        return ContactControllerApiFp(this.configuration).getContactById(contactId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary saveContact
-     * @param {Contact} contact contact
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactControllerApi
-     */
-    public saveContact(contact: Contact, options?: any) {
-        return ContactControllerApiFp(this.configuration).saveContact(contact, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary updateContact
-     * @param {Contact} contact contact
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactControllerApi
-     */
-    public updateContact(contact: Contact, options?: any) {
-        return ContactControllerApiFp(this.configuration).updateContact(contact, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * MediaControllerApi - axios parameter creator
  * @export
  */
@@ -2763,46 +2432,6 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @summary addPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addPostTags: async (postId: number, tags: Array<Tag>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'postId' is not null or undefined
-            assertParamExists('addPostTags', 'postId', postId)
-            // verify required parameter 'tags' is not null or undefined
-            assertParamExists('addPostTags', 'tags', tags)
-            const localVarPath = `/posts/{postId}/tags`
-                .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tags, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary deletePostById
          * @param {number} postId postId
          * @param {*} [options] Override http request option.
@@ -2829,46 +2458,6 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary deletePostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePostTags: async (postId: number, tags: Array<Tag>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'postId' is not null or undefined
-            assertParamExists('deletePostTags', 'postId', postId)
-            // verify required parameter 'tags' is not null or undefined
-            assertParamExists('deletePostTags', 'tags', tags)
-            const localVarPath = `/posts/{postId}/tags`
-                .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tags, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3026,46 +2615,6 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary setPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setPostTags: async (postId: number, tags: Array<Tag>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'postId' is not null or undefined
-            assertParamExists('setPostTags', 'postId', postId)
-            // verify required parameter 'tags' is not null or undefined
-            assertParamExists('setPostTags', 'tags', tags)
-            const localVarPath = `/posts/{postId}/tags`
-                .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tags, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary updatePost
          * @param {Post} post post
          * @param {*} [options] Override http request option.
@@ -3112,18 +2661,6 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary addPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addPostTags(postId: number, tags: Array<Tag>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addPostTags(postId, tags, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary deletePostById
          * @param {number} postId postId
          * @param {*} [options] Override http request option.
@@ -3131,18 +2668,6 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
          */
         async deletePostById(postId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deletePostById(postId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary deletePostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deletePostTags(postId: number, tags: Array<Tag>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePostTags(postId, tags, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3193,18 +2718,6 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary setPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async setPostTags(postId: number, tags: Array<Tag>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setPostTags(postId, tags, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary updatePost
          * @param {Post} post post
          * @param {*} [options] Override http request option.
@@ -3226,17 +2739,6 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @summary addPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addPostTags(postId: number, tags: Array<Tag>, options?: any): AxiosPromise<Array<Tag>> {
-            return localVarFp.addPostTags(postId, tags, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary deletePostById
          * @param {number} postId postId
          * @param {*} [options] Override http request option.
@@ -3244,17 +2746,6 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
          */
         deletePostById(postId: number, options?: any): AxiosPromise<void> {
             return localVarFp.deletePostById(postId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary deletePostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePostTags(postId: number, tags: Array<Tag>, options?: any): AxiosPromise<Array<Tag>> {
-            return localVarFp.deletePostTags(postId, tags, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3300,17 +2791,6 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
-         * @summary setPostTags
-         * @param {number} postId postId
-         * @param {Array<Tag>} tags tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setPostTags(postId: number, tags: Array<Tag>, options?: any): AxiosPromise<Array<Tag>> {
-            return localVarFp.setPostTags(postId, tags, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary updatePost
          * @param {Post} post post
          * @param {*} [options] Override http request option.
@@ -3331,19 +2811,6 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
 export class PostControllerApi extends BaseAPI {
     /**
      * 
-     * @summary addPostTags
-     * @param {number} postId postId
-     * @param {Array<Tag>} tags tags
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PostControllerApi
-     */
-    public addPostTags(postId: number, tags: Array<Tag>, options?: any) {
-        return PostControllerApiFp(this.configuration).addPostTags(postId, tags, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary deletePostById
      * @param {number} postId postId
      * @param {*} [options] Override http request option.
@@ -3352,19 +2819,6 @@ export class PostControllerApi extends BaseAPI {
      */
     public deletePostById(postId: number, options?: any) {
         return PostControllerApiFp(this.configuration).deletePostById(postId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary deletePostTags
-     * @param {number} postId postId
-     * @param {Array<Tag>} tags tags
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PostControllerApi
-     */
-    public deletePostTags(postId: number, tags: Array<Tag>, options?: any) {
-        return PostControllerApiFp(this.configuration).deletePostTags(postId, tags, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3415,19 +2869,6 @@ export class PostControllerApi extends BaseAPI {
      */
     public savePost(post: Post, options?: any) {
         return PostControllerApiFp(this.configuration).savePost(post, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary setPostTags
-     * @param {number} postId postId
-     * @param {Array<Tag>} tags tags
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PostControllerApi
-     */
-    public setPostTags(postId: number, tags: Array<Tag>, options?: any) {
-        return PostControllerApiFp(this.configuration).setPostTags(postId, tags, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4011,46 +3452,6 @@ export const TagControllerApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * 
-         * @summary addTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addTagPosts: async (tagId: number, posts: Array<Post>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('addTagPosts', 'tagId', tagId)
-            // verify required parameter 'posts' is not null or undefined
-            assertParamExists('addTagPosts', 'posts', posts)
-            const localVarPath = `/tags/{tagId}/posts`
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(posts, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary deleteTagById
          * @param {number} tagId tagId
          * @param {*} [options] Override http request option.
@@ -4077,46 +3478,6 @@ export const TagControllerApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary deleteTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTagPosts: async (tagId: number, posts: Array<Post>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('deleteTagPosts', 'tagId', tagId)
-            // verify required parameter 'posts' is not null or undefined
-            assertParamExists('deleteTagPosts', 'posts', posts)
-            const localVarPath = `/tags/{tagId}/posts`
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(posts, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4199,40 +3560,6 @@ export const TagControllerApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary getTagPosts
-         * @param {number} tagId tagId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTagPosts: async (tagId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('getTagPosts', 'tagId', tagId)
-            const localVarPath = `/tags/{tagId}/posts`
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary saveTag
          * @param {Tag} tag tag
          * @param {*} [options] Override http request option.
@@ -4261,46 +3588,6 @@ export const TagControllerApiAxiosParamCreator = function (configuration?: Confi
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(tag, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary setTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setTagPosts: async (tagId: number, posts: Array<Post>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('setTagPosts', 'tagId', tagId)
-            // verify required parameter 'posts' is not null or undefined
-            assertParamExists('setTagPosts', 'posts', posts)
-            const localVarPath = `/tags/{tagId}/posts`
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(posts, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4355,18 +3642,6 @@ export const TagControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary addTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addTagPosts(tagId: number, posts: Array<Post>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addTagPosts(tagId, posts, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary deleteTagById
          * @param {number} tagId tagId
          * @param {*} [options] Override http request option.
@@ -4374,18 +3649,6 @@ export const TagControllerApiFp = function(configuration?: Configuration) {
          */
         async deleteTagById(tagId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTagById(tagId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary deleteTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteTagPosts(tagId: number, posts: Array<Post>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTagPosts(tagId, posts, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4413,17 +3676,6 @@ export const TagControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary getTagPosts
-         * @param {number} tagId tagId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTagPosts(tagId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTagPosts(tagId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary saveTag
          * @param {Tag} tag tag
          * @param {*} [options] Override http request option.
@@ -4431,18 +3683,6 @@ export const TagControllerApiFp = function(configuration?: Configuration) {
          */
         async saveTag(tag: Tag, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tag>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveTag(tag, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary setTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async setTagPosts(tagId: number, posts: Array<Post>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setTagPosts(tagId, posts, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4468,17 +3708,6 @@ export const TagControllerApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * 
-         * @summary addTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addTagPosts(tagId: number, posts: Array<Post>, options?: any): AxiosPromise<Array<Post>> {
-            return localVarFp.addTagPosts(tagId, posts, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary deleteTagById
          * @param {number} tagId tagId
          * @param {*} [options] Override http request option.
@@ -4486,17 +3715,6 @@ export const TagControllerApiFactory = function (configuration?: Configuration, 
          */
         deleteTagById(tagId: number, options?: any): AxiosPromise<void> {
             return localVarFp.deleteTagById(tagId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary deleteTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTagPosts(tagId: number, posts: Array<Post>, options?: any): AxiosPromise<Array<Post>> {
-            return localVarFp.deleteTagPosts(tagId, posts, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4521,16 +3739,6 @@ export const TagControllerApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary getTagPosts
-         * @param {number} tagId tagId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTagPosts(tagId: number, options?: any): AxiosPromise<Array<Post>> {
-            return localVarFp.getTagPosts(tagId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary saveTag
          * @param {Tag} tag tag
          * @param {*} [options] Override http request option.
@@ -4538,17 +3746,6 @@ export const TagControllerApiFactory = function (configuration?: Configuration, 
          */
         saveTag(tag: Tag, options?: any): AxiosPromise<Tag> {
             return localVarFp.saveTag(tag, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary setTagPosts
-         * @param {number} tagId tagId
-         * @param {Array<Post>} posts posts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setTagPosts(tagId: number, posts: Array<Post>, options?: any): AxiosPromise<Array<Post>> {
-            return localVarFp.setTagPosts(tagId, posts, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4572,19 +3769,6 @@ export const TagControllerApiFactory = function (configuration?: Configuration, 
 export class TagControllerApi extends BaseAPI {
     /**
      * 
-     * @summary addTagPosts
-     * @param {number} tagId tagId
-     * @param {Array<Post>} posts posts
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagControllerApi
-     */
-    public addTagPosts(tagId: number, posts: Array<Post>, options?: any) {
-        return TagControllerApiFp(this.configuration).addTagPosts(tagId, posts, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary deleteTagById
      * @param {number} tagId tagId
      * @param {*} [options] Override http request option.
@@ -4593,19 +3777,6 @@ export class TagControllerApi extends BaseAPI {
      */
     public deleteTagById(tagId: number, options?: any) {
         return TagControllerApiFp(this.configuration).deleteTagById(tagId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary deleteTagPosts
-     * @param {number} tagId tagId
-     * @param {Array<Post>} posts posts
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagControllerApi
-     */
-    public deleteTagPosts(tagId: number, posts: Array<Post>, options?: any) {
-        return TagControllerApiFp(this.configuration).deleteTagPosts(tagId, posts, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4635,18 +3806,6 @@ export class TagControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary getTagPosts
-     * @param {number} tagId tagId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagControllerApi
-     */
-    public getTagPosts(tagId: number, options?: any) {
-        return TagControllerApiFp(this.configuration).getTagPosts(tagId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary saveTag
      * @param {Tag} tag tag
      * @param {*} [options] Override http request option.
@@ -4655,19 +3814,6 @@ export class TagControllerApi extends BaseAPI {
      */
     public saveTag(tag: Tag, options?: any) {
         return TagControllerApiFp(this.configuration).saveTag(tag, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary setTagPosts
-     * @param {number} tagId tagId
-     * @param {Array<Post>} posts posts
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagControllerApi
-     */
-    public setTagPosts(tagId: number, posts: Array<Post>, options?: any) {
-        return TagControllerApiFp(this.configuration).setTagPosts(tagId, posts, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

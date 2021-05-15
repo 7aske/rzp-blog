@@ -20,8 +20,7 @@ import PostService from "../../../services/Post.service";
 import TagService from "../../../services/Tag.service";
 import CategoryService from "../../../services/Category.service";
 import PostPreviewService from "../../../services/PostPreview.service";
-import { Category } from "../../../@types/Category";
-import { Role, Post, Tag } from "../../../api/api";
+import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
 
 const postService = new PostService();
 const tagService = new TagService();
@@ -43,8 +42,8 @@ export const PostEdit = (props: PostEditProps) => {
 	const {postSlug} = useParams();
 
 	const getCategories = () => {
-		categoryService.getAll().then(_categories => {
-			setCategories(_categories);
+		categoryService.getAll().then(res => {
+			setCategories(res.data);
 		}).catch(err => {
 			Console.error(err);
 			setCategories([]);
@@ -59,8 +58,8 @@ export const PostEdit = (props: PostEditProps) => {
 
 
 	const getTags = () => {
-		tagService.getAll().then(_tags => {
-			setTags(_tags);
+		tagService.getAll().then(res => {
+			setTags(res.data);
 		}).catch(err => {
 			Console.error(err);
 			setTags([]);
@@ -123,8 +122,11 @@ export const PostEdit = (props: PostEditProps) => {
 	const setProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const value = ev.target.value;
 		const id = ev.target.id;
-
-		setPost({...(post as Post), [id]: value, published: value === "true"});
+		if (id === "recordStatus") {
+			setPost({...(post as Post), [id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted});
+		} else {
+			setPost({...(post as Post), [id]: value});
+		}
 	};
 
 	useEffect(() => {
@@ -150,14 +152,14 @@ export const PostEdit = (props: PostEditProps) => {
 							<div className="row">
 								<MaterializeInput placeholder={localization[locale].postTitlePlaceholder}
 								                  className="col s12 m12 l6"
-								                  id="postTitle"
+								                  id="title"
 								                  type="text"
 								                  value={post?.title}
 								                  label={localization[locale].postTitleLabel}
 								                  onChange={setProp}/>
 								<MaterializeInput placeholder={localization[locale].postSlugPlaceholder}
 								                  className="col s12 m12 l6"
-								                  id="postSlug"
+								                  id="slug"
 								                  type="text"
 								                  value={post?.slug}
 								                  label={localization[locale].postSlugLabel}
@@ -167,14 +169,14 @@ export const PostEdit = (props: PostEditProps) => {
 								<div className="col s12 m12 l6">
 									<GenericSelect
 										value={post?.category?.id}
-										list={categories.map(categ => new GenericElement<Category>(categ, categ.id!, categ.name))}
+										list={categories.map(categ => new GenericElement<Category>(categ, categ.id!, categ.name!))}
 										labelText={localization[locale].postCategoryLabel}
 										onSelect={elem => elem?.id && setPost({
 											...(post as Post),
 											category: {id: elem.id, name: elem.name},
 										})}/>
 								</div>
-								<MaterializeCheckbox id="postPublished"
+								<MaterializeCheckbox id="recordStatus"
 								                     className="col s12 m12 l6"
 								                     label={localization[locale].postPublishedLabel}
 								                     value={post?.published + ""}
@@ -197,7 +199,7 @@ export const PostEdit = (props: PostEditProps) => {
 							</div>
 							<div className="row">
 								<MaterializeTextarea
-									id="postExcerpt"
+									id="excerpt"
 									className="col s12 m12 l12"
 									placeholder={localization[locale].postExcerptPlaceholder}
 									spellCheck={false}

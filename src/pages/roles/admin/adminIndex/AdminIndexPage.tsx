@@ -14,6 +14,7 @@ import { hasRole } from "../../../../utils/utils";
 import { UserProfilePage } from "../../user/userProfile/UserProfilePage";
 import "./AdminIndexPage.scss";
 import localization from "./localization";
+import Roles from "../../../../utils/Roles";
 
 type AdminIndexPageProps = {};
 export const AdminIndexPage = (props: AdminIndexPageProps) => {
@@ -35,7 +36,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 		</NavLink>,
 	];
 
-	if (!hasRole(ctx.user?.roles!, "admin")) menuItems.pop();
+	if (!hasRole(ctx.user?.roles!, Roles.ADMIN_ROLE)) menuItems.pop();
 	return (
 		<div id="admin-index-page" className="white-text">
 			<div className="row">

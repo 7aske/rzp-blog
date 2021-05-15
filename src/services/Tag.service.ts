@@ -1,27 +1,23 @@
-import AbstractHttpClient from "./client/AbstractHttpClient";
-import { ITagService } from "../@types/services/TagService";
-import { Tag } from "../@types/Tag";
+import { AxiosResponse } from "axios";
+import { TagControllerApi, Tag } from "../api/api";
 
-export default class TagService extends AbstractHttpClient implements ITagService {
+export default class TagService {
+	private service = new TagControllerApi();
 
-	constructor() {
-		super("/tags");
+	public async deleteById(id: number): Promise<AxiosResponse<void>> {
+		return this.service.deleteTagById(id);
 	}
 
-	public async deleteById(id: number): Promise<void> {
-		await this.delete(`/${id}`);
+	public async getAll(): Promise<AxiosResponse<Array<Tag>>> {
+		return this.service.getAllTags();
 	}
 
-	public async getAll(): Promise<Tag[]> {
-		return (await this.get("")).data;
+	public async save(tag: Tag): Promise<AxiosResponse<Tag>> {
+		return this.service.saveTag(tag);
 	}
 
-	public async save(tag: Tag): Promise<Tag> {
-		return (await this.post("", tag)).data;
-	}
-
-	public async update(tag: Tag): Promise<Tag> {
-		return (await this.put("", tag)).data;
+	public async update(tag: Tag): Promise<AxiosResponse<Tag>> {
+		return this.service.updateTag(tag);
 	}
 
 }

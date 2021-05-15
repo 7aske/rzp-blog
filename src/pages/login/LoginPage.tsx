@@ -11,6 +11,7 @@ import Console from "../../utils/Console";
 import UserService from "../../services/User.service";
 import AuthService from "../../services/Auth.service";
 import { User } from "../../@types/User";
+import Roles from "../../utils/Roles";
 
 const userService = new UserService();
 const authService = new AuthService();
@@ -22,9 +23,9 @@ export const LoginPage = () => {
 	const [errors, setErrors] = useState<string[]>([]);
 
 	const postLogin = (user: User) => {
-		if (hasRole(user!.roles.map(r => r.name!), "admin")) {
+		if (hasRole(user!.roles.map(r => r.name!), Roles.ADMIN_ROLE)) {
 			history.replace("/admin/users");
-		} else if (hasRole(user!.roles.map(r => r.name!), "user")) {
+		} else if (hasRole(user!.roles.map(r => r.name!), Roles.USER_ROLE)) {
 			history.replace("/user/profile");
 		} else {
 			history.replace("/");
@@ -37,7 +38,7 @@ export const LoginPage = () => {
 			try {
 				const res = await userService.getByUsername(token.user);
 				const user: User = res.data as User;
-				user.roles = (await userService.getRoles(user)).data;
+				user.roles = (token.roles as string[]).map(role => ({name: role}))
 				setCtx({...ctx, user: user});
 				postLogin(user);
 			} catch (e) {
@@ -47,12 +48,12 @@ export const LoginPage = () => {
 	};
 
 	const failure = (err: any) => {
-		Console.error(err);
-		if (err.response && err.response.data) {
-			setErrors([getErrorText(err.response.data.error, locale)]);
+		if (err.response && err.response.data.error) {
+			setErrors([err.response.data.error])
 		} else {
-			setErrors([err.message]);
+			setErrors([getErrorText("generic", locale)]);
 		}
+		console.dir(err);
 	};
 
 	const login = (ev: React.FormEvent) => {

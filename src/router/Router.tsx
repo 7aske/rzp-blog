@@ -12,6 +12,7 @@ import { IndexPage } from "../pages/index/IndexPage";
 import { PostPage } from "../pages/post/PostPage";
 import { UserProfilePage } from "../pages/roles/user/userProfile/UserProfilePage";
 import { TagPage } from "../pages/tag/TagPage";
+import Roles from "../utils/Roles";
 
 export const Router = () => {
 	return (
@@ -25,10 +26,10 @@ export const Router = () => {
 			<Route path="/register" component={RegisterPage}/>
 			<AuthGuard>
 				<Route exact path="/logout" component={LogoutPage}/>
-				<RoleGuard roles={["user"]}>
+				<RoleGuard roles={[Roles.USER_ROLE]}>
 					<Route path={"/user/profile"} component={UserProfilePage}/>
 				</RoleGuard>
-				<RoleGuard roles={["admin", "author"]}>
+				<RoleGuard roles={[Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE]}>
 					<Route path="/admin" component={AdminIndexPage}/>
 				</RoleGuard>
 			</AuthGuard>

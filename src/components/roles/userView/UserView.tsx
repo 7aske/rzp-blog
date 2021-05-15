@@ -6,7 +6,7 @@ import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.scss";
-import { UserControllerApi, User, Role } from "../../../api/api";
+import { UserControllerApi, User, Role, UserRecordStatusEnum } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
 
 const service = new UserControllerApi();
@@ -105,7 +105,7 @@ const UserViewListItem = ({user}: AdminPostListItemProps) => {
 						{user.email}
 					</div>
 					<div className="col s2 m2 l1 center">
-						{user.recordStatus === 1 ?
+						{user.recordStatus === UserRecordStatusEnum.Active ?
 							<i className="material-icons">check</i> :
 							<i className="material-icons">do_not_disturb_on</i>}
 					</div>

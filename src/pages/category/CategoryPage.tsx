@@ -9,12 +9,11 @@ import useLocale from "../../hooks/useLocale";
 import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import Console from "../../utils/Console";
-import { Category } from "../../@types/Category";
 import CategoryService from "../../services/Category.service";
 import PostService from "../../services/Post.service";
 import PostPreviewService from "../../services/PostPreview.service";
 import { usePageable } from "../../hooks/usePageable";
-import { PostPreview } from "../../api/api";
+import { PostPreview, Category } from "../../api/api";
 
 const categoryService = new CategoryService();
 const postService = new PostService();
@@ -31,16 +30,18 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	const [locale] = useLocale();
 
 	useEffect(() => {
-		categoryService.getAll().then(_categories => {
-			setCategories(_categories);
-			const categ = _categories.find(c => c.name === categoryName);
-			if (categ) {
-				setCategory(categ);
-			}
-		}).catch(err => {
-			Console.error(err);
-			setCategories([]);
-		});
+		categoryService.getAll()
+			.then(res => {
+				setCategories(res.data);
+				const categ = res.data.find(c => c.name === categoryName);
+				if (categ) {
+					setCategory(categ);
+				}
+			})
+			.catch(err => {
+				Console.error(err);
+				setCategories([]);
+			});
 
 		scrollToTop();
 		// eslint-disable-next-line
@@ -82,7 +83,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 					<GenericSelect
 						value={category?.id}
 						labelText={localization[locale].chooseCategoryText}
-						list={categories.map(categ => new GenericElement<Category>(categ, categ.id!, categ.name))}
+						list={categories.map(categ => new GenericElement<Category>(categ, categ.id!, categ.name!))}
 						onSelect={val => setCategory(val?.element)}/>
 				</div>
 			</div>

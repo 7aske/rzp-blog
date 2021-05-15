@@ -10,7 +10,7 @@ import "./PostView.scss";
 import PostService from "../../../services/Post.service";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { usePageable } from "../../../hooks/usePageable";
-import { PostPreview } from "../../../api/api";
+import { PostPreview, PostRecordStatusEnum, PostPreviewRecordStatusEnum } from "../../../api/api";
 
 const postService = new PostService();
 const postPreviewService = new PostPreviewService();
@@ -102,7 +102,7 @@ const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
 						<span className="blob grey darken-2">{post.category?.name}</span>
 					</div>
 					<div className="col s3 m3 l2 truncate">
-						{post.recordStatus === 1 ? localization[locale].published : ""}
+						{post.recordStatus === PostPreviewRecordStatusEnum.Active ? localization[locale].published : ""}
 					</div>
 					<div className="col s3 m3 l2">
 						<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>

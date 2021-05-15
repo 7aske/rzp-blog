@@ -26,11 +26,11 @@
   },
   "scripts": {
     "start": "PORT=3000 BROWSER=none react-scripts start",
-    "build": "react-scripts build",
-    "deploy:prod": "rsync -have ssh build/ root@digitize.rs:/srv/http/rzp/blog/",
-    "predeploy:prod": "npm run build",
-    "deploy:staging": "rsync -have ssh build/ root@viking.lan:/srv/http/rzp/blog/",
-    "predeploy:staging": "npm run build"
+    "build": "sh -ac '. ./.env.${REACT_APP_ENV}; react-scripts build'",
+    "deploy:prod": "rsync --delete --progress -havz build/ root@digitize.rs:/srv/http/rzp/blog/",
+    "predeploy:prod": "REACT_APP_ENV=production npm run build",
+    "deploy:staging": "rsync --delete --progress -havz build/ root@viking.lan:/srv/http/rzp/blog/",
+    "predeploy:staging": "REACT_APP_ENV=staging npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
