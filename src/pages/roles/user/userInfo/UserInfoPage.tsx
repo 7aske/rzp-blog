@@ -17,7 +17,6 @@ export const UserInfoPage = () => {
 	const [user, setUser] = useState(ctx.user);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
-	console.log(localization[locale])
 
 	const updateProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			setUser({...(user as User), [ev.target.id]: ev.target.value});
