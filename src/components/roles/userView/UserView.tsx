@@ -1,23 +1,21 @@
 import * as moment from "moment";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
 import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.css";
 import { UserControllerApi, User, Role } from "../../../api/api";
+import { usePageable } from "../../../hooks/usePageable";
 
 const service = new UserControllerApi();
 
 type UserViewProps = {};
 export const UserView = (props: UserViewProps) => {
-	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
-	const itemsPerPage = 10;
 	const pageCount = useRef<number>(0);
-	const [currentPage, setCurrentPage] = useState(0);
+	const {page, perPage, setPage} = usePageable();
 	const [users, setUsers] = useState<User[]>([]);
 	moment.locale(locale);
 
@@ -26,11 +24,9 @@ export const UserView = (props: UserViewProps) => {
 	}, []);
 
 	useEffect(() => {
-		service.getAllUsers(String(currentPage)).then(res => {
-			const _users = new Array(itemsPerPage).fill(null).map((_, i) => res.data[i]);
-
-			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / itemsPerPage);
-			console.log(pageCount.current);
+		service.getAllUsers(String(page)).then(res => {
+			const _users = new Array(perPage).fill(null).map((_, i) => res.data[i]);
+			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 			setUsers(_users);
 		}).catch(err => {
 			setUsers([]);
@@ -38,7 +34,7 @@ export const UserView = (props: UserViewProps) => {
 		});
 
 		// eslint-disable-next-line
-	}, [currentPage]);
+	}, [page]);
 
 	return (
 		<div className="admin-user-list">
@@ -73,7 +69,7 @@ export const UserView = (props: UserViewProps) => {
 				</li>
 				{users.map((user, i) => <UserViewListItem key={i} user={user} locale={locale}/>)}
 			</ul>
-			<Pagination className="right" onPageChange={setCurrentPage} pageCount={pageCount.current}/>
+			<Pagination className="right" onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
 import { getErrorText } from "../../../pages/errors/localization";
 import Console from "../../../utils/Console";
-import { hasRole, scrollToTop } from "../../../utils/utils";
+import { scrollToTop } from "../../../utils/utils";
 import { FloatingActionButton } from "../../floatingActionButton/FloatingActionButton";
 import { GenericChipSelect } from "../../genericSelect/GenericChipSelect";
 import GenericElement from "../../genericSelect/GenericElement";
@@ -19,16 +19,14 @@ import { PostEditor } from "./postEditor/PostEditor";
 import PostService from "../../../services/Post.service";
 import TagService from "../../../services/Tag.service";
 import CategoryService from "../../../services/Category.service";
-import { Post } from "../../../@types/Post";
-import { Tag } from "../../../@types/Tag";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { Category } from "../../../@types/Category";
-import { Role } from "../../../api/api";
+import { Role, Post, Tag } from "../../../api/api";
 
 const postService = new PostService();
 const tagService = new TagService();
-const categoryService = new CategoryService()
-const postPreviewService = new PostPreviewService()
+const categoryService = new CategoryService();
+const postPreviewService = new PostPreviewService();
 
 type PostEditProps = {
 	roles: Role[];
@@ -70,7 +68,7 @@ export const PostEdit = (props: PostEditProps) => {
 	};
 
 	const savePost = () => {
-		if (isNaN(post?.id!)){
+		if (isNaN(post?.id!)) {
 			postService.save(post!).then(_post => {
 				setMessages([localization[locale].postSavedText]);
 			}).catch(err => {
@@ -107,11 +105,13 @@ export const PostEdit = (props: PostEditProps) => {
 
 	useEffect(() => {
 		if (postSlug) {
-			postService.getByPostSlug(postSlug).then(_post => {
-				setPost(_post);
-			}).catch(err => {
-				Console.error(err);
-			});
+			postService.getByPostSlug(postSlug)
+				.then(res => {
+					setPost(res.data);
+				})
+				.catch(err => {
+					Console.error(err);
+				});
 		}
 
 		getCategories();
@@ -184,7 +184,7 @@ export const PostEdit = (props: PostEditProps) => {
 								<div className="col s12 m12 l12">
 									<GenericChipSelect
 										labelText={localization[locale].postTagsLabel}
-										list={tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name))}
+										list={tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name!))}
 										onUpdate={elems => setPost({
 											...(post as Post),
 											tags: elems.map(elem => ({
@@ -192,7 +192,7 @@ export const PostEdit = (props: PostEditProps) => {
 												name: elem.name,
 											})),
 										})}
-										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name)) : []}/>
+										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name!)) : []}/>
 								</div>
 							</div>
 							<div className="row">

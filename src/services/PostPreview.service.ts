@@ -6,11 +6,20 @@ export default class PostPreviewService {
 
 	public async getAll(page = 0, queryParams: string[] = []) {
 		const stringAttrs = ["slug", "title", "excerpt"];
-		const arrAttrs = ["category"];
 		const builder = new QueryBuilder();
 		stringAttrs.forEach(attr => queryParams.forEach(param => builder.like(attr, param).or()));
-		arrAttrs.forEach(attr => queryParams.forEach(param => builder.like(attr + ".name", param).or()));
-		console.log(builder.build());
+		builder.criteria(b => {
+			queryParams.forEach(param => b.like("category.name", param).or())
+			return b;
+		});
+		builder.criteria(b => {
+			queryParams.forEach(param => b.like("user.displayName", param).or())
+			return b;
+		});
+		builder.criteria(b => {
+			queryParams.forEach(param => b.like("tags.name", param).or())
+			return b;
+		});
 		return this.service.getAllPostPreviews(String(page), builder.build());
 	}
 

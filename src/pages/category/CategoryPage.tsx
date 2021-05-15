@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import GenericElement from "../../components/genericSelect/GenericElement";
 import { GenericSelect } from "../../components/genericSelect/GenericSelect";
@@ -26,6 +26,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	const [category, setCategory] = useState<Category | null>(null);
 	const [categories, setCategories] = useState<Category[]>([]);
 	const {page, perPage, setPage} = usePageable();
+	const pageCount = useRef<number>(0);
 	const [posts, setPosts] = useState<PostPreview[]>(new Array(perPage).fill(null));
 	const [locale] = useLocale();
 
@@ -48,8 +49,8 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	const getPosts = () => {
 		postPreviewService.getAllByCategoryName(page, category?.name!)
 			.then(res => {
-				console.log(res);
 				setPosts(res.data);
+				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 				if (category) window.history.replaceState(null, null!, "/#/category/" + category?.name);
 			})
 			.catch(err => {
@@ -87,7 +88,7 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			</div>
 			<div className="row">
 				<PostPreviewList posts={posts}/>
-				<Pagination onPageChange={setPage} pageCount={page}/>
+				<Pagination onPageChange={setPage} pageCount={pageCount.current}/>
 			</div>
 		</div>
 	);

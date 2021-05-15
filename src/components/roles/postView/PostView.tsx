@@ -22,17 +22,13 @@ export const PostView = () => {
 	const [posts, setPosts] = useState<PostPreview[]>([]);
 	moment.locale(locale);
 
-	useEffect(() => {
-		postService.getPageCount({page, count: perPage}).then(_count => {
-			pageCount.current = _count;
-		});
-		// eslint-disable-next-line
-	}, []);
 
 	useEffect(() => {
 		postPreviewService.getAll(pageCount.current)
 			.then(res => {
-				setPosts(res.data);
+				const _posts = new Array(perPage).fill(null).map((_, i) => res.data[i]);
+				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+				setPosts(_posts);
 			})
 			.catch(() => {
 				setPosts([]);
@@ -87,30 +83,34 @@ type AdminPostListItemProps = {
 	locale: string;
 };
 const AdminPostListItem = ({post, locale}: AdminPostListItemProps) => {
-	return (
-		<li className="admin-post-list-item collection-item">
-			<div className="row">
-				<div className="col s6 m6 l2 truncate">
-					<Link to={"/admin/posts/edit/" + post.slug}><i
-						className="material-icons">edit</i></Link>
-					<Link to={"/posts/" + post.slug}>{post.title}</Link>
+	if (post)
+		return (
+			<li className="admin-post-list-item collection-item">
+				<div className="row">
+					<div className="col s6 m6 l2 truncate">
+						<Link to={"/admin/posts/edit/" + post.slug}><i
+							className="material-icons">edit</i></Link>
+						<Link to={"/posts/" + post.slug}>{post.title}</Link>
+					</div>
+					<div className="col s2 hide-on-med-and-down truncate">
+						<Link to={"/posts/" + post.slug}>{post.slug}</Link>
+					</div>
+					<div className="col s2 hide-on-med-and-down">
+						{post?.user?.displayName}
+					</div>
+					<div className="col s2 hide-on-med-and-down">
+						<span className="blob grey darken-2">{post.category?.name}</span>
+					</div>
+					<div className="col s3 m3 l2 truncate">
+						{post.recordStatus === 1 ? localization[locale].published : ""}
+					</div>
+					<div className="col s3 m3 l2">
+						<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>
+					</div>
 				</div>
-				<div className="col s2 hide-on-med-and-down truncate">
-					<Link to={"/posts/" + post.slug}>{post.slug}</Link>
-				</div>
-				<div className="col s2 hide-on-med-and-down">
-					{post?.user?.displayName}
-				</div>
-				<div className="col s2 hide-on-med-and-down">
-					<span className="blob grey darken-2">{post.category?.name}</span>
-				</div>
-				<div className="col s3 m3 l2 truncate">
-					{post.recordStatus === 1 ? localization[locale].published : ""}
-				</div>
-				<div className="col s3 m3 l2">
-					<Moment locale={locale} fromNow>{post.lastModifiedDate}</Moment>
-				</div>
-			</div>
-		</li>
-	);
+			</li>
+		);
+	else
+		return (<li className="admin-post-list-item collection-item"/>);
+
 };

@@ -35,12 +35,12 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 	];
 
 	const infoProps: { element?: string, prop: string, className: string, disabled?: boolean }[] = [
-		{prop: "userUsername", className: "col s12 m12 l8", disabled: true},
-		{prop: "userDisplayName", className: "col s12 m12 l8"},
-		{prop: "userEmail", className: "col s12 m12 l8"},
-		{prop: "userFirstName", className: "col s12 m12 l6"},
-		{prop: "userLastName", className: "col s12 m12 l6"},
-		{prop: "userAbout", className: "col s12 m12", element: "textarea"},
+		{prop: "username", className: "col s12 m12 l8", disabled: true},
+		{prop: "displayName", className: "col s12 m12 l8"},
+		{prop: "email", className: "col s12 m12 l8"},
+		{prop: "firstName", className: "col s12 m12 l6"},
+		{prop: "lastName", className: "col s12 m12 l6"},
+		{prop: "about", className: "col s12 m12", element: "textarea"},
 	];
 
 	return (

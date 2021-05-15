@@ -2,16 +2,16 @@
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.post-preview .category span {
+.post-preview .category > span {
   position: absolute;
   right: 0;
   padding-left: 1em;
   font-size: 1.2em;
 }
-.post-preview .category span a {
+.post-preview .category > span a {
   color: #88dcc1;
 }
-.post-preview .category span:hover a {
+.post-preview .category > span:hover a {
   border-bottom: 2px solid #c2eddf;
   color: #eeeeee;
 }

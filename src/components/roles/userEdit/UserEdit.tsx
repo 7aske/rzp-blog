@@ -57,10 +57,10 @@ export const UserEdit = (props: UserEditProps) => {
 
 	useEffect(() => {
 		userService.getById(idUser)
-			.then(res => {
-				setUser({...res.data} as User);
-				userService.getRoles(res.data)
-					.then(res => setUser({...user, roles: res.data}))
+			.then(userRes => {
+				setUser({...userRes.data} as User);
+				userService.getRoles(userRes.data)
+					.then(res => setUser({...userRes.data, roles: res.data}))
 					.catch(Console.error);
 			})
 			.catch(err => {
@@ -83,6 +83,10 @@ export const UserEdit = (props: UserEditProps) => {
 				setMessages([localization[locale].userSavedText]);
 			}).catch(err => {
 				Console.error(err);
+				if (!err){
+					setErrors([getErrorText("generic", locale)]);
+					return;
+				}
 				if (err.response && err.response.data) {
 					setErrors([getErrorText(err.response.data.error, locale)]);
 				} else {
@@ -94,6 +98,12 @@ export const UserEdit = (props: UserEditProps) => {
 				setMessages([localization[locale].userSavedText]);
 			}).catch(err => {
 				Console.error(err);
+				if (!err){
+					setErrors([getErrorText("generic", locale)]);
+					return;
+				}
+
+				setErrors([getErrorText("generic", locale)]);
 				if (err.response && err.response.data) {
 					setErrors([getErrorText(err.response.data.error, locale)]);
 				} else {
@@ -113,47 +123,47 @@ export const UserEdit = (props: UserEditProps) => {
 						<MaterializeInput className="col s12 m12 l8"
 						                  disabled={true}
 						                  value={user?.id}
-						                  id="idUser"
+						                  id="id"
 						                  type="text"
 						                  onChange={updateProp} label={localization[locale].idUserLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8" value={user?.username}
-						                  id="userUsername" type="text"
+						                  id="username" type="text"
 						                  onChange={updateProp} label={localization[locale].userUsernameLabel}/>
 					</div>
-					{!user?.id ?
-						<div className="row">
-							<MaterializeInput className="col s12 m12 l8" value={user?.password}
-							                  id="userPassword" type="password"
-							                  onChange={updateProp} label={localization[locale].userPasswordLabel}/>
-						</div>
-						: ""}
+					{/*{!user?.id ?*/}
+					{/*	<div className="row">*/}
+					{/*		<MaterializeInput className="col s12 m12 l8" value={user?.password}*/}
+					{/*		                  id="password" type="password"*/}
+					{/*		                  onChange={updateProp} label={localization[locale].userPasswordLabel}/>*/}
+					{/*	</div>*/}
+					{/*	: ""}*/}
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8" value={user?.displayName}
-						                  id="userDisplayName" type="text"
+						                  id="displayName" type="text"
 						                  onChange={updateProp} label={localization[locale].userDisplayNameLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8" value={user?.email}
-						                  id="userEmail" type="text"
+						                  id="email" type="text"
 						                  onChange={updateProp} label={localization[locale].userEmailLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8" value={user?.firstName}
-						                  id="userFirstName" type="text"
+						                  id="firstName" type="text"
 						                  onChange={updateProp} label={localization[locale].userFirstNameLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeInput className="col s12 m12 l8" value={user?.lastName}
-						                  id="userLastName" type="text"
+						                  id="lastName" type="text"
 						                  onChange={updateProp} label={localization[locale].userLastNameLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeTextarea
 							className="col s12 m12 l10"
 							value={user?.about}
-							id="userAbout"
+							id="about"
 							onChange={updateProp}
 							label={localization[locale].userAboutLabel}/>
 					</div>
@@ -176,12 +186,10 @@ export const UserEdit = (props: UserEditProps) => {
 						<MessageList className="green accent-2 white-text" messages={messages}/>
 					</div>
 					<div className="row">
-						<div className="col s12">
-							<button onClick={save} className="btn"
+							<button onClick={save} className="btn theme-green"
 							        name="action">{localization[locale].saveUserButton}
 								<i className="material-icons right">send</i>
 							</button>
-						</div>
 					</div>
 				</div>
 			</div>

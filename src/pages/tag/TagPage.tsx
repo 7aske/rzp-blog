@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { GenericAutocomplete } from "../../components/genericSelect/GenericAutocomplete";
 import { Pagination } from "../../components/pagination/Pagination";
@@ -26,7 +26,7 @@ export const TagPage = (props: TagPageProps) => {
 	const [tags, setTags] = useState<Tag []>([]);
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState<PostPreview[]>(new Array(perPage).fill(null));
-	const [pageCount, setPageCount] = useState(0);
+	const pageCount = useRef(0);
 	const [locale] = useLocale();
 
 	useEffect(() => {
@@ -49,6 +49,7 @@ export const TagPage = (props: TagPageProps) => {
 		postPreviewService.getAllByTagName(page, tag?.name!)
 			.then(res => {
 				setPosts(res.data);
+				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 				if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
 			})
 			.catch(err => {
@@ -59,9 +60,6 @@ export const TagPage = (props: TagPageProps) => {
 
 	useEffect(() => {
 		getTags();
-		postService.getPageCount({page, count: perPage}, {tag: tag?.name, published: true}).then(_pageCount => {
-			setPageCount(_pageCount);
-		});
 		if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
 		// eslint-disable-next-line
 	}, [tag]);
@@ -89,7 +87,7 @@ export const TagPage = (props: TagPageProps) => {
 			</div>
 			<div className="row">
 				<PostPreviewList posts={posts}/>
-				<Pagination onPageChange={setPage} pageCount={pageCount}/>
+				<Pagination onPageChange={setPage} pageCount={pageCount.current}/>
 			</div>
 		</div>
 	);

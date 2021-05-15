@@ -24,7 +24,6 @@ export const IndexPage = (props: IndexPageProps) => {
 
 	useEffect(() => {
 		if (search !== "") {
-			console.log(search);
 			postPreviewService.getAll(page, search.split(/\s+/))
 				.then(res => {
 					setPosts(res.data)
@@ -62,7 +61,7 @@ export const IndexPage = (props: IndexPageProps) => {
 			<div className="row">
 				{posts.length > 0 ?
 					<div className="col s12">
-						<PostPreviewList posts={posts}/>
+						<PostPreviewList posts={posts} search={search}/>
 						<Pagination onPageChange={setPage} pageCount={pageCount}/>
 					</div>
 					: <div className="col s12 no-posts">

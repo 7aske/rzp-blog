@@ -136,22 +136,3 @@ export class QueryBuilder {
   }
 
 }
-
-// const query = CriteriaBuilder.of("users")
-//   .eq("test", "test1")
-//   .or()
-//   .gt("test2", "test3")
-//   .and()
-//   .null("test3")
-//   .or()
-//   .criteria(builder =>
-//     builder.like("test4", "test5")
-//       .or()
-//       .endsWith("test6", "test7")
-//       .criteria(builder1 =>
-//         builder1.eq("test22", "test33")));
-//
-//
-// console.log(query.build()); // ( test:test1 OR test2:test3 AND test3:null OR ( test4~*test5* OR test6~test7* ) )
-// console.log(query.buildUrlEncoded()); // (%20test%3Atest1%20OR%20test2%3Atest3%20AND%20test3%3Anull%20OR%20(%20test4~*test5*%20OR%20test6~test7*%20)%20)
-

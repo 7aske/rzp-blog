@@ -9,7 +9,7 @@ import { formatDate, scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import "./PostPage.css";
 import PostService from "../../services/Post.service";
-import { Post } from "../../@types/Post";
+import { Post } from "../../api/api";
 
 const postService = new PostService();
 
@@ -21,19 +21,19 @@ export const PostPage = () => {
 
 	useEffect(() => {
 		Console.log(slug);
-		postService.getByPostSlug(slug).then(_post => {
-			if (_post)
-				setPost(_post);
-		}).catch(err => {
-			Console.error(err);
-			history.replace("/404");
-		});
+		postService.getByPostSlug(slug)
+			.then(res => {
+				if (res.data)
+					setPost(res.data);
+			})
+			.catch(err => {
+				Console.error(err);
+				history.replace("/404");
+			});
 		scrollToTop();
 
 		// eslint-disable-next-line
 	}, []);
-
-
 
 
 	return (
