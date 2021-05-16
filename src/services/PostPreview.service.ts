@@ -25,13 +25,13 @@ export default class PostPreviewService {
 		const query = new QueryBuilder()
 			.eq("category.name", categoryName)
 			.build();
-		return this.service.getAllPostPreviews(String(page), query);
+		return this.service.getAllPostPreviewsNotDeleted(String(page), query);
 	}
 
 	public async getAllByTagName(page = 0, tagName: string) {
 		const query = new QueryBuilder()
 			.eq("tags.name", tagName)
 			.build();
-		return this.service.getAllPostPreviews(String(page), query);
+		return this.service.getAllPostPreviewsNotDeleted(String(page), query);
 	}
 }

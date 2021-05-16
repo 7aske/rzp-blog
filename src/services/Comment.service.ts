@@ -1,18 +1,15 @@
-import AbstractHttpClient from "./client/AbstractHttpClient";
-import { ICommentService } from "../@types/services/CommentService";
+import { Comment, PostControllerApi } from "../api/api";
+import { CommentDTO } from "../@types/CommentDTO";
+import { AxiosResponse } from "axios";
 
-export default class CommentService extends AbstractHttpClient implements ICommentService {
+export default class CommentService {
+	private service = new PostControllerApi();
 
-	constructor() {
-		super("/comments");
+	public getAllByIdPost(id: number, page: number): Promise<AxiosResponse<Array<Comment>>> {
+		return this.service.getAllPostComments(id, `${page},5`);
 	}
 
-	public getAllByIdPost(id: number, page: number, count?: number): Promise<CommentDTO[]> {
-		return this.get(`/${id}?page=${page},${count}`);
+	public save(postId: number, comment: CommentDTO): Promise<AxiosResponse<Comment>> {
+		return this.service.savePostComment(postId, comment);
 	}
-
-	public save(_comment: CommentDTO): Promise<CommentDTO> {
-		return this.post("", _comment);
-	}
-
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
@@ -8,47 +8,51 @@ import MaterializeTextarea from "../materialize/textarea/MaterializeTextarea";
 import localization from "./localization";
 import routes from "../../router/localization";
 import CommentService from "../../services/Comment.service";
+import { CommentDTO } from "../../@types/CommentDTO";
+import { Comment } from "../../api/api";
 
 const commentService = new CommentService();
 
 type CommentInputProps = {
-	idPost: number;
-	onCommentSubmit?: (comment: CommentDTO) => void;
+	postId: number;
+	onCommentSubmit?: (comment: Comment) => void;
 };
 export const CommentInput = (props: CommentInputProps) => {
 	const [locale] = useLocale();
 	const {ctx} = useContext(AppContext);
+
 	const [comment, setComment] = useState<CommentDTO>({
-		commentBody: "",
-		idPost: props.idPost,
-		idUser: {idUser: ctx.user ? ctx.user.id: undefined},
+		body: "",
+		post: {id: props.postId},
+		user: ctx.user!
 	});
 
-	useEffect(()=>{
-		console.log(comment);
-	}, [comment])
-
 	const submit = () => {
-		commentService.save(comment)
-			.then(_comment => {
-				if(props.onCommentSubmit) props.onCommentSubmit(_comment);
-				setComment({...comment, commentBody: ""});
+		commentService.save(comment.post.id!, comment)
+			.then(res => {
+				if (props.onCommentSubmit) props.onCommentSubmit(res.data);
+				setComment({...comment, body: ""});
 			})
 			.catch(Console.error);
 	};
 
 	const setProp = (ev: ChangeEvent<HTMLTextAreaElement>) => {
-		setComment({...comment, [ev.target.id]: ev.target.value});
-	}
+		setComment({
+			...comment,
+			[ev.target.id]: ev.target.value,
+			user: ctx.user!
+		});
+	};
+
 
 	return (
 		<div className="comment-input">
 			{ctx.user ?
 				<div>
 					<div className="row">
-						<MaterializeTextarea id="commentBody"
+						<MaterializeTextarea id="body"
 						                     onChange={setProp}
-						                     value={comment.commentBody}
+						                     value={comment.body}
 						                     label={localization[locale].labelText}/>
 					</div>
 					<div className="row">

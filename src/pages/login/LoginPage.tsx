@@ -7,7 +7,6 @@ import useLocale from "../../hooks/useLocale";
 import { getHistoryErrors, hasRole } from "../../utils/utils";
 import { getErrorText } from "../errors/localization";
 import "./LoginPage.scss";
-import Console from "../../utils/Console";
 import UserService from "../../services/User.service";
 import AuthService from "../../services/Auth.service";
 import { User } from "../../@types/User";
@@ -38,7 +37,7 @@ export const LoginPage = () => {
 			try {
 				const res = await userService.getByUsername(token.user);
 				const user: User = res.data as User;
-				user.roles = (token.roles as string[]).map(role => ({name: role}))
+				user.roles = (token.roles as string[]).map(role => ({name: role}));
 				setCtx({...ctx, user: user});
 				postLogin(user);
 			} catch (e) {
@@ -49,7 +48,7 @@ export const LoginPage = () => {
 
 	const failure = (err: any) => {
 		if (err.response && err.response.data.error) {
-			setErrors([err.response.data.error])
+			setErrors([err.response.data.error]);
 		} else {
 			setErrors([getErrorText("generic", locale)]);
 		}
@@ -71,7 +70,7 @@ export const LoginPage = () => {
 		M.updateTextFields();
 		authService.verify()
 			.then(success)
-			.catch(failure);
+			.catch(() => void false);
 		setErrors(getHistoryErrors(history));
 
 		// eslint-disable-next-line

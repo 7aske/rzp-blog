@@ -10,13 +10,12 @@ import { scrollToTop } from "../../utils/utils";
 import localization from "./localization";
 import Console from "../../utils/Console";
 import CategoryService from "../../services/Category.service";
-import PostService from "../../services/Post.service";
 import PostPreviewService from "../../services/PostPreview.service";
 import { usePageable } from "../../hooks/usePageable";
 import { PostPreview, Category } from "../../api/api";
+import "./CategoryPage.scss";
 
 const categoryService = new CategoryService();
-const postService = new PostService();
 const postPreviewService = new PostPreviewService();
 
 type CategoryPageProps = {};
@@ -89,7 +88,8 @@ export const CategoryPage = (props: CategoryPageProps) => {
 			</div>
 			<div className="row">
 				<PostPreviewList posts={posts}/>
-				<Pagination onPageChange={setPage} pageCount={pageCount.current}/>
+				{posts.length ?
+					<Pagination onPageChange={setPage} pageCount={pageCount.current}/> : <></>}
 			</div>
 		</div>
 	);

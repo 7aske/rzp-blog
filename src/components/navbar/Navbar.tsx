@@ -12,11 +12,16 @@ import MenuBuilder from "./MenuBuilder";
 import "./Navbar.scss";
 import { Sidenav } from "./sidenav/Sidenav";
 import Roles from "../../utils/Roles";
+import AuthService from "../../services/Auth.service";
+import { User } from "../../@types/User";
+import UserService from "../../services/User.service";
 
+const authService = new AuthService();
+const userService = new UserService();
 
 export const Navbar = () => {
 	const [locale] = useLocale();
-	const {ctx} = useContext(AppContext);
+	const {ctx, setCtx} = useContext(AppContext);
 
 	const [navRef, setNavRef] = useState<HTMLElement | null>(null);
 	const [progRef, setProgRef] = useState<HTMLDivElement | null>(null);
@@ -62,6 +67,25 @@ export const Navbar = () => {
 			progRef.style.width = `${Number(innerWidth * (scrollY / height))}px`;
 		}
 	}
+
+	const success = (token: any) => {
+		(async () => {
+			try {
+				const res = await userService.getByUsername(token.user);
+				const user: User = res.data as User;
+				user.roles = (token.roles as string[]).map(role => ({name: role}));
+				setCtx({...ctx, user: user});
+			} catch (e) {
+			}
+		})();
+	};
+
+	useEffect(() => {
+		authService.verify()
+			.then(success)
+			.catch(() => void false);
+		// eslint-disable-next-line
+	}, [])
 
 	useEffect(() => {
 		window.removeEventListener("scroll", onScroll);

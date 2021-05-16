@@ -17,7 +17,6 @@ export const AuthGuard = (props: AuthGuardProps) => {
 		authService.verify().then(() => {
 			setAuthorized(true);
 		}).catch(err => {
-			Console.error(err.response);
 			if (err.response)
 				history.replace({
 					pathname: "/login",

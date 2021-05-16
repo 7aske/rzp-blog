@@ -1,7 +1,6 @@
-type CommentDTO = {
-	idComment?: number;
-	idUser: UserCommentDTO | {idUser?: number};
-	idPost: number;
-	commentBody: string;
-	commentDatePosted?: Date;
+export interface CommentDTO {
+	id?: number;
+	user: {id?: number};
+	post: {id?: number};
+	body: string;
 }
