@@ -1,5 +1,6 @@
 type PropertyUpdateInputLocalizationStrings = {
 	success: string;
+	successExpired: string;
 	password: string;
 	confirmPassword: string;
 	newPassword: string;
@@ -9,6 +10,7 @@ type PropertyUpdateInputLocalizationStrings = {
 
 const sr: PropertyUpdateInputLocalizationStrings = {
 	success:"Sačuvano",
+	successExpired: "Sačuvano. Mozete se ponovo ulogovati",
 	confirmPassword: "Potvrdite šifru",
 	newPassword: "Nova šifra",
 	password: "Šifra",
@@ -17,6 +19,7 @@ const sr: PropertyUpdateInputLocalizationStrings = {
 
 const en: PropertyUpdateInputLocalizationStrings = {
 	success: "Updated",
+	successExpired: "Updated. You can relog",
 	confirmPassword: "Confirm password",
 	newPassword: "New password",
 	password: "Password",

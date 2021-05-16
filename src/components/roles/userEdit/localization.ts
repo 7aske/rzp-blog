@@ -13,6 +13,7 @@ type UserEditLocalizationStrings = {
 	userSavedText: string;
 	userActiveLabel: string;
 	saveUserButton: string;
+	resetPassword: string;
 	[keyLabel: string]: string;
 }
 
@@ -30,6 +31,7 @@ const sr: UserEditLocalizationStrings = {
 	userPasswordLabel: "Šifra",
 	userSavedText: "Korisnik ažuriran",
 	userActiveLabel: "Aktivan",
+	resetPassword: "Resetuj šifru",
 	saveUserButton: "Pošalji"
 };
 
@@ -47,6 +49,7 @@ const en: UserEditLocalizationStrings = {
 	userPasswordLabel:"Password",
 	userActiveLabel: "Active",
 	userSavedText: "User updated",
+	resetPassword: "Reset password",
 	saveUserButton: "Send"
 };
 

@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
 import * as React from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { AppContext } from "../../context/AppContext";
 import { hasRole } from "../../utils/utils";
@@ -16,7 +16,8 @@ export const RoleGuard = (props: RoleGuardProps) => {
 	useEffect(() => {
 		if (user !== null) {
 			const has = user.roles.some(role => hasRole(props.roles, role.name!));
-			setAuthorized(has);
+			const noRoleRule = user.roles.length === 0 && props.roles.length === 0;
+			setAuthorized(has || noRoleRule);
 		} else {
 			history.push("/login");
 		}

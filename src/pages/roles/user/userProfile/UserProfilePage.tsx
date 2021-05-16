@@ -2,7 +2,6 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import { PasswordChangeInput } from "../../../../components/propertyUpdateInput/PasswordChangeInput";
-import { PropertyUpdateInput } from "../../../../components/propertyUpdateInput/PropertyUpdateInput";
 import { Sidebar } from "../../../../components/sidebar/Sidebar";
 import { AppContext } from "../../../../context/AppContext";
 import useLocale from "../../../../hooks/useLocale";
@@ -61,7 +60,7 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 						<Route exact path={"/user/profile/security"}>
 							<div className="row">
 								<div className="col s12 m12 l8">
-									<PasswordChangeInput locale={locale}/>
+									<PasswordChangeInput/>
 								</div>
 							</div>
 						</Route>

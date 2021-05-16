@@ -53,4 +53,3 @@ const en: UserInfoLocalizationStrings = {
 const localization: Localized<UserInfoLocalizationStrings> = {en, sr};
 
 export default localization;
-;

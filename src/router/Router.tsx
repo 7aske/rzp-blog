@@ -13,6 +13,8 @@ import { PostPage } from "../pages/post/PostPage";
 import { UserProfilePage } from "../pages/roles/user/userProfile/UserProfilePage";
 import { TagPage } from "../pages/tag/TagPage";
 import Roles from "../utils/Roles";
+import { PasswordChangeInput } from "../components/propertyUpdateInput/PasswordChangeInput";
+import { UserChangePasswordPage } from "../pages/roles/user/userChangePasswordPage/UserChangePasswordPage";
 
 export const Router = () => {
 	return (
@@ -31,6 +33,9 @@ export const Router = () => {
 				</RoleGuard>
 				<RoleGuard roles={[Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE]}>
 					<Route path="/admin" component={AdminIndexPage}/>
+				</RoleGuard>
+				<RoleGuard roles={[]}>
+					<Route exact path="/user/profile" component={UserChangePasswordPage}/>
 				</RoleGuard>
 			</AuthGuard>
 		</Switch>

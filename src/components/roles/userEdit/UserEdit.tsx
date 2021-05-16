@@ -114,6 +114,20 @@ export const UserEdit = (props: UserEditProps) => {
 	};
 
 
+	const resetPassword = () => {
+		userService.resetPassword(user.id!)
+			.then(()=> {
+				setMessages([localization[locale].userSavedText]);
+			})
+			.catch(err => {
+				if (err.response && err.response.data) {
+					setErrors([err.response.data.error]);
+				} else {
+					setErrors([getErrorText("generic", locale)]);
+				}
+			})
+	}
+
 	return (
 		<div id="user-edit">
 			<div className="row">
@@ -183,6 +197,11 @@ export const UserEdit = (props: UserEditProps) => {
 					<div className="row">
 						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
 						<MessageList className="green accent-2 white-text" messages={messages}/>
+					</div>
+					<div className="row">
+						<button onClick={resetPassword} className="btn theme-grey-light">{localization[locale].resetPassword}
+							<i className="material-icons right">clear</i>
+						</button>
 					</div>
 					<div className="row">
 							<button onClick={save} className="btn theme-green"

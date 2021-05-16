@@ -37,11 +37,15 @@ export default class UserService {
 		return this.service.updateUser(user)
 	}
 
-	updatePassword(password: string, confirmPassword: string, newPassword: string): Promise<void> {
-		throw new Error("Not Implemented");
+	public updatePassword(passwordDto:{previous: string, confirm: string, password: string}): Promise<AxiosResponse<void>> {
+		return this.service.updateUserPassword(passwordDto);
 	}
 
-	updateProperty(prop: string, value: string): Promise<User> {
+	public resetPassword(userId: number): Promise<AxiosResponse<void>> {
+		return this.service.resetUserPassword(userId);
+	}
+
+	public updateProperty(prop: string, value: string): Promise<User> {
 		throw new Error("Not Implemented");
 	}
 }
