@@ -4339,7 +4339,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async resetUserPassword(userId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async resetUserPassword(userId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.resetUserPassword(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4445,7 +4445,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resetUserPassword(userId: number, options?: any): AxiosPromise<void> {
+        resetUserPassword(userId: number, options?: any): AxiosPromise<User> {
             return localVarFp.resetUserPassword(userId, options).then((request) => request(axios, basePath));
         },
         /**

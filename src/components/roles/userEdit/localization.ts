@@ -32,7 +32,7 @@ const sr: UserEditLocalizationStrings = {
 	userSavedText: "Korisnik ažuriran",
 	userActiveLabel: "Aktivan",
 	resetPassword: "Resetuj šifru",
-	saveUserButton: "Pošalji"
+	saveUserButton: "Sačuvaj"
 };
 
 const en: UserEditLocalizationStrings = {
@@ -50,7 +50,7 @@ const en: UserEditLocalizationStrings = {
 	userActiveLabel: "Active",
 	userSavedText: "User updated",
 	resetPassword: "Reset password",
-	saveUserButton: "Send"
+	saveUserButton: "Save"
 };
 
 const localization: Localized<UserEditLocalizationStrings> = {en, sr};

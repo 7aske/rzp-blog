@@ -27,6 +27,7 @@
 		.sidenav-trigger {
 			display: inline !important;
 		}
+
 	}
 
 	.admin-post-list-item {
@@ -62,6 +63,14 @@
 				color: $theme-green-lightest;
 				text-decoration: underline;
 			}
+		}
+		.dropdown-trigger {
+			position: relative;
+			top: -0.5em;
+		}
+
+		.hidden {
+			display: none !important;
 		}
 	}
 }

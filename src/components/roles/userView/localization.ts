@@ -5,6 +5,10 @@ type UserViewLocalizationStrings = {
 	headRoles: string;
 	headActive: string;
 	newUserButton: string;
+	editUserButton: string;
+	resetUserButton: string;
+	successAction: string;
+	deleteUserButton: string;
 	[key: string]: string;
 }
 
@@ -14,7 +18,11 @@ const sr: UserViewLocalizationStrings = {
 	headEmail: "Email",
 	headRoles: "Role",
 	headUsername: "Korisničko ime",
+	editUserButton: "Izmeni",
 	newUserButton: "Novi korisnik",
+	resetUserButton: "Resetuj",
+	deleteUserButton: "Obriši",
+	successAction: "Uspešno"
 };
 
 const en: UserViewLocalizationStrings = {
@@ -23,7 +31,11 @@ const en: UserViewLocalizationStrings = {
 	headEmail: "Email",
 	headRoles: "Roles",
 	headUsername: "Username",
+	editUserButton: "Edit",
+	resetUserButton: "Reset",
 	newUserButton: "New user",
+	deleteUserButton: "Delete",
+	successAction: "Success"
 };
 
 const localization: Localized<UserViewLocalizationStrings> = {en, sr};

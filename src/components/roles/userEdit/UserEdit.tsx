@@ -113,67 +113,43 @@ export const UserEdit = (props: UserEditProps) => {
 	};
 
 
-	const resetPassword = () => {
-		userService.resetPassword(user.id!)
-			.then(()=> {
-				setMessages([localization[locale].userSavedText]);
-			})
-			.catch(err => {
-				if (err.response && err.response.data) {
-					setErrors([err.response.data.error]);
-				} else {
-					setErrors([getErrorText("generic", locale)]);
-				}
-			})
-	}
+
 
 	return (
 		<div id="user-edit">
 			<div className="row">
 				<div className="col s12 m12 l8">
+					<MaterializeInput className="col s12 m12"
+									  disabled={true}
+					                  hidden={true}
+									  value={user?.id}
+									  id="id"
+									  type="text"
+									  onChange={updateProp}/>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8"
-						                  disabled={true}
-						                  value={user?.id}
-						                  id="id"
-						                  type="text"
-						                  onChange={updateProp} label={localization[locale].idUserLabel}/>
-					</div>
-					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.username}
+						<MaterializeInput className="col s12 m12 l6" value={user?.username}
 						                  id="username" type="text"
 						                  onChange={updateProp} label={localization[locale].userUsernameLabel}/>
-					</div>
-					{/*{!user?.id ?*/}
-					{/*	<div className="row">*/}
-					{/*		<MaterializeInput className="col s12 m12 l8" value={user?.password}*/}
-					{/*		                  id="password" type="password"*/}
-					{/*		                  onChange={updateProp} label={localization[locale].userPasswordLabel}/>*/}
-					{/*	</div>*/}
-					{/*	: ""}*/}
-					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.displayName}
+						<MaterializeInput className="col s12 m12 l6" value={user?.displayName}
 						                  id="displayName" type="text"
 						                  onChange={updateProp} label={localization[locale].userDisplayNameLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.email}
+						<MaterializeInput className="col s12 m12 l12" value={user?.email}
 						                  id="email" type="text"
 						                  onChange={updateProp} label={localization[locale].userEmailLabel}/>
 					</div>
 					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.firstName}
+						<MaterializeInput className="col s12 m12 l6" value={user?.firstName}
 						                  id="firstName" type="text"
 						                  onChange={updateProp} label={localization[locale].userFirstNameLabel}/>
-					</div>
-					<div className="row">
-						<MaterializeInput className="col s12 m12 l8" value={user?.lastName}
+						<MaterializeInput className="col s12 m12 l6" value={user?.lastName}
 						                  id="lastName" type="text"
 						                  onChange={updateProp} label={localization[locale].userLastNameLabel}/>
 					</div>
 					<div className="row">
 						<MaterializeTextarea
-							className="col s12 m12 l10"
+							className="col s12 m12 l12"
 							value={user?.about}
 							id="about"
 							onChange={updateProp}
@@ -181,7 +157,7 @@ export const UserEdit = (props: UserEditProps) => {
 					</div>
 					<div className="row">
 						<GenericChipSelect
-							className="col s12 m12 l10"
+							className="col s12 m12 l12"
 							onUpdate={elems => setUser({
 								...(user as User),
 								roles: elems.map(elem => ({
@@ -196,11 +172,6 @@ export const UserEdit = (props: UserEditProps) => {
 					<div className="row">
 						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
 						<MessageList className="green accent-2 white-text" messages={messages}/>
-					</div>
-					<div className="row">
-						<button onClick={resetPassword} className="btn theme-grey-light">{localization[locale].resetPassword}
-							<i className="material-icons right">clear</i>
-						</button>
 					</div>
 					<div className="row">
 							<button onClick={save} className="btn theme-green"

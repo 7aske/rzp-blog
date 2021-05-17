@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useLocale from "../../../hooks/useLocale";
 import Console from "../../../utils/Console";
@@ -8,8 +8,12 @@ import localization from "./localization";
 import "./UserView.scss";
 import { UserControllerApi, User, Role, UserRecordStatusEnum } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
+import { Dropdown, Button, Icon, Toast } from "react-materialize";
+import { getErrorText } from "../../../pages/errors/localization";
+import UserService from "../../../services/User.service";
+import { AppContext } from "../../../context/AppContext";
 
-const service = new UserControllerApi();
+const service = new UserService();
 
 type UserViewProps = {};
 export const UserView = (props: UserViewProps) => {
@@ -23,8 +27,8 @@ export const UserView = (props: UserViewProps) => {
 		// eslint-disable-next-line
 	}, []);
 
-	useEffect(() => {
-		service.getAllUsers(String(page)).then(res => {
+	const getAllUsers = () => {
+		service.getAll(page).then(res => {
 			const _users = new Array(perPage).fill(null).map((_, i) => res.data[i]);
 			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 			setUsers(_users);
@@ -32,9 +36,16 @@ export const UserView = (props: UserViewProps) => {
 			setUsers([]);
 			Console.error(err);
 		});
+	}
 
+	useEffect(() => {
+		getAllUsers();
 		// eslint-disable-next-line
 	}, [page]);
+
+	const handleDeleteUser = () => {
+		getAllUsers();
+	}
 
 	return (
 		<div className="admin-user-list">
@@ -56,7 +67,7 @@ export const UserView = (props: UserViewProps) => {
 						<div className="col s2 l2 hide-on-med-and-down">
 							{localization[locale].headDisplayName}
 						</div>
-						<div className="col s5 m5 l3">
+						<div className="col s3 m3 l2">
 							{localization[locale].headRoles}
 						</div>
 						<div className="col s3 l3 hide-on-med-and-down">
@@ -65,9 +76,11 @@ export const UserView = (props: UserViewProps) => {
 						<div className="col s2 m2 l1 center">
 							{localization[locale].headActive}
 						</div>
+						<div className="col s2 m2 l1 center">
+						</div>
 					</div>
 				</li>
-				{users.map((user, i) => <UserViewListItem key={i} user={user} locale={locale}/>)}
+				{users.map((user, i) => <UserViewListItem onDeleteUser={handleDeleteUser} key={i} user={user} locale={locale}/>)}
 			</ul>
 			<Pagination className="right" onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
@@ -78,27 +91,64 @@ export const UserView = (props: UserViewProps) => {
 type AdminPostListItemProps = {
 	user: User;
 	locale: string;
+	onDeleteUser: (id: number) => void;
 };
-const UserViewListItem = ({user}: AdminPostListItemProps) => {
+const UserViewListItem = (props: AdminPostListItemProps) => {
 	const [roles, setRoles] = useState<Role[]>([]);
+	const [user, setUser] = useState(props.user);
+	const {ctx} = useContext(AppContext);
+
 	useEffect(() => {
 		if (user)
-			service.getAllUserRoles(user.id!)
+			service.getRoles(user)
 				.then(res => setRoles(res.data));
 	}, [user]);
+
+
+	const resetPassword = () => {
+		service.resetPassword(user.id!)
+			.then(res => {
+				M.toast({html: localization[props.locale].successAction, classes: "green accent-2 theme-grey-text"})
+				setUser(res.data);
+			})
+			.catch(err => {
+				let errMsg;
+				if (err.response && err.response.data) {
+					errMsg = err.response.data.error;
+				} else {
+					errMsg = getErrorText("generic", props.locale);
+				}
+				M.toast({html: errMsg, classes: "red accent-2 theme-grey-text"})
+			});
+	};
+
+	const deleteUser = () => {
+		service.deleteById(user.id!)
+			.then(res => {
+				M.toast({html: localization[props.locale].successAction, classes: "green accent-2 theme-grey-text"})
+			})
+			.catch(err => {
+				let errMsg;
+				if (err.response && err.response.data) {
+					errMsg = err.response.data.error;
+				} else {
+					errMsg = getErrorText("generic", props.locale);
+				}
+				M.toast({html: errMsg, classes: "red accent-2 theme-grey-text"})
+			});
+	}
+
 	if (user)
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s5 m5 l3 truncate user-edit-container">
-						<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
-							className="material-icons">edit</i></Link>
+					<div className="col s5 m5 l3 truncate">
 						<span>{user.username}</span>
 					</div>
 					<div className="col s2 l2 hide-on-med-and-down">
 						{user.displayName}
 					</div>
-					<div className="col s5 m5 l3">
+					<div className="col s3 m3 l2">
 						{roles.sort().map(role =>
 							<span key={role.name} className="blob theme-green black-text darken-2">{role.name}</span>)}
 					</div>
@@ -109,6 +159,21 @@ const UserViewListItem = ({user}: AdminPostListItemProps) => {
 						{user.recordStatus === UserRecordStatusEnum.Active ?
 							<i className="material-icons">check</i> :
 							<i className="material-icons">do_not_disturb_on</i>}
+					</div>
+					<div className="col s2 m2 l1">
+						<Dropdown
+							id={`dropdown-${user.id}`}
+							options={{
+								constrainWidth: false,
+								coverTrigger: true,
+							}}
+							trigger={<Button className="theme-white-text" flat
+							                 node="button"><Icon>more_vert</Icon></Button>}>
+							<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
+								className="material-icons">edit</i>{localization[props.locale].editUserButton}</Link>
+							{ctx.user?.id === user.id ? undefined : <a  onClick={resetPassword}><Icon>lock_open</Icon>{localization[props.locale].resetUserButton}</a>}
+							{ctx.user?.id === user.id ? undefined : <a className={ctx.user?.id === user.id ? "hidden" : ""} onClick={deleteUser}><Icon>delete</Icon>{localization[props.locale].deleteUserButton}</a>}
+						</Dropdown>
 					</div>
 				</div>
 			</li>

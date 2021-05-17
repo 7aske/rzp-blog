@@ -13,8 +13,8 @@ export default class UserService {
 		return this.service.deleteUserById(id);
 	}
 
-	public async getAll(): Promise<AxiosResponse<Array<User>>> {
-		return this.service.getAllUsers()
+	public async getAll(page: number): Promise<AxiosResponse<Array<User>>> {
+		return this.service.getAllUsers(String(page));
 	}
 
 	public async getById(id: number): Promise<AxiosResponse<User>> {
@@ -41,7 +41,7 @@ export default class UserService {
 		return this.service.updateUserPassword(passwordDto);
 	}
 
-	public resetPassword(userId: number): Promise<AxiosResponse<void>> {
+	public resetPassword(userId: number): Promise<AxiosResponse<User>> {
 		return this.service.resetUserPassword(userId);
 	}
 
