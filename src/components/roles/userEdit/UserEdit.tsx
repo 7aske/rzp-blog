@@ -36,7 +36,6 @@ export const UserEdit = (props: UserEditProps) => {
 		lastModifiedDate: "",
 		recordStatus: UserRecordStatusEnum.Active,
 		roles: [],
-		password: "",
 		username: ""
 	});
 	const [roles, setRoles] = useState<Role[]>([]);
