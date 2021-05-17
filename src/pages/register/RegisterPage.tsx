@@ -8,8 +8,8 @@ import Console from "../../utils/Console";
 import { getErrorText } from "../errors/localization";
 import localization from "./localization";
 import "./RegisterPage.scss";
-import { User } from "../../@types/User";
 import UserService from "../../services/User.service";
+import { RegisterUserDto } from "../../api/api";
 
 const userService = new UserService();
 
@@ -17,15 +17,12 @@ type RegisterPageProps = {};
 export const RegisterPage = (props: RegisterPageProps) => {
 	const history = useHistory();
 	const [locale] = useLocale();
-	const [user, setUser] = useState<User>({
-		id: undefined,
-		about: "",
-		displayName: "",
+	const [user, setUser] = useState<RegisterUserDto>({
 		email: "",
 		firstName: "",
 		lastName: "",
 		password: "",
-		roles: [],
+		confirm: "",
 		username: "",
 	});
 
@@ -36,95 +33,91 @@ export const RegisterPage = (props: RegisterPageProps) => {
 		setUser({...user, [ev.target.id]: ev.target.value});
 	};
 
-	useEffect(() => {
-		Console.log(user);
-	}, [user]);
-
 	const register = () => {
-		let action = userService.register;
-
-		action(user).then(() => {
-			setMessages([localization[locale].successText]);
-			setTimeout(() => history.replace("/login"), 3000);
-		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			} else {
-				setErrors([getErrorText("generic", locale)]);
-			}
-		});
+		userService.register(user)
+			.then(() => {
+				setMessages([localization[locale].successText]);
+				setTimeout(() => history.replace("/login"), 3000);
+			})
+			.catch(err => {
+				if (err.response && err.response.data) {
+					setErrors([err.response.data.error]);
+				} else {
+					setErrors([getErrorText("generic", locale)]);
+				}
+			});
 	};
 
 	return (
 		<div id="register-page" className="container">
 			<div className="row">
 				<h2 className="theme-green-text title">{localization[locale].registerTitle}</h2>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userUsernameLabel}
-							                  className="col s12 m12 l6 xl4"
-							                  value={user?.username}
-							                  id="userUsername"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userUsernameLabel}
-							                  value={user?.password}
-							                  id="userPassword"
-							                  type="password"
-							                  className="col s12 m12 l6 xl4"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userDisplayNameLabel}
-							                  value={user?.displayName}
-							                  id="userDisplayName"
-							                  className="col s12 m12 l6 xl4"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userEmailLabel}
-							                  value={user?.email}
-							                  id="userEmail"
-							                  className="col s12 m12 l6 xl4"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userFirstNameLabel}
-							                  value={user?.firstName}
-							                  id="userFirstName"
-							                  className="col s12 m12 l6 xl4"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<MaterializeInput label={localization[locale].userLastNameLabel}
-							                  value={user?.lastName}
-							                  id="userLastName"
-							                  className="col s12 m12 l6 xl4"
-							                  onChange={updateProp}/>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<div className="col s12 m12 l6 xl4">
-								<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
-								<MessageList className="green accent-2 white-text" messages={messages}/>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col s12 m12 l3 xl4"/>
-							<div className="col s12">
-								<button onClick={register} className="btn"
-								        name="action">{localization[locale].registerButton}
-									<i className="material-icons right">send</i>
-								</button>
-							</div>
-						</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userUsernameLabel}
+					                  className="col s12 m12 l6 xl4"
+					                  value={user?.username}
+					                  id="username"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userPasswordLabel}
+					                  value={user?.password}
+					                  id="password"
+					                  type="password"
+					                  className="col s12 m12 l6 xl4"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userConfirmLabel}
+					                  value={user?.confirm}
+					                  id="confirm"
+					                  type="password"
+					                  className="col s12 m12 l6 xl4"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userEmailLabel}
+					                  value={user?.email}
+					                  id="email"
+					                  className="col s12 m12 l6 xl4"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userFirstNameLabel}
+					                  value={user?.firstName}
+					                  id="firstName"
+					                  className="col s12 m12 l6 xl4"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<MaterializeInput label={localization[locale].userLastNameLabel}
+					                  value={user?.lastName}
+					                  id="lastName"
+					                  className="col s12 m12 l6 xl4"
+					                  onChange={updateProp}/>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<div className="col s12 m12 l6 xl4">
+						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
+						<MessageList className="green accent-2 white-text" messages={messages}/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col s12 m12 l3 xl4"/>
+					<div className="col s12">
+						<button onClick={register} className="btn"
+						        name="action">{localization[locale].registerButton}
+							<i className="material-icons right">send</i>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

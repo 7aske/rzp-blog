@@ -3,6 +3,7 @@ type RegisterPageLocalizationStrings = {
 	idUserLabel: string;
 	userUsernameLabel: string;
 	userPasswordLabel: string;
+	userConfirmLabel: string;
 	userDisplayNameLabel: string;
 	userEmailLabel: string;
 	userFirstNameLabel: string;
@@ -29,6 +30,7 @@ const sr: RegisterPageLocalizationStrings = {
 	userRolesLabel: "Role",
 	userUsernameLabel: "Korisničko ime",
 	userPasswordLabel: "Šifra",
+	userConfirmLabel: "Potvrda šifre",
 	successText: "Registracija uspešna. Bićete preusmereni",
 	registerButton: "Registracija"
 };
@@ -46,6 +48,7 @@ const en: RegisterPageLocalizationStrings = {
 	userRolesLabel: "Roles",
 	userUsernameLabel: "Username",
 	userPasswordLabel:"Password",
+	userConfirmLabel: "Confirm password",
 	successText: "Success. You will be redirected",
 	registerButton: "Register"
 };

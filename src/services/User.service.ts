@@ -1,4 +1,4 @@
-import { UserControllerApi, Role, User } from "../api/api";
+import { UserControllerApi, Role, User, RegisterUserDto } from "../api/api";
 import {User as AppUser} from "../@types/User";
 import { AxiosResponse } from "axios";
 
@@ -25,8 +25,8 @@ export default class UserService {
 		return this.service.getUserById(username);
 	}
 
-	public register(user: User): Promise<User> {
-		throw new Error("Not Implemented");
+	public register(dto: RegisterUserDto): Promise<AxiosResponse<User>> {
+		return this.service.registerUser(dto);
 	}
 
 	public save(user: User): Promise<AxiosResponse<User>> {

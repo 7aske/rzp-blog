@@ -83,6 +83,18 @@ export interface ChangePasswordDto {
      * @memberof ChangePasswordDto
      */
     confirm?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePasswordDto
+     */
+    password?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePasswordDto
+     */
+    previous?: string;
 }
 /**
  * 
@@ -529,6 +541,49 @@ export enum PostPreviewRecordStatusEnum {
     Deleted = 'DELETED'
 }
 
+/**
+ * 
+ * @export
+ * @interface RegisterUserDto
+ */
+export interface RegisterUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    confirm?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    firstName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    lastName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    password?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterUserDto
+     */
+    username?: string;
+}
 /**
  * 
  * @export
@@ -4034,6 +4089,42 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary save
+         * @param {RegisterUserDto} dto dto
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        registerUser: async (dto: RegisterUserDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dto' is not null or undefined
+            assertParamExists('registerUser', 'dto', dto)
+            const localVarPath = `/users/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary resetUserPassword
          * @param {number} userId userId
          * @param {*} [options] Override http request option.
@@ -4232,6 +4323,17 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary save
+         * @param {RegisterUserDto} dto dto
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async registerUser(dto: RegisterUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerUser(dto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary resetUserPassword
          * @param {number} userId userId
          * @param {*} [options] Override http request option.
@@ -4325,6 +4427,16 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         getUserById(identifier: string, options?: any): AxiosPromise<User> {
             return localVarFp.getUserById(identifier, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary save
+         * @param {RegisterUserDto} dto dto
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        registerUser(dto: RegisterUserDto, options?: any): AxiosPromise<User> {
+            return localVarFp.registerUser(dto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4424,6 +4536,18 @@ export class UserControllerApi extends BaseAPI {
      */
     public getUserById(identifier: string, options?: any) {
         return UserControllerApiFp(this.configuration).getUserById(identifier, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary save
+     * @param {RegisterUserDto} dto dto
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public registerUser(dto: RegisterUserDto, options?: any) {
+        return UserControllerApiFp(this.configuration).registerUser(dto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
