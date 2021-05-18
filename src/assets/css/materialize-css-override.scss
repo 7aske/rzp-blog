@@ -4,6 +4,11 @@ nav {
 	box-shadow: none;
 }
 
+
+a.active {
+	color: $theme-green !important;
+}
+
 .collection {
 	background-color: $theme-black;
 	border: none;

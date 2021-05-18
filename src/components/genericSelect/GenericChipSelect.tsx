@@ -37,32 +37,32 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 	};
 
 	useEffect(() => {
-		if (chipRef) {
-			const autocompleteData = {};
-			props.list.forEach(item => Object.assign(autocompleteData, {[item.name]: null}));
-			const initialData: M.ChipData[] = [];
-			data.forEach(item => initialData.push({tag: item.name}));
-			M.Chips.init(chipRef, {
-				onChipAdd: (element, chip) => {
-					const val = chip.childNodes[0].nodeValue;
-					const elem = props.list.find(e => e.filter(val));
-					if (elem) {
-						onUpdate([...data, elem]);
-					}
-				},
-				onChipDelete: (element, chip) => {
-					const val = chip.childNodes[0].nodeValue;
-					const elem = props.list.find(e => e.filter(val));
-					if (elem) {
-						onUpdate(data.filter(e => e.name !== elem.name));
-					}
-				},
-				data: initialData,
-				autocompleteOptions: {
-					data: autocompleteData,
-				},
-			});
-		}
+		if (!chipRef) return;
+		const autocompleteData = {};
+		props.list.forEach(item => Object.assign(autocompleteData, {[item.name]: null}));
+		const initialData: M.ChipData[] = [];
+		data.forEach(item => initialData.push({tag: item.name}));
+		M.Chips.init(chipRef, {
+			onChipAdd: (element, chip) => {
+				const val = chip.childNodes[0].nodeValue;
+				const elem = props.list.find(e => e.filter(val));
+				if (elem) {
+					onUpdate([...data, elem]);
+				}
+			},
+			onChipDelete: (element, chip) => {
+				const val = chip.childNodes[0].nodeValue;
+				const elem = props.list.find(e => e.filter(val));
+				if (elem) {
+					onUpdate(data.filter(e => e.name !== elem.name));
+				}
+			},
+			data: initialData,
+			autocompleteOptions: {
+				data: autocompleteData,
+				minLength: 0,
+			},
+		});
 		// eslint-disable-next-line
 	}, [chipRef, data, props.value, props.list]);
 

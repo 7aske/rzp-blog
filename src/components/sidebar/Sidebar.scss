@@ -6,17 +6,21 @@
 			padding-left: 0;
 			padding-right: 0;
 
-
 			i {
 				margin-right: .3em;
+			}
+
+			&:hover a {
+				background-color: $theme-green-light !important;
+				color: $theme-grey !important;
+				&.active {
+					color: $theme-grey !important;
+				}
 			}
 
 			a {
 				&.active {
 					color: $theme-green !important;
-					&:hover {
-						color: $theme-white !important;
-					}
 				}
 				text-align: left;
 				height: 100% !important;
