@@ -117,7 +117,7 @@ export const PostEdit = (props: PostEditProps) => {
 		if (id === "recordStatus") {
 			setPost({...(post as Post), [id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted});
 		} else if (id === "title") {
-			const slug = value.replace(/\s+/g, "-").toLocaleLowerCase();
+			const slug = value.replace(/\s+/g, "-").replace(/[^\w-]/g, '').toLocaleLowerCase();
 			setPost({...(post as Post), [id]: value, slug});
 		} else {
 			setPost({...(post as Post), [id]: value});
