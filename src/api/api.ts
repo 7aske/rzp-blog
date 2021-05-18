@@ -3001,6 +3001,47 @@ export const PostPreviewControllerApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary setRecordStatus
+         * @param {number} postId postId
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setRecordStatus: async (postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'postId' is not null or undefined
+            assertParamExists('setRecordStatus', 'postId', postId)
+            // verify required parameter 'recordStatus' is not null or undefined
+            assertParamExists('setRecordStatus', 'recordStatus', recordStatus)
+            const localVarPath = `/previews/{postId}/record-status`
+                .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (recordStatus !== undefined) {
+                localVarQueryParameter['recordStatus'] = recordStatus;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3037,6 +3078,18 @@ export const PostPreviewControllerApiFp = function(configuration?: Configuration
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPostPreviewsNotDeleted(page, q, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary setRecordStatus
+         * @param {number} postId postId
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostPreview>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setRecordStatus(postId, recordStatus, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -3070,6 +3123,17 @@ export const PostPreviewControllerApiFactory = function (configuration?: Configu
          */
         getAllPostPreviewsNotDeleted(page?: string, q?: string, sort?: string, options?: any): AxiosPromise<Array<PostPreview>> {
             return localVarFp.getAllPostPreviewsNotDeleted(page, q, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary setRecordStatus
+         * @param {number} postId postId
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any): AxiosPromise<PostPreview> {
+            return localVarFp.setRecordStatus(postId, recordStatus, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3107,6 +3171,19 @@ export class PostPreviewControllerApi extends BaseAPI {
      */
     public getAllPostPreviewsNotDeleted(page?: string, q?: string, sort?: string, options?: any) {
         return PostPreviewControllerApiFp(this.configuration).getAllPostPreviewsNotDeleted(page, q, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary setRecordStatus
+     * @param {number} postId postId
+     * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostPreviewControllerApi
+     */
+    public setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any) {
+        return PostPreviewControllerApiFp(this.configuration).setRecordStatus(postId, recordStatus, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

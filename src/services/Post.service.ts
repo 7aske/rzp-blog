@@ -8,12 +8,6 @@ export default class PostService {
 		return this.service.deletePostById(id);
 	}
 
-	// public getAll(params?: PostQueryParams): Promise<Post[]> {
-	// 	if (params)
-	// 		return this.get("?q=" + btoa(JSON.stringify(params)));
-	// 	return this.get("");
-	// }
-
 	public getById(id: number): Promise<AxiosResponse<Post>> {
 		return this.service.getPostById(String(id))
 	}

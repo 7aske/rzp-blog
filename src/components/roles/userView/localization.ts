@@ -20,7 +20,7 @@ const sr: UserViewLocalizationStrings = {
 	headUsername: "Korisničko ime",
 	editUserButton: "Izmeni",
 	newUserButton: "Novi korisnik",
-	resetUserButton: "Resetuj",
+	resetUserButton: "Resetuj šifru",
 	deleteUserButton: "Obriši",
 	successAction: "Uspešno"
 };
@@ -32,7 +32,7 @@ const en: UserViewLocalizationStrings = {
 	headRoles: "Roles",
 	headUsername: "Username",
 	editUserButton: "Edit",
-	resetUserButton: "Reset",
+	resetUserButton: "Reset password",
 	newUserButton: "New user",
 	deleteUserButton: "Delete",
 	successAction: "Success"

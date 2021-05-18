@@ -71,19 +71,13 @@ export const PostEdit = (props: PostEditProps) => {
 			postService.save(post!).then(_post => {
 				setMessages([localization[locale].postSavedText]);
 			}).catch(err => {
-				Console.error(err);
-				if (err.response && err.response.data) {
-					setErrors([getErrorText(err.response.data.error, locale)]);
-				}
+				setErrors([getErrorText(err, locale)]);
 			});
 		} else {
 			postService.update(post!).then(_post => {
 				setMessages([localization[locale].postSavedText]);
 			}).catch(err => {
-				Console.error(err);
-				if (err.response && err.response.data) {
-					setErrors([getErrorText(err.response.data.error, locale)]);
-				}
+				setErrors([getErrorText(err, locale)]);
 			});
 		}
 	};
@@ -95,10 +89,7 @@ export const PostEdit = (props: PostEditProps) => {
 				history.replace("/admin/posts");
 			}, 3000);
 		}).catch(err => {
-			Console.error(err);
-			if (err.response && err.response.data) {
-				setErrors([getErrorText(err.response.data.error, locale)]);
-			}
+			setErrors([getErrorText(err, locale)]);
 		});
 	};
 
@@ -124,15 +115,13 @@ export const PostEdit = (props: PostEditProps) => {
 		const id = ev.target.id;
 		if (id === "recordStatus") {
 			setPost({...(post as Post), [id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted});
+		} else if (id === "title") {
+			const slug = value.replace(/\s+/g, "-").toLocaleLowerCase();
+			setPost({...(post as Post), [id]: value, slug});
 		} else {
 			setPost({...(post as Post), [id]: value});
 		}
 	};
-
-	useEffect(() => {
-		Console.log(post);
-		// eslint-disable-next-line
-	}, [post]);
 
 	return (
 		<div id="admin-post-edit">

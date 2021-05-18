@@ -41,6 +41,11 @@ type ErrorLocalizationStrings = {
 	"user.update.password-invalid": string;
 	"user.update.password-empty": string;
 	"user.update.password-not-matching": string;
+	"email.validation.invalid": string;
+	"password.validation.change.not-match": string;
+	"password.validation.not-match": string;
+	"password.validation.invalid": string;
+	"password.invalid": string;
 	[key: string]: string;
 }
 
@@ -84,9 +89,14 @@ const sr: ErrorLocalizationStrings = {
 	"user.update.email-empty": "Email nije validan",
 	"user.update.about-invalid": "Opis nije validan",
 	"user.update.address-invalid": "Adresa nije validna",
-	"user.update.password-invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
-	"user.update.password-empty": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedan specijalni karakter",
+	"user.update.password-invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedno malo slovo",
+	"user.update.password-empty": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedno malo slovo",
 	"user.update.password-not-matching": "Šifre se ne poklapaju",
+	"email.validation.invalid": "Email nije validan",
+	"password.invalid": "Šifra nije ispravna",
+	"password.validation.change.not-match": "Šifre se ne poklapaju",
+	"password.validation.invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedno malo slovo",
+	"password.validation.not-match": "Šifre se ne poklapaju"
 };
 
 
@@ -130,12 +140,18 @@ const en: ErrorLocalizationStrings = {
 	"user.update.email-empty":  "Email is invalid",
 	"user.update.about-invalid": "About is invalid",
 	"user.update.address-invalid": "Address is invalid",
-	"user.update.password-invalid": "Password must contain one number, one uppercase letter and one special character",
-	"user.update.password-empty":  "Password must contain one number, one uppercase letter and one special character",
+	"user.update.password-invalid": "Password must at least contain one number, one uppercase letter and one lowercase letter",
+	"user.update.password-empty":  "Password must at least contain one number, one uppercase letter and one lowercase letter",
 	"user.update.password-not-matching": "Passwords do not match",
+	"email.validation.invalid": "Email is invalid",
+	"password.invalid": "Password is invalid",
+	"password.validation.change.not-match": "Passwords do not match",
+	"password.validation.invalid": "Password must at least contain one number, one uppercase letter and one lowercase letter",
+	"password.validation.not-match": "Passwords do not match"
 };
 
 export const getErrorText = (error: any, locale: string) => {
+	console.error(error);
 	let errKey = "generic";
 	if (error.response && error.response.data) {
 		errKey = error.response.data.error

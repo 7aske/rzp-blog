@@ -1,4 +1,4 @@
-import { PostPreviewControllerApi } from "../api/api";
+import { PostPreviewControllerApi, PostPreview, PostPreviewRecordStatusEnum } from "../api/api";
 import { QueryBuilder } from "../utils/QueryBuilder";
 
 export default class PostPreviewService {
@@ -33,5 +33,9 @@ export default class PostPreviewService {
 			.eq("tags.name", tagName)
 			.build();
 		return this.service.getAllPostPreviewsNotDeleted(String(page), query);
+	}
+
+	public async setRecordStatus(post: PostPreview, recordStatus: PostPreviewRecordStatusEnum) {
+		return this.service.setRecordStatus(post.id!, recordStatus);
 	}
 }

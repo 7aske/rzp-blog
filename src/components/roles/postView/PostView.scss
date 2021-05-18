@@ -1,6 +1,7 @@
 @import "../../../assets/css/theme";
 
 .admin-post-list {
+	position: relative;
 	nav {
 		transition: all 500ms;
 		margin-left: 0;
@@ -45,12 +46,9 @@
 			margin-bottom: 0 !important;
 		}
 
-		.btn-post-edit {
-			position: absolute;
-		}
-
-		.post-edit-container a:not(.btn-post-edit) {
-			padding-left: 2em;
+		.dropdown-trigger {
+			position: relative;
+			top: -0.5em;
 		}
 
 		a {

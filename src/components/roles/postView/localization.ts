@@ -7,6 +7,11 @@ type AdminPostsListLocalizationStrings = {
 	headAuthor: string;
 	published: string;
 	newPostButton: string;
+	editPostButton: string;
+	deletePostButton: string;
+	publish: string;
+	unPublish: string;
+	success: string;
 	[key: string]: string;
 }
 
@@ -18,8 +23,12 @@ const sr: AdminPostsListLocalizationStrings = {
 	headUpdated: "Ažurirano",
 	published: "Obavljeno",
 	newPostButton: "Nova Objava",
-	headAuthor: "Autor"
-
+	editPostButton: "Izmeni",
+	headAuthor: "Autor",
+	publish: "Objavi",
+	unPublish: "Povuci",
+	success: "Uspešno",
+	deletePostButton: "Obriši"
 };
 
 const en: AdminPostsListLocalizationStrings = {
@@ -30,7 +39,13 @@ const en: AdminPostsListLocalizationStrings = {
 	headUpdated: "Updated",
 	published: "Published",
 	newPostButton: "New Post",
-	headAuthor: "Author"
+	editPostButton: "Edit",
+	headAuthor: "Author",
+	publish: "Publish",
+	unPublish: "Unpublish",
+	success: "Successful",
+	deletePostButton: "Delete"
+
 };
 
 const localization: Localized<AdminPostsListLocalizationStrings> = {en, sr};

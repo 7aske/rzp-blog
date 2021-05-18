@@ -6,12 +6,13 @@ import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.scss";
-import { UserControllerApi, User, Role, UserRecordStatusEnum } from "../../../api/api";
+import { User, Role } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
-import { Dropdown, Button, Icon, Toast } from "react-materialize";
-import { getErrorText } from "../../../pages/errors/localization";
+import { Dropdown, Button, Icon, Preloader } from "react-materialize";
 import UserService from "../../../services/User.service";
 import { AppContext } from "../../../context/AppContext";
+import Toast from "../../../utils/Toast";
+import { getUserStatusIcon } from "../../../utils/RecordStatusUtils";
 
 const service = new UserService();
 
@@ -20,7 +21,8 @@ export const UserView = (props: UserViewProps) => {
 	const [locale] = useLocale();
 	const pageCount = useRef<number>(0);
 	const {page, perPage, setPage} = usePageable();
-	const [users, setUsers] = useState<User[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [users, setUsers] = useState<User[]>(new Array(perPage).fill(null));
 	moment.locale(locale);
 
 	useEffect(() => {
@@ -28,15 +30,16 @@ export const UserView = (props: UserViewProps) => {
 	}, []);
 
 	const getAllUsers = () => {
+		setLoading(true);
 		service.getAll(page).then(res => {
 			const _users = new Array(perPage).fill(null).map((_, i) => res.data[i]);
 			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 			setUsers(_users);
-		}).catch(err => {
+		}).catch(() => {
 			setUsers([]);
-			Console.error(err);
-		});
-	}
+		})
+		.finally(() => setLoading(false));
+	};
 
 	useEffect(() => {
 		getAllUsers();
@@ -45,7 +48,7 @@ export const UserView = (props: UserViewProps) => {
 
 	const handleDeleteUser = () => {
 		getAllUsers();
-	}
+	};
 
 	return (
 		<div className="admin-user-list">
@@ -58,6 +61,7 @@ export const UserView = (props: UserViewProps) => {
 					</ul>
 				</div>
 			</nav>
+			<Preloader active={loading}/>
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
@@ -80,7 +84,8 @@ export const UserView = (props: UserViewProps) => {
 						</div>
 					</div>
 				</li>
-				{users.map((user, i) => <UserViewListItem onDeleteUser={handleDeleteUser} key={i} user={user} locale={locale}/>)}
+				{users.map((user, i) => <UserViewListItem onDeleteUser={handleDeleteUser} key={i} user={user}
+				                                          locale={locale}/>)}
 			</ul>
 			<Pagination className="right" onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
@@ -104,39 +109,32 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 				.then(res => setRoles(res.data));
 	}, [user]);
 
+	useEffect(() => {
+		setUser(props.user);
+	}, [props.user]);
+
 
 	const resetPassword = () => {
 		service.resetPassword(user.id!)
 			.then(res => {
-				M.toast({html: localization[props.locale].successAction, classes: "green accent-2 theme-grey-text"})
+				Toast.showSuccess(localization[props.locale].successAction);
 				setUser(res.data);
 			})
 			.catch(err => {
-				let errMsg;
-				if (err.response && err.response.data) {
-					errMsg = err.response.data.error;
-				} else {
-					errMsg = getErrorText("generic", props.locale);
-				}
-				M.toast({html: errMsg, classes: "red accent-2 theme-grey-text"})
+				Toast.showError(err, props.locale);
+
 			});
 	};
 
 	const deleteUser = () => {
 		service.deleteById(user.id!)
-			.then(res => {
-				M.toast({html: localization[props.locale].successAction, classes: "green accent-2 theme-grey-text"})
+			.then(() => {
+				Toast.showSuccess(localization[props.locale].successAction);
 			})
 			.catch(err => {
-				let errMsg;
-				if (err.response && err.response.data) {
-					errMsg = err.response.data.error;
-				} else {
-					errMsg = getErrorText("generic", props.locale);
-				}
-				M.toast({html: errMsg, classes: "red accent-2 theme-grey-text"})
+				Toast.showError(err, props.locale);
 			});
-	}
+	};
 
 	if (user)
 		return (
@@ -156,9 +154,7 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 						{user.email}
 					</div>
 					<div className="col s2 m2 l1 center">
-						{user.recordStatus === UserRecordStatusEnum.Active ?
-							<i className="material-icons">check</i> :
-							<i className="material-icons">do_not_disturb_on</i>}
+						{getUserStatusIcon(user.recordStatus!, props.locale)}
 					</div>
 					<div className="col s2 m2 l1">
 						<Dropdown
@@ -171,8 +167,13 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 							                 node="button"><Icon>more_vert</Icon></Button>}>
 							<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
 								className="material-icons">edit</i>{localization[props.locale].editUserButton}</Link>
-							{ctx.user?.id === user.id ? undefined : <a  onClick={resetPassword}><Icon>lock_open</Icon>{localization[props.locale].resetUserButton}</a>}
-							{ctx.user?.id === user.id ? undefined : <a className={ctx.user?.id === user.id ? "hidden" : ""} onClick={deleteUser}><Icon>delete</Icon>{localization[props.locale].deleteUserButton}</a>}
+							{ctx.user?.id === user.id ? undefined :
+								<a onClick={resetPassword}><Icon>lock_open</Icon>{localization[props.locale].resetUserButton}
+								</a>}
+							{ctx.user?.id === user.id ? undefined :
+								<a className={ctx.user?.id === user.id ? "hidden" : ""}
+								   onClick={deleteUser}><Icon>delete</Icon>{localization[props.locale].deleteUserButton}
+								</a>}
 						</Dropdown>
 					</div>
 				</div>
