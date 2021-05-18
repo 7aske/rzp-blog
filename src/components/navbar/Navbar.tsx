@@ -35,6 +35,7 @@ export const Navbar = () => {
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
 		.withRoles([Roles.USER_ROLE])
+		.withRoles(ctx.user?.roles.find(r => r.name === Roles.USER_ROLE) ? [Roles.AUTHOR_ROLE] : [])
 		.withNavTrigger()
 		.build();
 
@@ -66,7 +67,7 @@ export const Navbar = () => {
 
 			progRef.style.width = `${Number(innerWidth * (scrollY / height))}px`;
 		}
-	}
+	};
 
 	const success = (token: any) => {
 		(async () => {
@@ -85,7 +86,7 @@ export const Navbar = () => {
 			.then(success)
 			.catch(() => void false);
 		// eslint-disable-next-line
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		window.removeEventListener("scroll", onScroll);

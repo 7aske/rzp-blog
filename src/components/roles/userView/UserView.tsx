@@ -2,7 +2,6 @@ import * as moment from "moment";
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useLocale from "../../../hooks/useLocale";
-import Console from "../../../utils/Console";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.scss";
@@ -55,7 +54,7 @@ export const UserView = (props: UserViewProps) => {
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
-						<li><Link className="btn" to="/admin/users/edit"><i
+						<li><Link className="btn theme-green" to="/admin/users/edit"><i
 							className="material-icons left">add_to_photos</i>
 							{localization[locale].newUserButton}</Link></li>
 					</ul>
@@ -65,22 +64,22 @@ export const UserView = (props: UserViewProps) => {
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
-						<div className="col s5 m5 l3">
+						<div className="col s6 l2">
 							{localization[locale].headUsername}
 						</div>
 						<div className="col s2 l2 hide-on-med-and-down">
 							{localization[locale].headDisplayName}
 						</div>
-						<div className="col s3 m3 l2">
+						<div className="col s3 l3 hide-on-med-and-down">
 							{localization[locale].headRoles}
 						</div>
 						<div className="col s3 l3 hide-on-med-and-down">
 							{localization[locale].headEmail}
 						</div>
-						<div className="col s2 m2 l1 center">
+						<div className="col s4 l1 center">
 							{localization[locale].headActive}
 						</div>
-						<div className="col s2 m2 l1 center">
+						<div className="col s2 l1 center">
 						</div>
 					</div>
 				</li>
@@ -140,23 +139,23 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s5 m5 l3 truncate">
+					<div className="col s6 l2 truncate">
 						<span>{user.username}</span>
 					</div>
 					<div className="col s2 l2 hide-on-med-and-down">
 						{user.displayName}
 					</div>
-					<div className="col s3 m3 l2">
+					<div className="col s3 l3 hide-on-med-and-down">
 						{roles.sort().map(role =>
 							<span key={role.name} className="blob theme-green black-text darken-2">{role.name}</span>)}
 					</div>
 					<div className="col s3 l3 hide-on-med-and-down">
 						{user.email}
 					</div>
-					<div className="col s2 m2 l1 center">
+					<div className="col s4 l1 center">
 						{getUserStatusIcon(user.recordStatus!, props.locale)}
 					</div>
-					<div className="col s2 m2 l1">
+					<div className="col s1 l1">
 						<Dropdown
 							id={`dropdown-${user.id}`}
 							options={{

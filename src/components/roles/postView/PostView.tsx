@@ -50,7 +50,7 @@ export const PostView = () => {
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
-						<li><Link className="btn" to="/admin/posts/edit"><i
+						<li><Link className="btn theme-green" to="/author/posts/edit"><i
 							className="material-icons left">add_to_photos</i>
 							{localization[locale].newPostButton}</Link></li>
 					</ul>
@@ -60,7 +60,7 @@ export const PostView = () => {
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
-						<div className="col s6 m6 l2">
+						<div className="col s8 l2">
 							{localization[locale].headTitle}
 						</div>
 						<div className="col s2 hide-on-med-and-down">
@@ -72,10 +72,10 @@ export const PostView = () => {
 						<div className="col s2 hide-on-med-and-down">
 							{localization[locale].headCategory}
 						</div>
-						<div className="col s2 m2 l1">
+						<div className="col s2 l1">
 							{localization[locale].headStatus}
 						</div>
-						<div className="col s3 m3 l2">
+						<div className="col s3 l2 hide-on-med-and-down">
 							{localization[locale].headUpdated}
 						</div>
 						<div className="col s1 m1 l1">
@@ -135,7 +135,7 @@ const AdminPostListItem = (props: AdminPostListItemProps) => {
 		return (
 			<li className="admin-post-list-item collection-item">
 				<div className="row">
-					<div className="col s6 m6 l2 truncate post-edit-container">
+					<div className="col s8 l2 truncate post-edit-container">
 						<Link to={"/posts/" + post.slug}>{post.title}</Link>
 					</div>
 					<div className="col s2 hide-on-med-and-down truncate">
@@ -147,13 +147,13 @@ const AdminPostListItem = (props: AdminPostListItemProps) => {
 					<div className="col s2 hide-on-med-and-down">
 						<span className="blob grey darken-2">{post.category?.name}</span>
 					</div>
-					<div className="col s2 m2 l1">
+					<div className="col s2 l1">
 						{getPostStatusIcon(post.recordStatus!, props.locale)}
 					</div>
-					<div className="col s3 m3 l2">
+					<div className="col s3 l2 hide-on-med-and-down">
 						<Moment locale={props.locale} fromNow>{post.lastModifiedDate}</Moment>
 					</div>
-					<div className="col s1 m1 l1">
+					<div className="col s1 l1">
 						<Dropdown
 							id={`post-dropdown-${post.id}`}
 							options={{
@@ -162,7 +162,7 @@ const AdminPostListItem = (props: AdminPostListItemProps) => {
 							}}
 							trigger={<Button className="theme-white-text" flat
 							                 node="button"><Icon>more_vert</Icon></Button>}>
-							<Link className="btn-edit" to={"/admin/posts/edit/" + post.slug}><i
+							<Link className="btn-edit" to={"/author/posts/edit/" + post.slug}><i
 								className="material-icons">edit</i>{localization[props.locale].editPostButton}</Link>
 							<a onClick={togglePublished}>
 								{post.recordStatus === PostPreviewRecordStatusEnum.Active ?

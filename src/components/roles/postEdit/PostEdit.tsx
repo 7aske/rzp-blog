@@ -21,6 +21,7 @@ import TagService from "../../../services/Tag.service";
 import CategoryService from "../../../services/Category.service";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
+import { Button, Icon } from "react-materialize";
 
 const postService = new PostService();
 const tagService = new TagService();
@@ -86,7 +87,7 @@ export const PostEdit = (props: PostEditProps) => {
 		postService.deleteById(post!.id!).then(_post => {
 			setMessages([localization[locale].postDeletedText]);
 			setTimeout(() => {
-				history.replace("/admin/posts");
+				history.replace("/author/posts");
 			}, 3000);
 		}).catch(err => {
 			setErrors([getErrorText(err, locale)]);

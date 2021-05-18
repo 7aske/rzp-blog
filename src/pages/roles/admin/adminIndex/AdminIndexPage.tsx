@@ -22,7 +22,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 	const [locale] = useLocale();
 
 	const menuItems = [
-		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/posts"><i
+		<NavLink activeClassName="active" className="btn btn-flat" to="/author/posts"><i
 			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/categories"><i
@@ -45,7 +45,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 				</div>
 				<div className="col s12 m12 l10 xl10 container">
 					<Switch>
-						<Route exact path="/admin/posts">
+						<Route exact path="/author/posts">
 							<PostView/>
 						</Route>
 						<Route exact path="/admin/categories">
@@ -57,10 +57,10 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 						<Route exact path="/admin/users">
 							<UserView/>
 						</Route>
-						<Route exact path="/admin/posts/edit">
+						<Route exact path="/author/posts/edit">
 							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
-						<Route path="/admin/posts/edit/:postSlug">
+						<Route path="/author/posts/edit/:postSlug">
 							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route exact path="/admin/users/edit">

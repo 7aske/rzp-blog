@@ -33,7 +33,7 @@ type ToolbarButtonProps = {
 const ToolbarButton = ({className, icon, onClick}: ToolbarButtonProps) => {
 	return (
 		<button onClick={onClick}
-		        className={className ? className + " btn-floating btn-large" : "btn-floating btn-large"}>
+		        className={className ? "btn-floating btn-large theme-green " + className : "btn-floating btn-large"}>
 			<i className="material-icons">{icon ? icon : ""}</i>
 		</button>
 	);

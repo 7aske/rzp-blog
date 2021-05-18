@@ -112,9 +112,6 @@ export const UserEdit = (props: UserEditProps) => {
 
 	};
 
-
-
-
 	return (
 		<div id="user-edit">
 			<div className="row">
@@ -170,14 +167,18 @@ export const UserEdit = (props: UserEditProps) => {
 							list={roles.map(r => new GenericElement<Role>(r, r.id!, r.name!))}/>
 					</div>
 					<div className="row">
-						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
-						<MessageList className="green accent-2 white-text" messages={messages}/>
+						<div className="col s12">
+							<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
+							<MessageList className="green accent-2 white-text" messages={messages}/>
+						</div>
 					</div>
 					<div className="row">
+						<div className="col s12">
 							<button onClick={save} className="btn theme-green"
 							        name="action">{localization[locale].saveUserButton}
 								<i className="material-icons right">send</i>
 							</button>
+						</div>
 					</div>
 				</div>
 			</div>

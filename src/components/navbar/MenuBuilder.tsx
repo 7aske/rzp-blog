@@ -24,7 +24,7 @@ class MenuBuilder {
 				.order(1).build(),
 			new MenuItemBuilder("/user/profile", routes[this.locale].profile)
 				.order(20).roles([Roles.USER_ROLE]).loggedIn(true).build(),
-			new MenuItemBuilder("/admin/posts", routes[this.locale].posts)
+			new MenuItemBuilder("/author/posts", routes[this.locale].posts)
 				.order(100).roles([Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE]).loggedIn(true).build(),
 			new MenuItemBuilder("/login", routes[this.locale].login)
 				.order(900).loggedIn(false).build(),

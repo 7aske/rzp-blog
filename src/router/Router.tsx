@@ -28,10 +28,13 @@ export const Router = () => {
 			<Route path="/register" component={RegisterPage}/>
 			<AuthGuard>
 				<Route exact path="/logout" component={LogoutPage}/>
-				<RoleGuard roles={[Roles.USER_ROLE]}>
+				<RoleGuard roles={[Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE, Roles.USER_ROLE]}>
 					<Route path={"/user/profile"} component={UserProfilePage}/>
 				</RoleGuard>
 				<RoleGuard roles={[Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE]}>
+					<Route path="/author" component={AdminIndexPage}/>
+				</RoleGuard>
+				<RoleGuard roles={[Roles.ADMIN_ROLE]}>
 					<Route path="/admin" component={AdminIndexPage}/>
 				</RoleGuard>
 				<RoleGuard roles={[]}>

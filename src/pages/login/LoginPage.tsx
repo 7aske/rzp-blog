@@ -23,7 +23,7 @@ export const LoginPage = () => {
 
 	const postLogin = (user: User) => {
 		if (hasRole(user!.roles.map(r => r.name!), Roles.ADMIN_ROLE)) {
-			history.replace("/admin/users");
+			history.replace("/author/posts");
 		} else if (hasRole(user!.roles.map(r => r.name!), Roles.USER_ROLE)) {
 			history.replace("/user/profile");
 		} else {

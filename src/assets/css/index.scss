@@ -44,6 +44,10 @@ main {
 
 .theme-green {
 	background-color: $theme-green;
+
+	&:hover {
+		background-color: $theme-green-light;
+	}
 }
 
 .theme-green-light {
