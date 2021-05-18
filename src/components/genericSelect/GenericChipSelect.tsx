@@ -6,7 +6,6 @@ type GenericChipSelectProps = {
 	id?: string;
 	list: GenericElement<any>[];
 	onUpdate?: (list: GenericElement<any>[]) => void;
-	// onSelect?: (element?: GenericElement<any>) => void;
 	value?: any[];
 	className?: string;
 	create?: boolean;
@@ -17,18 +16,10 @@ export const GenericChipSelect = (props: GenericChipSelectProps) => {
 	const [data, setData] = useState<GenericElement<any>[]>([]);
 
 	useEffect(() => {
-		// setData(props.list);
-	}, [props.list]);
-
-	useEffect(() => {
 		if (props.value) {
 			setData([...props.value]);
 		}
 	}, [props.value]);
-
-	// useEffect(() => {
-	// 	onUpdate();
-	// }, [data]);
 
 	const onUpdate = (_data: GenericElement<any>[]) => {
 		if (props.onUpdate) {
