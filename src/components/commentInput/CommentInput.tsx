@@ -1,15 +1,15 @@
 import * as React from "react";
-import { ChangeEvent, useContext, useEffect, useState, useRef } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import useLocale from "../../hooks/useLocale";
-import Console from "../../utils/Console";
 import MaterializeTextarea from "../materialize/textarea/MaterializeTextarea";
 import localization from "./localization";
 import routes from "../../router/localization";
 import CommentService from "../../services/Comment.service";
 import { CommentDTO } from "../../@types/CommentDTO";
 import { Comment } from "../../api/api";
+import Toast from "../../utils/Toast";
 
 const commentService = new CommentService();
 
@@ -31,9 +31,12 @@ export const CommentInput = (props: CommentInputProps) => {
 		commentService.save(comment.post.id!, comment)
 			.then(res => {
 				if (props.onCommentSubmit) props.onCommentSubmit(res.data);
+				Toast.showSuccess(localization[locale].success);
 				setComment({...comment, body: ""});
 			})
-			.catch(Console.error);
+			.catch(err => {
+				Toast.showError(err, locale);
+			});
 	};
 
 	const setProp = (ev: ChangeEvent<HTMLTextAreaElement>) => {

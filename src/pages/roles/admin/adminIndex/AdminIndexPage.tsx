@@ -15,6 +15,7 @@ import { UserProfilePage } from "../../user/userProfile/UserProfilePage";
 import "./AdminIndexPage.scss";
 import localization from "./localization";
 import Roles from "../../../../utils/Roles";
+import { MediaView } from "../../../../components/roles/mediaView/MediaView";
 
 type AdminIndexPageProps = {};
 export const AdminIndexPage = (props: AdminIndexPageProps) => {
@@ -25,10 +26,13 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 		<NavLink activeClassName="active" className="btn btn-flat" to="/author/posts"><i
 			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}
 		</NavLink>,
-		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/categories"><i
+		<NavLink activeClassName="active" className="btn btn-flat" to="/author/media"><i
+			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarMedia}
+		</NavLink>,
+		<NavLink activeClassName="active" className="btn btn-flat" to="/author/categories"><i
 			className="material-icons left hide-on-small-and-down">label</i>{localization[locale].sidebarCategories}
 		</NavLink>,
-		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/tags"><i
+		<NavLink activeClassName="active" className="btn btn-flat" to="/author/tags"><i
 			className="material-icons left hide-on-small-and-down">local_offer</i>{localization[locale].sidebarTags}
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/users"><i
@@ -48,20 +52,23 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 						<Route exact path="/author/posts">
 							<PostView/>
 						</Route>
-						<Route exact path="/admin/categories">
+						<Route exact path="/author/categories">
 							<CategoryEdit roles={ctx.user?.roles || []}/>
 						</Route>
-						<Route exact path="/admin/tags">
+						<Route exact path="/author/tags">
 							<TagEdit roles={ctx.user?.roles || []}/>
-						</Route>
-						<Route exact path="/admin/users">
-							<UserView/>
 						</Route>
 						<Route exact path="/author/posts/edit">
 							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route path="/author/posts/edit/:postSlug">
 							<PostEdit roles={ctx.user?.roles || []}/>
+						</Route>
+						<Route exact path="/author/media">
+							<MediaView roles={ctx.user?.roles || []}/>
+						</Route>
+						<Route exact path="/admin/users">
+							<UserView/>
 						</Route>
 						<Route exact path="/admin/users/edit">
 							<UserEdit roles={ctx.user?.roles || []}/>

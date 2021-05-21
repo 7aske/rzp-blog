@@ -54,7 +54,7 @@ export const CommentList = (props: CommentListProps) => {
 	return (
 		<div className="comment-list">
 			<CommentInput postId={props.idPost} onCommentSubmit={onCommentSubmit}/>
-			{comments.map(c => <CommentListItem locale={props.locale} comment={c}/>)}
+			{comments.map(c => <CommentListItem key={c.id} locale={props.locale} comment={c}/>)}
 			{loading ?
 				<div className="progress">
 					<div className="indeterminate"/>

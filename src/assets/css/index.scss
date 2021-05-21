@@ -128,9 +128,11 @@ main {
 	&.lighten-1 {
 		background-color: $theme-green-light !important;
 	}
+
 	&.lighten-2 {
 		background-color: $theme-green-lightest !important;
 	}
+
 	background-color: $theme-green !important;
 }
 
@@ -138,9 +140,11 @@ main {
 	&.lighten-1 {
 		color: $theme-green-light !important;
 	}
+
 	&.lighten-2 {
 		color: $theme-green-lightest !important;
 	}
+
 	color: $theme-green !important;
 }
 
@@ -171,4 +175,79 @@ code {
 ::selection {
 	background-color: $theme-green-light;
 	color: $theme-black;
+}
+
+.list-page {
+	position: relative;
+
+	nav {
+		transition: all 500ms;
+		margin-left: 0;
+		margin-right: 0;
+		background-color: $theme-grey;
+		height: 3.5em;
+		border-radius: 3px;
+
+		ul li {
+			height: 3.5em !important;
+
+			a {
+				top: -5px;
+				position: relative;
+
+				&:hover {
+					color: $theme-green;
+					background-color: $theme-black;
+					border-bottom: 2px solid $theme-green;
+				}
+			}
+		}
+
+		.sidenav-trigger {
+			display: inline !important;
+		}
+
+	}
+
+	.custom-list-item {
+		padding-left: .5em !important;
+		padding-right: .5em !important;
+		padding-top: 1em;
+		height: 3.5em;
+
+		i {
+			margin-right: 0.5em;
+		}
+
+		&.collection-header {
+			background-color: $theme-grey;
+			border-bottom: 2px solid $theme-green-light;
+		}
+
+		.row {
+			margin-bottom: 0 !important;
+		}
+
+		a {
+			color: $theme-green;
+
+			&:hover {
+				color: $theme-green-lightest;
+				text-decoration: underline;
+			}
+		}
+
+		.dropdown-trigger {
+			position: relative;
+			top: -0.5em;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+	}
+}
+
+tr {
+	border-bottom-color: $theme-grey !important;
 }

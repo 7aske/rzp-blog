@@ -3,6 +3,7 @@ type AdminPostsListPagePageLocalizationStrings = {
 	sidebarCategories: string;
 	sidebarTags: string;
 	sidebarAuthors: string;
+	sidebarMedia: string;
 	[key: string]: string;
 }
 
@@ -11,6 +12,8 @@ const sr: AdminPostsListPagePageLocalizationStrings = {
 	sidebarCategories: "Kategorije",
 	sidebarPosts: "Objave",
 	sidebarTags: "Tagovi",
+	sidebarMedia: "Media",
+
 };
 
 const en: AdminPostsListPagePageLocalizationStrings = {
@@ -18,6 +21,7 @@ const en: AdminPostsListPagePageLocalizationStrings = {
 	sidebarCategories: "Categories",
 	sidebarPosts: "Posts",
 	sidebarTags: "Tags",
+	sidebarMedia: "Media",
 };
 
 const localization: Localized<AdminPostsListPagePageLocalizationStrings> = {en, sr};

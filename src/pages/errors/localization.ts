@@ -120,7 +120,7 @@ const en: ErrorLocalizationStrings = {
 	"category.save.category-not-found": "Category not found",
 	"role.save.name-invalid": "Name is invalid",
 	"role.save.role-not-found": "Role not found",
-	"comment.save.body-empty": "Comment body is empty",
+	"comment.save.body-empty": "Comment is empty",
 	"comment.save.post-not-found": "Post not found",
 	"comment.save.user-invalid": "User is invalid",
 	"auth.token.expired": "Session expired. Please log in",
