@@ -14,6 +14,12 @@ type AdminPostEditPageLocalizationStrings = {
 	postSavedText: string;
 	postDeletedText: string;
 	postTagsLabel: string;
+	tapTargetHeader: string;
+	tapTargetBody: string;
+	tooltipSave: string;
+	tooltipDelete: string;
+	tooltipImages: string;
+	tooltipToTop: string;
 	[key: string]: string;
 }
 
@@ -33,6 +39,13 @@ const sr: AdminPostEditPageLocalizationStrings = {
 	postSavedText: "Objava sačuvana",
 	postDeletedText: "Objava obrisana",
 	postTagsLabel: "Tagovi",
+	tapTargetHeader: "Kontrole",
+	tapTargetBody: "Klikom na ovo dugme možete pristupiti kontorlama vezanima za objavljivanje post-a",
+	tooltipDelete: "Obriši",
+	tooltipImages: "Media",
+	tooltipSave: "Sačuvaj",
+	tooltipToTop: "Na vrh"
+
 };
 
 const en: AdminPostEditPageLocalizationStrings = {
@@ -51,6 +64,13 @@ const en: AdminPostEditPageLocalizationStrings = {
 	postSavedText: "Post saved",
 	postDeletedText: "Post deleted",
 	postTagsLabel: "Tags",
+	tapTargetHeader:"Controls",
+	tapTargetBody: "By clicking this button you can access controls for publishing the post",
+	tooltipDelete: "Delete",
+	tooltipImages: "Media",
+	tooltipSave: "Save",
+	tooltipToTop: "To top"
+
 };
 
 const localization: Localized<AdminPostEditPageLocalizationStrings> = {en, sr};

@@ -3,7 +3,10 @@ type MediaViewLocalizationStrings = {
 	width: string;
 	size: string;
 	copySuccess: string;
+	copy: string;
 	deleteSuccess:string;
+	actions: string
+	delete: string;
 	[key: string]: string;
 }
 
@@ -12,7 +15,10 @@ const sr: MediaViewLocalizationStrings = {
 	width: "Širina",
 	size: "Veličina",
 	deleteSuccess: "Obrisano",
-	copySuccess: "Kopirano"
+	copySuccess: "Kopirano",
+	copy: "Kopiraj",
+	actions: "Akcije",
+	delete: "Obriši",
 };
 
 const en: MediaViewLocalizationStrings = {
@@ -20,7 +26,10 @@ const en: MediaViewLocalizationStrings = {
 	width: "Width",
 	size: "Size",
 	deleteSuccess: "Deleted",
-	copySuccess: "Copied"
+	copySuccess: "Copied",
+	copy: "Copy",
+	actions: "Actions",
+	delete:"Delete"
 };
 
 const localization: Localized<MediaViewLocalizationStrings> = {en, sr};

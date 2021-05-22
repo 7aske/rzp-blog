@@ -13,6 +13,7 @@ import "./MediaView.scss";
 import localization from "./localization";
 import { humanFileSize } from "../../../utils/utils";
 import Toast from "../../../utils/Toast";
+import ReactTooltip from "react-tooltip";
 
 const service = new MediaService();
 
@@ -54,7 +55,7 @@ export const MediaView = (props: MediaViewProps) => {
 	}, [page]);
 
 	return (
-		<div className="list-page">
+		<div id="media-view" className="list-page">
 			{isViewerOpen && (
 				<ImageViewer
 					src={media.map(m => environment.backendUrl + "/" + m.uri)}
@@ -116,7 +117,6 @@ const MediaViewListItem = (props: MediaViewListItemProps) => {
 						     style={{margin: "2px"}}
 						     alt=""/>
 						<br/>
-						<Button flat className="red-text accent-2" onClick={handleDelete} node="button"><Icon>delete</Icon></Button>
 					</div>
 					<div className="col s12 l8">
 						<table>
@@ -136,21 +136,23 @@ const MediaViewListItem = (props: MediaViewListItemProps) => {
 							</tbody>
 						</table>
 						<table>
-							<thead>
-							<tr>
-								<th>URL</th>
-							</tr>
-							</thead>
 							<tbody>
 							<tr>
 								<td><a rel="noopener noreferrer" className="theme-green-text" target="_blank"
 								       href={environment.backendUrl + "/" + media.uri}>{media.uri}</a>
-									<Button onClick={() => {
+									<Button data-for={`copy-tooltip-${props.media.id}`} data-tip={localization[props.locale].copy}
+										onClick={() => {
 										navigator.clipboard.writeText(environment.backendUrl + "/" + media.uri)
 											.then(() => Toast.showSuccess(localization[props.locale].copySuccess));
 									}} flat node="button">
 										<Icon className="theme-green-light-text">content_copy</Icon>
 									</Button>
+									<ReactTooltip id={`copy-tooltip-${props.media.id}`} effect="solid" place="top" />
+									<ReactTooltip id={`delete-tooltip-${props.media.id}`} effect="solid" place="top" />
+								</td>
+								<td>
+									<Button data-for={`delete-tooltip-${props.media.id}`} data-tip={localization[props.locale].delete}
+									        flat className="red-text accent-2" onClick={handleDelete} node="button"><Icon>delete</Icon></Button>
 								</td>
 							</tr>
 							</tbody>

@@ -314,6 +314,7 @@ textarea {
 }
 
 .modal {
+	overflow-x: hidden !important;
 	background-color: $theme-grey;
 	color: $theme-white;
 

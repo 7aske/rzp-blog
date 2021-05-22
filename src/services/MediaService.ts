@@ -8,8 +8,8 @@ export default class MediaService {
 		return this.service.getAllMedias(String(page));
 	}
 
-	public upload(form:FormData): Promise<AxiosResponse<Media>> {
-		return this.service.uploadMedia(form.get("file"));
+	public upload(file: any): Promise<AxiosResponse<Media>> {
+		return this.service.uploadMedia(file);
 	}
 
 	public deleteById(id: number): Promise<AxiosResponse<void>> {

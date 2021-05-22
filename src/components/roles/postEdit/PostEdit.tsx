@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router";
 import { AppContext } from "../../../context/AppContext";
 import useLocale from "../../../hooks/useLocale";
@@ -19,14 +19,13 @@ import { PostEditor } from "./postEditor/PostEditor";
 import PostService from "../../../services/Post.service";
 import TagService from "../../../services/Tag.service";
 import CategoryService from "../../../services/Category.service";
-import PostPreviewService from "../../../services/PostPreview.service";
 import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
-import { Button, Icon } from "react-materialize";
+import { Button, Modal } from "react-materialize";
+import { MediaView } from "../mediaView/MediaView";
 
 const postService = new PostService();
 const tagService = new TagService();
 const categoryService = new CategoryService();
-const postPreviewService = new PostPreviewService();
 
 type PostEditProps = {
 	roles: Role[];
@@ -38,9 +37,11 @@ export const PostEdit = (props: PostEditProps) => {
 	const [locale] = useLocale();
 	const [post, setPost] = useState<Post>();
 	const [tags, setTags] = useState<Tag[]>([]);
+	const [modalOpen, setModalOpen] = useState(false);
 	const history = useHistory();
 	const {ctx} = useContext(AppContext);
 	const {postSlug} = useParams();
+	const tapRef = useRef(null);
 
 	const getCategories = () => {
 		categoryService.getAll().then(res => {
@@ -111,13 +112,24 @@ export const PostEdit = (props: PostEditProps) => {
 		// eslint-disable-next-line
 	}, []);
 
+	useEffect(() => {
+		if (tapRef.current) {
+			const instance = M.TapTarget.init(tapRef.current!, {});
+			instance.open();
+		}
+
+	}, [tapRef]);
+
 	const setProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const value = ev.target.value;
 		const id = ev.target.id;
 		if (id === "recordStatus") {
-			setPost({...(post as Post), [id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted});
+			setPost({
+				...(post as Post),
+				[id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted,
+			});
 		} else if (id === "title") {
-			const slug = value.replace(/\s+/g, "-").replace(/[^\w-]/g, '').toLocaleLowerCase();
+			const slug = value.replace(/\s+/g, "-").replace(/[^\w-]/g, "").toLocaleLowerCase();
 			setPost({...(post as Post), [id]: value, slug});
 		} else {
 			setPost({...(post as Post), [id]: value});
@@ -127,14 +139,32 @@ export const PostEdit = (props: PostEditProps) => {
 	return (
 		<div id="admin-post-edit">
 			<FloatingActionButton icon="more_vert" toolbar={[{
-				icon: "save",
-				className: "theme-green",
-				onClick: savePost,
-			}, {
 				icon: "vertical_align_top",
 				className: "theme-grey",
 				onClick: scrollToTop,
+				tooltip: localization[locale].tooltipToTop,
+			}, {
+				icon: "save",
+				className: "theme-green",
+				onClick: savePost,
+				tooltip: localization[locale].tooltipSave,
+			}, {
+				icon: "delete",
+				className: "red accent-2",
+				onClick: deletePost,
+				tooltip: localization[locale].tooltipDelete,
+			}, {
+				icon: "image",
+				className: "theme-grey",
+				onClick: () => setModalOpen(true),
+				tooltip: localization[locale].tooltipImages,
 			}]}/>
+			<div ref={tapRef} className="tap-target theme-green theme-grey-text" data-target="fab">
+				<div className="tap-target-content">
+					<h5>{localization[locale].tapTargetHeader}</h5>
+					<p>{localization[locale].tapTargetBody}</p>
+				</div>
+			</div>
 			<div className="row">
 				<div className="col s12 m12 l10">
 					<div className="row">
@@ -204,22 +234,22 @@ export const PostEdit = (props: PostEditProps) => {
 								</div>
 							</div>
 						</div>
-						<div className="col s12 m12 l4 post-edit-controls">
-							<div className="row">
-								<div className="col s6 m6 l12">
-									<button onClick={savePost} className="btn"
-									        name="action">{localization[locale].savePostButton}
-										<i className="material-icons right">send</i>
-									</button>
-								</div>
-								<div className="col s6 m6 l12">
-									<button onClick={deletePost} className="btn red accent-2"
-									        name="action">{localization[locale].deletePostButton}
-										<i className="material-icons right">delete</i>
-									</button>
-								</div>
-							</div>
-						</div>
+						{/*<div className="col s12 m12 l4 post-edit-controls">*/}
+						{/*	<div className="row">*/}
+						{/*		<div className="col s6 m6 l12">*/}
+						{/*			<button onClick={savePost} className="btn"*/}
+						{/*			        name="action">{localization[locale].savePostButton}*/}
+						{/*				<i className="material-icons right">send</i>*/}
+						{/*			</button>*/}
+						{/*		</div>*/}
+						{/*		<div className="col s6 m6 l12">*/}
+						{/*			<button onClick={deletePost} className="btn red accent-2"*/}
+						{/*			        name="action">{localization[locale].deletePostButton}*/}
+						{/*				<i className="material-icons right">delete</i>*/}
+						{/*			</button>*/}
+						{/*		</div>*/}
+						{/*	</div>*/}
+						{/*</div>*/}
 					</div>
 					<div className="row">
 						<PostEditor locale={locale}
@@ -227,6 +257,18 @@ export const PostEdit = (props: PostEditProps) => {
 						            value={post ? post.body : undefined}
 						            onChange={(postBody) => setPost({...(post as Post), body: postBody})}/>
 					</div>
+					<Modal
+						actions={[
+							<Button flat modal="close" node="button" waves="green">Close</Button>,
+						]}
+						options={{
+							preventScrolling: true,
+							onCloseEnd: () => setModalOpen(false),
+						}}
+						id={`modal-post`}
+						open={modalOpen}>
+						<MediaView roles={[]}/>
+					</Modal>
 				</div>
 			</div>
 		</div>

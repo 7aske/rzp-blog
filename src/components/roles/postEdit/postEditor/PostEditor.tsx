@@ -7,7 +7,11 @@ import SimpleMDE from "react-simplemde-editor";
 import { MessageList } from "../../../messageList/MessageList";
 import localization from "./localization";
 import "./PostEditor.scss";
+import { environment } from "../../../../environment";
+import MediaService from "../../../../services/MediaService";
+import { getErrorText } from "../../../../pages/errors/localization";
 
+const service = new MediaService();
 
 type PostEditorProps = {
 	id?: number;
@@ -33,12 +37,11 @@ export const PostEditor = (props: PostEditorProps) => {
 				           },
 				           uploadImage: true,
 				           showIcons: ["strikethrough", "code", "table", "redo", "heading", "undo", "horizontal-rule"],
-				           // imageUploadEndpoint: `${backendUrl}/author/media/mdeupload`,
 				           imageUploadFunction: (file, onSuccess, onError) => {
-								// TODO
-					           // authorMediaService.mdeUpload(file)
-						       //     .then(filePath => onSuccess(filePath))
-						       //     .catch(err => onError(err));
+					           // TODO
+					           service.upload(file as any)
+						           .then(res => onSuccess(environment.backendUrl + "/" + res.data.uri))
+						           .catch(err => onError(getErrorText(err, locale)));
 				           },
 				           renderingConfig: {
 					           codeSyntaxHighlighting: true,
