@@ -1,0 +1,17 @@
+@import "src/assets/css/theme";
+.scroll-to-top {
+	position: fixed;
+	bottom: 5em;
+	right: 5em;
+	transition: 500ms all;
+	filter: opacity(0);
+	pointer-events: none;
+	&:active, &:focus {
+		background-color: $theme-green;
+	}
+	&.visible {
+		pointer-events: initial;
+		filter: opacity(1);
+	}
+
+}

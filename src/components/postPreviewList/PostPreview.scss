@@ -5,7 +5,7 @@
 	padding-bottom: 1em;
 
 	.category {
-
+		position: relative;
 		& > span {
 			position: absolute;
 			right: 0;
@@ -110,6 +110,11 @@
 
 @media screen and (max-width: 993px) {
 	.post-preview-item {
+		margin-bottom: 2em!important;
 		padding-left: .1em !important;
+	}
+
+	.category {
+		top: -1.5em;
 	}
 }

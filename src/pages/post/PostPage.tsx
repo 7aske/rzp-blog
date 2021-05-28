@@ -10,6 +10,7 @@ import localization from "./localization";
 import "./PostPage.scss";
 import PostService from "../../services/Post.service";
 import { Post } from "../../api/api";
+import { ScrollToTop } from "../../components/scrollToTop/ScrollToTop";
 
 const postService = new PostService();
 
@@ -38,6 +39,7 @@ export const PostPage = () => {
 
 	return (
 		<div id="post" className="container">
+			<ScrollToTop/>
 			<button className={"btn btn-back"} onClick={history.goBack}>{localization[locale].back}</button>
 			{post ?
 				<article className="animate__animated animate__fadeIn animate__slow">
