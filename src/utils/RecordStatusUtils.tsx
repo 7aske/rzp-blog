@@ -38,6 +38,12 @@ export const getUserStatusIcon = (status: UserRecordStatusEnum, locale: string) 
 		case UserRecordStatusEnum.Expired:
 			return <>
 				<Icon data-for={id} data-tip={localization[locale].userStatusExpired}
+				      className="theme-green-text accent-2">lock_open</Icon>
+				<ReactTooltip id={id} effect="solid" place="top"/>
+			</>;
+		case UserRecordStatusEnum.Disabled:
+			return <>
+				<Icon data-for={id} data-tip={localization[locale].userStatusDisabled}
 				      className="red-text accent-2">do_not_disturb_on</Icon>
 				<ReactTooltip id={id} effect="solid" place="top"/>
 			</>;

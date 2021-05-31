@@ -7,6 +7,8 @@ type UserViewLocalizationStrings = {
 	newUserButton: string;
 	editUserButton: string;
 	resetUserButton: string;
+	disableUserButton: string;
+	enableUserButton: string;
 	successAction: string;
 	deleteUserButton: string;
 	[key: string]: string;
@@ -22,7 +24,9 @@ const sr: UserViewLocalizationStrings = {
 	newUserButton: "Novi korisnik",
 	resetUserButton: "Resetuj šifru",
 	deleteUserButton: "Obriši",
-	successAction: "Uspešno"
+	disableUserButton: "Deaktiviraj",
+	enableUserButton: "Aktiviraj",
+	successAction: "Uspešno",
 };
 
 const en: UserViewLocalizationStrings = {
@@ -34,8 +38,10 @@ const en: UserViewLocalizationStrings = {
 	editUserButton: "Edit",
 	resetUserButton: "Reset password",
 	newUserButton: "New user",
+	enableUserButton: "Enable",
+	disableUserButton: "Disable",
 	deleteUserButton: "Delete",
-	successAction: "Success"
+	successAction: "Success",
 };
 
 const localization: Localized<UserViewLocalizationStrings> = {en, sr};

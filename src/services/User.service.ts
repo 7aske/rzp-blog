@@ -48,4 +48,12 @@ export default class UserService {
 	public updateProperty(prop: string, value: string): Promise<User> {
 		throw new Error("Not Implemented");
 	}
+
+	public enableUser(userId: number) {
+		return this.service.enableUser(userId);
+	}
+
+	public disableUser(userId: number) {
+		return this.service.disableUser(userId);
+	}
 }

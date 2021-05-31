@@ -5,7 +5,7 @@ import useLocale from "../../../hooks/useLocale";
 import { Pagination } from "../../pagination/Pagination";
 import localization from "./localization";
 import "./UserView.scss";
-import { User, Role } from "../../../api/api";
+import { User, Role, UserRecordStatusEnum } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
 import { Dropdown, Button, Icon, Preloader } from "react-materialize";
 import UserService from "../../../services/User.service";
@@ -37,7 +37,7 @@ export const UserView = (props: UserViewProps) => {
 		}).catch(() => {
 			setUsers([]);
 		})
-		.finally(() => setLoading(false));
+			.finally(() => setLoading(false));
 	};
 
 	useEffect(() => {
@@ -135,6 +135,28 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 			});
 	};
 
+	const enableUser = () => {
+		service.enableUser(user.id!)
+			.then(() => {
+				setUser({...user, recordStatus: UserRecordStatusEnum.Active})
+				Toast.showSuccess(localization[props.locale].successAction);
+			})
+			.catch(err => {
+				Toast.showError(err, props.locale);
+			});
+	};
+
+	const disableUser = () => {
+		service.disableUser(user.id!)
+			.then(() => {
+				setUser({...user, recordStatus: UserRecordStatusEnum.Disabled})
+				Toast.showSuccess(localization[props.locale].successAction);
+			})
+			.catch(err => {
+				Toast.showError(err, props.locale);
+			});
+	};
+
 	if (user)
 		return (
 			<li className="admin-post-list-item collection-item">
@@ -167,8 +189,18 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 							<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
 								className="material-icons">edit</i>{localization[props.locale].editUserButton}</Link>
 							{ctx.user?.id === user.id ? undefined :
-								<a onClick={resetPassword}><Icon>lock_open</Icon>{localization[props.locale].resetUserButton}
+								<a onClick={resetPassword}>
+									<Icon>lock_open</Icon>{localization[props.locale].resetUserButton}
 								</a>}
+							{ctx.user?.id === user.id ? undefined :
+								(user.recordStatus === UserRecordStatusEnum.Disabled ?
+									<a onClick={enableUser}>
+										<Icon>check</Icon>{localization[props.locale].enableUserButton}
+									</a>
+									:
+									<a onClick={disableUser}>
+										<Icon>do_not_disturb_on</Icon>{localization[props.locale].disableUserButton}
+									</a>)}
 							{ctx.user?.id === user.id ? undefined :
 								<a className={ctx.user?.id === user.id ? "hidden" : ""}
 								   onClick={deleteUser}><Icon>delete</Icon>{localization[props.locale].deleteUserButton}

@@ -68,7 +68,8 @@ export enum CategoryRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -167,7 +168,8 @@ export enum CommentRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -235,7 +237,8 @@ export enum MediaRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -464,7 +467,8 @@ export enum PostRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -556,7 +560,8 @@ export enum PostPreviewRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -649,7 +654,8 @@ export enum RoleRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -699,7 +705,8 @@ export enum TagRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -791,7 +798,8 @@ export enum UserRecordStatusEnum {
     Active = 'ACTIVE',
     Expired = 'EXPIRED',
     Locked = 'LOCKED',
-    Deleted = 'DELETED'
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
 }
 
 /**
@@ -2965,11 +2973,11 @@ export const PostPreviewControllerApiAxiosParamCreator = function (configuration
          * 
          * @summary setRecordStatus
          * @param {number} postId postId
-         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED'} recordStatus recordStatus
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setRecordStatus: async (postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options: any = {}): Promise<RequestArgs> => {
+        setRecordStatus: async (postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED', options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('setRecordStatus', 'postId', postId)
             // verify required parameter 'recordStatus' is not null or undefined
@@ -3042,11 +3050,11 @@ export const PostPreviewControllerApiFp = function(configuration?: Configuration
          * 
          * @summary setRecordStatus
          * @param {number} postId postId
-         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED'} recordStatus recordStatus
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostPreview>> {
+        async setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostPreview>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setRecordStatus(postId, recordStatus, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3088,11 +3096,11 @@ export const PostPreviewControllerApiFactory = function (configuration?: Configu
          * 
          * @summary setRecordStatus
          * @param {number} postId postId
-         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+         * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED'} recordStatus recordStatus
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any): AxiosPromise<PostPreview> {
+        setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED', options?: any): AxiosPromise<PostPreview> {
             return localVarFp.setRecordStatus(postId, recordStatus, options).then((request) => request(axios, basePath));
         },
     };
@@ -3137,12 +3145,12 @@ export class PostPreviewControllerApi extends BaseAPI {
      * 
      * @summary setRecordStatus
      * @param {number} postId postId
-     * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED'} recordStatus recordStatus
+     * @param {'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED'} recordStatus recordStatus
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostPreviewControllerApi
      */
-    public setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED', options?: any) {
+    public setRecordStatus(postId: number, recordStatus: 'NONE' | 'ACTIVE' | 'EXPIRED' | 'LOCKED' | 'DELETED' | 'DISABLED', options?: any) {
         return PostPreviewControllerApiFp(this.configuration).setRecordStatus(postId, recordStatus, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -4013,6 +4021,74 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary disableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disableUser: async (userId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('disableUser', 'userId', userId)
+            const localVarPath = `/users/{userId}/enable`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary enableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        enableUser: async (userId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('enableUser', 'userId', userId)
+            const localVarPath = `/users/{userId}/enable`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary getAllRoles
          * @param {number} userId userId
          * @param {*} [options] Override http request option.
@@ -4325,6 +4401,28 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary disableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async disableUser(userId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.disableUser(userId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary enableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async enableUser(userId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.enableUser(userId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary getAllRoles
          * @param {number} userId userId
          * @param {*} [options] Override http request option.
@@ -4435,6 +4533,26 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @summary disableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disableUser(userId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.disableUser(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary enableUser
+         * @param {number} userId userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        enableUser(userId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.enableUser(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary getAllRoles
          * @param {number} userId userId
          * @param {*} [options] Override http request option.
@@ -4535,6 +4653,30 @@ export class UserControllerApi extends BaseAPI {
      */
     public deleteUserById(userId: number, options?: any) {
         return UserControllerApiFp(this.configuration).deleteUserById(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary disableUser
+     * @param {number} userId userId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public disableUser(userId: number, options?: any) {
+        return UserControllerApiFp(this.configuration).disableUser(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary enableUser
+     * @param {number} userId userId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public enableUser(userId: number, options?: any) {
+        return UserControllerApiFp(this.configuration).enableUser(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
