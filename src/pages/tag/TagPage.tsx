@@ -46,27 +46,28 @@ export const TagPage = (props: TagPageProps) => {
 		// eslint-disable-next-line
 	}, [tagName]);
 
-	const getTags = () => {
-		postPreviewService.getAllByTagName(page, tag?.name!)
-			.then(res => {
-				setPosts(res.data);
-				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
-				if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
-			})
-			.catch(err => {
-				Console.error(err);
-				setPosts([]);
-			});
+	const getPosts = () => {
+		if (tag?.name)
+			postPreviewService.getAllByTagName(page, tag?.name!)
+				.then(res => {
+					setPosts(res.data);
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+					if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
+				})
+				.catch(err => {
+					Console.error(err);
+					setPosts([]);
+				});
 	};
 
 	useEffect(() => {
-		getTags();
+		getPosts();
 		if (tag) window.history.replaceState(null, null!, "/#/tag/" + tag?.name);
 		// eslint-disable-next-line
 	}, [tag]);
 
 	useEffect(() => {
-		getTags();
+		getPosts();
 		// eslint-disable-next-line
 	}, [page]);
 

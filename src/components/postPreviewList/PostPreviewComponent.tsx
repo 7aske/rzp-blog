@@ -23,8 +23,8 @@ export const PostPreviewComponent = ({
 					<span>
 						<Link className="theme-green-light-text" to={"/category/" + category?.name}>
 							<Highlighter highlightClassName="theme-green"
-										 searchWords={search ? search.split(/\s+/) : []}
-										 textToHighlight={category?.name!}/>
+							             searchWords={search ? search.split(/\s+/) : []}
+							             textToHighlight={category?.name!}/>
 						</Link>
 					</span>
 				</div>
@@ -47,9 +47,9 @@ export const PostPreviewComponent = ({
 					             textToHighlight={excerpt!}/>
 				</p>
 				<div className="tags">
-					{tags?.map(tag => <span key={tag.name} className="tag"><Link replace={true}
-					                                                             className="theme-green-lightest-text"
-					                                                             to={`/tag/${tag.name}`}>{tag.name}</Link></span>)}
+					{tags?.map(tag => <Link replace={true} className="tag"
+					                        to={`/tag/${tag.name}`}> <span key={tag.name}
+					                                                       className="theme-grey-text">{tag.name}</span></Link>)}
 				</div>
 			</div>
 		</li>

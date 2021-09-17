@@ -47,16 +47,17 @@ export const CategoryPage = (props: CategoryPageProps) => {
 	}, []);
 
 	const getPosts = () => {
-		postPreviewService.getAllByCategoryName(page, category?.name!)
-			.then(res => {
-				setPosts(res.data);
-				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
-				if (category) window.history.replaceState(null, null!, "/#/category/" + category?.name);
-			})
-			.catch(err => {
-				Console.error(err);
-				setPosts([]);
-			});
+		if (category?.name)
+			postPreviewService.getAllByCategoryName(page, category?.name!)
+				.then(res => {
+					setPosts(res.data);
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+					if (category) window.history.replaceState(null, null!, "/#/category/" + category?.name);
+				})
+				.catch(err => {
+					Console.error(err);
+					setPosts([]);
+				});
 	};
 
 	useEffect(() => {
