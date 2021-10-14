@@ -34,15 +34,6 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 		</NavLink>,
 	];
 
-	const infoProps: { element?: string, prop: string, className: string, disabled?: boolean }[] = [
-		{prop: "username", className: "col s12 m12 l8", disabled: true},
-		{prop: "displayName", className: "col s12 m12 l8"},
-		{prop: "email", className: "col s12 m12 l8"},
-		{prop: "firstName", className: "col s12 m12 l6"},
-		{prop: "lastName", className: "col s12 m12 l6"},
-		{prop: "about", className: "col s12 m12", element: "textarea"},
-	];
-
 	return (
 		<div id="user-profile-page" className="container white-text">
 			<div className="row">

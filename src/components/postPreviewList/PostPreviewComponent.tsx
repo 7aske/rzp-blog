@@ -36,8 +36,10 @@ export const PostPreviewComponent = ({
 					</h4>
 				</Link>
 				<h5>
+					<Link className={"theme-white-text"} to={`/users/${user?.username}`}>
 					<Highlighter highlightClassName="theme-green" searchWords={search ? search.split(/\s+/) : []}
 					             textToHighlight={user?.displayName?.toLocaleUpperCase()!}/>
+					</Link>
 				</h5>
 				<h6>
 					{formatDate(createdDate!, locale)}

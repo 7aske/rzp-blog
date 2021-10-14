@@ -340,6 +340,10 @@ textarea {
 	}
 }
 
+button:focus {
+	background-color: $theme-green !important;
+}
+
 @media screen and (max-width: 993px) {
 
 	.modal {

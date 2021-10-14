@@ -30,7 +30,7 @@ const sr: UserInfoLocalizationStrings = {
 	userPasswordLabel: "Šifra",
 	userSavedText: "Korisnik ažuriran",
 	userActiveLabel: "Aktivan",
-	saveUserButton: "Pošalji"
+	saveUserButton: "Sačuvaj"
 };
 
 const en: UserInfoLocalizationStrings = {
@@ -47,7 +47,7 @@ const en: UserInfoLocalizationStrings = {
 	userPasswordLabel:"Password",
 	userActiveLabel: "Active",
 	userSavedText: "User updated",
-	saveUserButton: "Send"
+	saveUserButton: "Save"
 };
 
 const localization: Localized<UserInfoLocalizationStrings> = {en, sr};

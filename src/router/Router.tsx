@@ -15,6 +15,7 @@ import { TagPage } from "../pages/tag/TagPage";
 import Roles from "../utils/Roles";
 import { PasswordChangeInput } from "../components/propertyUpdateInput/PasswordChangeInput";
 import { UserChangePasswordPage } from "../pages/roles/user/userChangePasswordPage/UserChangePasswordPage";
+import { UserPage } from "../pages/user/UserPage";
 
 export const Router = () => {
 	return (
@@ -23,6 +24,7 @@ export const Router = () => {
 			<Route exact path="/login" component={LoginPage}/>
 			<Route exact path="/404" component={Error404}/>
 			<Route path="/posts/:slug" component={PostPage}/>
+			<Route path="/users/:username" component={UserPage}/>
 			<Route path="/category/:categoryName" component={CategoryPage}/>
 			<Route path="/tag/:tagName" component={TagPage}/>
 			<Route path="/register" component={RegisterPage}/>

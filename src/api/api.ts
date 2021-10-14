@@ -175,6 +175,63 @@ export enum CommentRecordStatusEnum {
 /**
  * 
  * @export
+ * @interface Contact
+ */
+export interface Contact {
+    /**
+     * 
+     * @type {string}
+     * @memberof Contact
+     */
+    contactType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contact
+     */
+    createdDate?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Contact
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contact
+     */
+    lastModifiedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contact
+     */
+    recordStatus?: ContactRecordStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contact
+     */
+    value?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContactRecordStatusEnum {
+    None = 'NONE',
+    Active = 'ACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Deleted = 'DELETED',
+    Disabled = 'DISABLED'
+}
+
+/**
+ * 
+ * @export
  * @interface Media
  */
 export interface Media {
@@ -721,6 +778,12 @@ export interface User {
      * @memberof User
      */
     about?: string;
+    /**
+     * 
+     * @type {Array<Contact>}
+     * @memberof User
+     */
+    contacts?: Array<Contact>;
     /**
      * 
      * @type {string}
@@ -1754,6 +1817,452 @@ export class CategoryControllerApi extends BaseAPI {
      */
     public updateCategory(category: Category, options?: any) {
         return CategoryControllerApiFp(this.configuration).updateCategory(category, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ContactControllerApi - axios parameter creator
+ * @export
+ */
+export const ContactControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary deleteContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteContactById: async (contactId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contactId' is not null or undefined
+            assertParamExists('deleteContactById', 'contactId', contactId)
+            const localVarPath = `/contacts/{contactId}`
+                .replace(`{${"contactId"}}`, encodeURIComponent(String(contactId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getAllContactTypes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllContactTypes: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/contacts/types`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getAllContacts
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllContacts: async (q?: string, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/contacts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContactById: async (contactId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contactId' is not null or undefined
+            assertParamExists('getContactById', 'contactId', contactId)
+            const localVarPath = `/contacts/{contactId}`
+                .replace(`{${"contactId"}}`, encodeURIComponent(String(contactId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary saveContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveContact: async (contact: Contact, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contact' is not null or undefined
+            assertParamExists('saveContact', 'contact', contact)
+            const localVarPath = `/contacts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contact, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary updateContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateContact: async (contact: Contact, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contact' is not null or undefined
+            assertParamExists('updateContact', 'contact', contact)
+            const localVarPath = `/contacts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contact, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ContactControllerApi - functional programming interface
+ * @export
+ */
+export const ContactControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ContactControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary deleteContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteContactById(contactId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContactById(contactId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary getAllContactTypes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllContactTypes(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContactTypes(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary getAllContacts
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllContacts(q?: string, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Contact>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContacts(q, sort, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary getContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getContactById(contactId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContactById(contactId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary saveContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveContact(contact: Contact, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveContact(contact, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary updateContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateContact(contact: Contact, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateContact(contact, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ContactControllerApi - factory interface
+ * @export
+ */
+export const ContactControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ContactControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary deleteContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteContactById(contactId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteContactById(contactId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getAllContactTypes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllContactTypes(options?: any): AxiosPromise<Array<object>> {
+            return localVarFp.getAllContactTypes(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getAllContacts
+         * @param {string} [q] q
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllContacts(q?: string, sort?: string, options?: any): AxiosPromise<Array<Contact>> {
+            return localVarFp.getAllContacts(q, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getContactById
+         * @param {number} contactId contactId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContactById(contactId: number, options?: any): AxiosPromise<Contact> {
+            return localVarFp.getContactById(contactId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary saveContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveContact(contact: Contact, options?: any): AxiosPromise<Contact> {
+            return localVarFp.saveContact(contact, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary updateContact
+         * @param {Contact} contact contact
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateContact(contact: Contact, options?: any): AxiosPromise<Contact> {
+            return localVarFp.updateContact(contact, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ContactControllerApi - object-oriented interface
+ * @export
+ * @class ContactControllerApi
+ * @extends {BaseAPI}
+ */
+export class ContactControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary deleteContactById
+     * @param {number} contactId contactId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public deleteContactById(contactId: number, options?: any) {
+        return ContactControllerApiFp(this.configuration).deleteContactById(contactId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getAllContactTypes
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public getAllContactTypes(options?: any) {
+        return ContactControllerApiFp(this.configuration).getAllContactTypes(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getAllContacts
+     * @param {string} [q] q
+     * @param {string} [sort] sort
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public getAllContacts(q?: string, sort?: string, options?: any) {
+        return ContactControllerApiFp(this.configuration).getAllContacts(q, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getContactById
+     * @param {number} contactId contactId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public getContactById(contactId: number, options?: any) {
+        return ContactControllerApiFp(this.configuration).getContactById(contactId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary saveContact
+     * @param {Contact} contact contact
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public saveContact(contact: Contact, options?: any) {
+        return ContactControllerApiFp(this.configuration).saveContact(contact, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary updateContact
+     * @param {Contact} contact contact
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactControllerApi
+     */
+    public updateContact(contact: Contact, options?: any) {
+        return ContactControllerApiFp(this.configuration).updateContact(contact, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

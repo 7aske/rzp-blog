@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, ChangeEvent, useState } from "react";
+import { useContext, ChangeEvent, useState, useEffect } from "react";
 import { User } from "../../../../@types/User";
 import MaterializeInput from "../../../../components/materialize/input/MaterializeInput";
 import MaterializeTextarea from "../../../../components/materialize/textarea/MaterializeTextarea";
@@ -9,6 +9,8 @@ import useLocale from "../../../../hooks/useLocale";
 import { getErrorText } from "../../../errors/localization";
 import UserService from "../../../../services/User.service";
 import localization from "./localization";
+import { ContactInputList } from "./contactInput/ContactInputList";
+import { Contact } from "../../../../api/api";
 
 export const UserInfoPage = () => {
 	const service = new UserService();
@@ -19,16 +21,24 @@ export const UserInfoPage = () => {
 	const [messages, setMessages] = useState<string[]>([]);
 
 	const updateProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			setUser({...(user as User), [ev.target.id]: ev.target.value});
-		}
-	;
+		setUser({...(user as User), [ev.target.id]: ev.target.value});
+	};
+
 	const save = () => {
 		const _user: User = {...(user as User)};
-		service.update(_user as any).then(() => {
+		service.update(_user as any).then(data => {
 			setMessages([localization[locale].userSavedText]);
+			setUser(data.data as User);
 		}).catch(err => {
 			setErrors([getErrorText(err, locale)]);
 		});
+	};
+
+	const handleContactsUpdate = (contacts: Contact[]) => {
+		if (user) {
+			user.contacts = contacts;
+			setUser(user);
+		}
 	};
 
 	return (
@@ -65,14 +75,23 @@ export const UserInfoPage = () => {
 							label={localization[locale].userAboutLabel}/>
 					</div>
 					<div className="row">
-						<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
-						<MessageList className="green accent-2 white-text" messages={messages}/>
+						<div className="col s12">
+							<ContactInputList contacts={user?.contacts} onUpdate={handleContactsUpdate}/>
+						</div>
 					</div>
 					<div className="row">
-						<button onClick={save} className="btn theme-green"
-						        name="action">{localization[locale].saveUserButton}
-							<i className="material-icons right">send</i>
-						</button>
+						<div className="col s12">
+							<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
+							<MessageList className="green accent-2 theme-black-text" messages={messages}/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col s12">
+							<button onClick={save} className="btn theme-green"
+							        name="action">{localization[locale].saveUserButton}
+								<i className="material-icons right">send</i>
+							</button>
+						</div>
 					</div>
 				</form>
 			</div>
