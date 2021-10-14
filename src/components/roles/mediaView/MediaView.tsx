@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState, useRef, useEffect, useContext, useCallback } from "react";
-import { Role, Media } from "../../../api/api";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Media } from "../../../api/api";
 import MediaService from "../../../services/MediaService";
 import { usePageable } from "../../../hooks/usePageable";
 import { Preloader, Button, Icon } from "react-materialize";
@@ -8,7 +8,6 @@ import { Pagination } from "../../pagination/Pagination";
 import useLocale from "../../../hooks/useLocale";
 import { environment } from "../../../environment";
 import ImageViewer from "react-simple-image-viewer";
-import { AppContext } from "../../../context/AppContext";
 import "./MediaView.scss";
 import localization from "./localization";
 import { humanFileSize } from "../../../utils/utils";
@@ -17,10 +16,7 @@ import ReactTooltip from "react-tooltip";
 
 const service = new MediaService();
 
-type MediaViewProps = {
-	roles: Role[];
-};
-export const MediaView = (props: MediaViewProps) => {
+export const MediaView = () => {
 	const {page, perPage, setPage} = usePageable();
 	const [locale] = useLocale();
 	const pageCount = useRef(0);
@@ -91,7 +87,6 @@ type MediaViewListItemProps = {
 };
 const MediaViewListItem = (props: MediaViewListItemProps) => {
 	const [media, setMedia] = useState(props.media);
-	const {ctx} = useContext(AppContext);
 
 	useEffect(() => {
 		setMedia(props.media);
@@ -152,7 +147,7 @@ const MediaViewListItem = (props: MediaViewListItemProps) => {
 								</td>
 								<td>
 									<Button data-for={`delete-tooltip-${props.media.id}`} data-tip={localization[props.locale].delete}
-									        flat className="red-text accent-2" onClick={handleDelete} node="button"><Icon>delete</Icon></Button>
+									        flat className="red-text text-accent-2 accent-2" onClick={handleDelete} node="button"><Icon>delete</Icon></Button>
 								</td>
 							</tr>
 							</tbody>

@@ -1,9 +1,13 @@
 #ReactSimpleImageViewer {
-	z-index: 10000!important;
+	z-index: 10000 !important;
 }
 
 #media-view {
+	.collection {
+		min-height: 34vh;
+	}
+
 	tr {
-		border-bottom: transparent!important;
+		border-bottom: transparent !important;
 	}
 }

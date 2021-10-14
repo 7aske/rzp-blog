@@ -65,7 +65,7 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							<PostEdit roles={ctx.user?.roles || []}/>
 						</Route>
 						<Route exact path="/author/media">
-							<MediaView roles={ctx.user?.roles || []}/>
+							<MediaView/>
 						</Route>
 						<Route exact path="/admin/users">
 							<UserView/>

@@ -3,6 +3,8 @@ type AdminPostEditPageLocalizationStrings = {
 	postTitlePlaceholder: string;
 	postSlugLabel: string;
 	postSlugPlaceholder: string;
+	postImageLabel: string;
+	postImagePlaceholder: string;
 	postCategoryLabel: string;
 	postCategoryPlaceholder: string;
 	postExcerptLabel: string;
@@ -44,7 +46,10 @@ const sr: AdminPostEditPageLocalizationStrings = {
 	tooltipDelete: "Obriši",
 	tooltipImages: "Media",
 	tooltipSave: "Sačuvaj",
-	tooltipToTop: "Na vrh"
+	tooltipToTop: "Na vrh",
+	postImageLabel: "Slika",
+	postImagePlaceholder: "Slika"
+
 
 };
 
@@ -69,8 +74,9 @@ const en: AdminPostEditPageLocalizationStrings = {
 	tooltipDelete: "Delete",
 	tooltipImages: "Media",
 	tooltipSave: "Save",
-	tooltipToTop: "To top"
-
+	tooltipToTop: "To top",
+	postImageLabel: "Image",
+	postImagePlaceholder: "Image"
 };
 
 const localization: Localized<AdminPostEditPageLocalizationStrings> = {en, sr};

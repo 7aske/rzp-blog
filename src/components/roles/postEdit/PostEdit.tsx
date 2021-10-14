@@ -22,6 +22,8 @@ import CategoryService from "../../../services/Category.service";
 import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
 import { Button, Modal } from "react-materialize";
 import { MediaView } from "../mediaView/MediaView";
+import { Link } from "react-router-dom";
+import code from "../../../assets/img/code.png";
 
 const postService = new PostService();
 const tagService = new TagService();
@@ -218,6 +220,22 @@ export const PostEdit = (props: PostEditProps) => {
 								</div>
 							</div>
 							<div className="row">
+								<div className="col s12 l3 post-preview-image hide-on-med-and-down">
+									<a href={post?.image} rel="noopener noreferrer" target="_blank"
+									   style={{pointerEvents: !post?.image ? "none": "initial"}}>
+										<img src={post?.image ? post?.image : code} alt="Post preview"
+										     onError={ev => (ev.target as HTMLImageElement).src = code}/>
+									</a>
+								</div>
+								<MaterializeInput placeholder={localization[locale].postImagePlaceholder}
+								                  className="col s12 m12 l9"
+								                  id="image"
+								                  type="text"
+								                  value={post?.image}
+								                  label={localization[locale].postImageLabel}
+								                  onChange={setProp}/>
+							</div>
+							<div className="row">
 								<MaterializeTextarea
 									id="excerpt"
 									className="col s12 m12 l12"
@@ -267,7 +285,7 @@ export const PostEdit = (props: PostEditProps) => {
 						}}
 						id={`modal-post`}
 						open={modalOpen}>
-						<MediaView roles={[]}/>
+						<MediaView/>
 					</Modal>
 				</div>
 			</div>
