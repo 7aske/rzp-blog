@@ -8,16 +8,16 @@ export const getPostStatusIcon = (status: PostRecordStatusEnum | PostPreviewReco
 	const id = btoa(Math.random().toString());
 	switch (status) {
 		case PostRecordStatusEnum.Active:
-			return <>
+			return (<>
 				<Icon data-for={id} data-tip={localization[locale].postStatusActive}>assignment</Icon>
 				<ReactTooltip id={id} effect="solid" place="top"/>
-			</>;
+			</>);
 		case PostRecordStatusEnum.Deleted:
-			return <>
+			return (<>
 				<Icon data-for={id} data-tip={localization[locale].postStatusDeleted}
 				      className="red-text accent-2">close</Icon>
 				<ReactTooltip id={id} effect="solid" place="top"/>
-			</>;
+			</>);
 		case PostRecordStatusEnum.None:
 		case PostRecordStatusEnum.Expired:
 		case PostRecordStatusEnum.Locked:

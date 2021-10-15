@@ -22,7 +22,7 @@ export const AppContext = createContext<AppContext>({
 export const AppContextProvider = (props: any) => {
 	const [appState, setAppState] = useState(initialAppState);
 
-	return <AppContext.Provider value={{ctx: appState, setCtx: setAppState}}>
+	return (<AppContext.Provider value={{ctx: appState, setCtx: setAppState}}>
 		{props.children}
-	</AppContext.Provider>;
+	</AppContext.Provider>);
 };

@@ -36,6 +36,7 @@ export const UserInfoPage = () => {
 
 	useEffect(() => {
 		resetImage();
+		// eslint-disable-next-line
 	}, [imageRef]);
 
 	const resetImage = () => {

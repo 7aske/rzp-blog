@@ -9,9 +9,7 @@ import { PostPreviewList } from "../../components/postPreviewList/PostPreviewLis
 import profile from "../../assets/img/team/profile.png";
 import localization from "./localization";
 import Moment from "react-moment";
-import { Simulate } from "react-dom/test-utils";
 import { environment } from "../../environment";
-import code from "../../assets/img/code.png";
 
 const userApi = new UserControllerApi();
 const postPreviewApi = new PostPreviewControllerApi();
@@ -37,15 +35,15 @@ export const UserPage = () => {
 	const getIcon = (contact: Contact) => {
 		switch (contact.contactType) {
 			case "WEBSITE":
-				return <i className="material-icons left theme-green-text">public</i>;
+				return (<i className="material-icons left theme-green-text">public</i>);
 			case "PHONE":
-				return <i className="material-icons left theme-green-text">local_phone</i>;
+				return (<i className="material-icons left theme-green-text">local_phone</i>);
 			case "ADDRESS":
-				return <i className="material-icons left theme-green-text">home</i>;
+				return (<i className="material-icons left theme-green-text">home</i>);
 			case "EMAIL":
-				return <i className="material-icons left theme-green-text">email</i>;
+				return (<i className="material-icons left theme-green-text">email</i>);
 			default:
-				return <i className="material-icons left theme-green-text">info_outline</i>;
+				return (<i className="material-icons left theme-green-text">info_outline</i>);
 		}
 	};
 
@@ -178,6 +176,7 @@ const PostList = (props: PostListProps) => {
 
 	useEffect(() => {
 		loadPosts();
+		// eslint-disable-next-line
 	}, [state.username])
 
 	useEffect(() => {
