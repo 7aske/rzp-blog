@@ -46,6 +46,7 @@ type ErrorLocalizationStrings = {
 	"password.validation.not-match": string;
 	"password.validation.invalid": string;
 	"password.invalid": string;
+	"upload.failed": string;
 	[key: string]: string;
 }
 
@@ -96,7 +97,8 @@ const sr: ErrorLocalizationStrings = {
 	"password.invalid": "Šifra nije ispravna",
 	"password.validation.change.not-match": "Šifre se ne poklapaju",
 	"password.validation.invalid": "Šifra mora da sadrži makar jedan broj, jedno veliko slovo, i jedno malo slovo",
-	"password.validation.not-match": "Šifre se ne poklapaju"
+	"password.validation.not-match": "Šifre se ne poklapaju",
+	"upload.failed": "Upload nije uspeo",
 };
 
 
@@ -147,7 +149,8 @@ const en: ErrorLocalizationStrings = {
 	"password.invalid": "Password is invalid",
 	"password.validation.change.not-match": "Passwords do not match",
 	"password.validation.invalid": "Password must at least contain one number, one uppercase letter and one lowercase letter",
-	"password.validation.not-match": "Passwords do not match"
+	"password.validation.not-match": "Passwords do not match",
+	"upload.failed": "Upload failed"
 };
 
 export const getErrorText = (error: any, locale: string) => {

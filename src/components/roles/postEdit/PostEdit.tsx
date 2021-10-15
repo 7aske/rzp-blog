@@ -217,6 +217,7 @@ export const PostEdit = (props: PostEditProps) => {
 										value={post?.tags ? post?.tags.map(tag => new GenericElement<Tag>(tag, tag.id!, tag.name!)) : []}/>
 								</div>
 							</div>
+							{/*TODO: factor out as a component*/}
 							<div className="row">
 								<div className="col s12 l3 post-preview-image hide-on-med-and-down">
 									<a href={post?.image} rel="noopener noreferrer" target="_blank"

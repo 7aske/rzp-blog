@@ -13,6 +13,7 @@ type UserInfoLocalizationStrings = {
 	userSavedText: string;
 	userActiveLabel: string;
 	saveUserButton: string;
+	profileImageLabel:string;
 	[keyLabel: string]: string;
 }
 
@@ -30,7 +31,8 @@ const sr: UserInfoLocalizationStrings = {
 	userPasswordLabel: "Šifra",
 	userSavedText: "Korisnik ažuriran",
 	userActiveLabel: "Aktivan",
-	saveUserButton: "Sačuvaj"
+	saveUserButton: "Sačuvaj",
+	profileImageLabel: "Profilna slika",
 };
 
 const en: UserInfoLocalizationStrings = {
@@ -47,7 +49,8 @@ const en: UserInfoLocalizationStrings = {
 	userPasswordLabel:"Password",
 	userActiveLabel: "Active",
 	userSavedText: "User updated",
-	saveUserButton: "Save"
+	saveUserButton: "Save",
+	profileImageLabel: "Profile image",
 };
 
 const localization: Localized<UserInfoLocalizationStrings> = {en, sr};

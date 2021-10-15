@@ -10,6 +10,8 @@ import profile from "../../assets/img/team/profile.png";
 import localization from "./localization";
 import Moment from "react-moment";
 import { Simulate } from "react-dom/test-utils";
+import { environment } from "../../environment";
+import code from "../../assets/img/code.png";
 
 const userApi = new UserControllerApi();
 const postPreviewApi = new PostPreviewControllerApi();
@@ -78,10 +80,13 @@ export const UserPage = () => {
 					<div className="col s12 l3">
 						<div className="user-view image-container">
 							<div className="row">
-								<div className="col s4 l12">
-									<img alt="User profile" className="circle" src={profile}/>
+								<div className="col s6 l12">
+									<div className="image-wrapper">
+										<img alt="User profile" className="circle" src={user?.profileImage ? environment.backendUrl + "/" + user.profileImage : profile}
+										     onError={ev => (ev.target as HTMLImageElement).src = profile}/>
+									</div>
 								</div>
-								<div className="col s8 l12">
+								<div className="col s6 l12">
 									<span><h5 className="white-text name">{user?.displayName}</h5></span><br/>
 									<span><h5 className="white-text name">{user?.firstName} {user?.lastName}</h5></span><br/>
 									<p className="theme-white-text">{user?.about}</p>

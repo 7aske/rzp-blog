@@ -1,0 +1,58 @@
+#user-info {
+	.hidden {
+		display: none !important;
+	}
+	.user-profile-image-container {
+		position: relative;
+		height: 8em;
+		width: 8em;
+
+		.file-field{
+			position: absolute;
+			display: inline-block;
+			color: #fff;
+			overflow: hidden;
+			z-index: 1;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			padding: 0;
+			border-radius: 50%;
+			transition: background-color .3s;
+			cursor: pointer;
+			vertical-align: middle;
+			left: 0;
+			top: -.5em;
+
+			input[type=file] {
+				height: 2.25em !important;
+			}
+			.file-path-wrapper {
+				display: none;
+			}
+		}
+
+		.user-profile-image-wrapper {
+			position: relative;
+			border-radius: 50%;
+			overflow: hidden;
+			text-align: center;
+			height: 8em;
+			width: 8em;
+
+			img {
+				position: absolute;
+				height: 100%;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		.reset-button {
+			position: absolute;
+			left: 0em;
+			top: -.5em;
+		}
+	}
+}
