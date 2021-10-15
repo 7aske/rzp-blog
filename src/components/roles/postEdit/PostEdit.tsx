@@ -12,7 +12,6 @@ import GenericElement from "../../genericSelect/GenericElement";
 import { GenericSelect } from "../../genericSelect/GenericSelect";
 import MaterializeInput, { MaterializeCheckbox } from "../../materialize/input/MaterializeInput";
 import MaterializeTextarea from "../../materialize/textarea/MaterializeTextarea";
-import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./PostEdit.scss";
 import { PostEditor } from "./postEditor/PostEditor";
@@ -22,8 +21,8 @@ import CategoryService from "../../../services/Category.service";
 import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
 import { Button, Modal } from "react-materialize";
 import { MediaView } from "../mediaView/MediaView";
-import { Link } from "react-router-dom";
 import code from "../../../assets/img/code.png";
+import Toast from "../../../utils/Toast";
 
 const postService = new PostService();
 const tagService = new TagService();
@@ -34,8 +33,6 @@ type PostEditProps = {
 };
 export const PostEdit = (props: PostEditProps) => {
 	const [categories, setCategories] = useState<Category[]>([]);
-	const [errors, setErrors] = useState<string[]>([]);
-	const [messages, setMessages] = useState<string[]>([]);
 	const [locale] = useLocale();
 	const [post, setPost] = useState<Post>();
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -73,27 +70,27 @@ export const PostEdit = (props: PostEditProps) => {
 	const savePost = () => {
 		if (isNaN(post?.id!)) {
 			postService.save(post!).then(_post => {
-				setMessages([localization[locale].postSavedText]);
+				Toast.showSuccess(localization[locale].postSavedText);
 			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
+				Toast.showError(getErrorText(err, locale));
 			});
 		} else {
 			postService.update(post!).then(_post => {
-				setMessages([localization[locale].postSavedText]);
+				Toast.showSuccess(localization[locale].postSavedText);
 			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
+				Toast.showError(getErrorText(err, locale));
 			});
 		}
 	};
 
 	const deletePost = () => {
 		postService.deleteById(post!.id!).then(_post => {
-			setMessages([localization[locale].postDeletedText]);
+			Toast.showSuccess(localization[locale].postDeletedText);
 			setTimeout(() => {
 				history.replace("/author/posts");
 			}, 3000);
 		}).catch(err => {
-			setErrors([getErrorText(err, locale)]);
+			Toast.showError(getErrorText(err, locale));
 		});
 	};
 
@@ -125,10 +122,11 @@ export const PostEdit = (props: PostEditProps) => {
 	const setProp = (ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const value = ev.target.value;
 		const id = ev.target.id;
+		console.log(value);
 		if (id === "recordStatus") {
 			setPost({
 				...(post as Post),
-				[id]: value === "on" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted,
+				[id]: value === "true" ? PostRecordStatusEnum.Active : PostRecordStatusEnum.Deleted,
 			});
 		} else if (id === "title") {
 			const slug = value.replace(/\s+/g, "-").replace(/[^\w-]/g, "").toLocaleLowerCase();
@@ -201,7 +199,7 @@ export const PostEdit = (props: PostEditProps) => {
 								<MaterializeCheckbox id="recordStatus"
 								                     className="col s12 m12 l6"
 								                     label={localization[locale].postPublishedLabel}
-								                     value={post?.published + ""}
+								                     value={post?.recordStatus === "ACTIVE" ? "true" : "false"}
 								                     onChange={setProp}/>
 							</div>
 							<div className="row">
@@ -245,29 +243,7 @@ export const PostEdit = (props: PostEditProps) => {
 									label={localization[locale].postExcerptLabel}
 									onChange={setProp}/>
 							</div>
-							<div className="row">
-								<div className="col s12">
-									<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
-									<MessageList className="green accent-2 white-text" messages={messages}/>
-								</div>
-							</div>
 						</div>
-						{/*<div className="col s12 m12 l4 post-edit-controls">*/}
-						{/*	<div className="row">*/}
-						{/*		<div className="col s6 m6 l12">*/}
-						{/*			<button onClick={savePost} className="btn"*/}
-						{/*			        name="action">{localization[locale].savePostButton}*/}
-						{/*				<i className="material-icons right">send</i>*/}
-						{/*			</button>*/}
-						{/*		</div>*/}
-						{/*		<div className="col s6 m6 l12">*/}
-						{/*			<button onClick={deletePost} className="btn red accent-2"*/}
-						{/*			        name="action">{localization[locale].deletePostButton}*/}
-						{/*				<i className="material-icons right">delete</i>*/}
-						{/*			</button>*/}
-						{/*		</div>*/}
-						{/*	</div>*/}
-						{/*</div>*/}
 					</div>
 					<div className="row">
 						<PostEditor locale={locale}
