@@ -24,16 +24,33 @@ export const MediaView = () => {
 	const [media, setMedia] = useState<Media[]>([]);
 	const [isViewerOpen, setIsViewerOpen] = useState(false);
 	const [currentImage, setCurrentImage] = useState(0);
+	const [search, setSearch] = useState("");
 
 	const getAll = () => {
 		setLoading(true);
-		service.getAll(page)
-			.then(res => {
-				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
-				setMedia(res.data);
-			})
-			.catch(console.error)
-			.finally(() => setLoading(false));
+
+		if (search !== "") {
+			service.getAll(page, search.split(/\s+/))
+				.then(res => {
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+					setMedia(res.data);
+				})
+				.catch(err => {
+					setMedia([]);
+				})
+				.finally(() => setLoading(false));
+		} else {
+			service.getAll(page)
+				.then(res => {
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+					setMedia(res.data)
+				})
+				.catch(err => {
+					setMedia([]);
+				})
+				.finally(() => setLoading(false));
+		}
+		M.updateTextFields();
 	};
 
 	const openImageViewer = useCallback(index => {
@@ -49,7 +66,7 @@ export const MediaView = () => {
 	useEffect(() => {
 		getAll();
 		// eslint-disable-next-line
-	}, [page]);
+	}, [page, search]);
 
 	return (
 		<div id="media-view" className="list-page">
@@ -65,14 +82,19 @@ export const MediaView = () => {
 			)}
 			<nav>
 				<div className="nav-wrapper">
-					<ul className="right">
-					</ul>
+					<div className="row">
+						<div className="input-field col s12 m12 l6 xl6 right">
+							<input onChange={ev => setSearch(ev.target.value)} placeholder={localization[locale].search}
+							       id="search" type="text" autoComplete="off"/>
+						</div>
+					</div>
 				</div>
 			</nav>
 			<Preloader active={loading}/>
 			<ul className="collection">
 				{media.map((m, i) => (
-					<MediaViewListItem media={m} index={i} locale={locale} onDelete={() => getAll()} onOpen={openImageViewer}/>))}
+					<MediaViewListItem media={m} index={i} locale={locale} onDelete={() => getAll()}
+					                   onOpen={openImageViewer}/>))}
 			</ul>
 			<Pagination className="right" onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
@@ -91,16 +113,25 @@ const MediaViewListItem = (props: MediaViewListItemProps) => {
 
 	useEffect(() => {
 		setMedia(props.media);
+		M.updateTextFields();
 	}, [props.media]);
+
+
+	const handleUpdate = () => {
+		service.update(media)
+			.then(res => {
+				setMedia(res.data as Media);
+			});
+	};
 
 	const handleDelete = () => {
 		service.deleteById(props.media.id!)
 			.then(() => {
-				props.onDelete(props.index)
+				props.onDelete(props.index);
 				Toast.showSuccess(localization[props.locale].deleteSuccess);
 			})
-			.catch(err => Toast.showError(err))
-	}
+			.catch(err => Toast.showError(err));
+	};
 
 	if (media)
 		return (
@@ -136,23 +167,39 @@ const MediaViewListItem = (props: MediaViewListItemProps) => {
 							<tr>
 								<td><a rel="noopener noreferrer" className="theme-green-text" target="_blank"
 								       href={environment.backendUrl + "/" + media.uri}>{media.uri}</a>
-									<Button data-for={`copy-tooltip-${props.media.id}`} data-tip={localization[props.locale].copy}
-										onClick={() => {
-										navigator.clipboard.writeText(environment.backendUrl + "/" + media.uri)
-											.then(() => Toast.showSuccess(localization[props.locale].copySuccess));
-									}} flat node="button">
+									<Button data-for={`copy-tooltip-${props.media.id}`}
+									        data-tip={localization[props.locale].copy}
+									        onClick={() => {
+										        navigator.clipboard.writeText(environment.backendUrl + "/" + media.uri)
+											        .then(() => Toast.showSuccess(localization[props.locale].copySuccess));
+									        }} flat node="button">
 										<Icon className="theme-green-light-text">content_copy</Icon>
 									</Button>
-									<ReactTooltip id={`copy-tooltip-${props.media.id}`} effect="solid" place="top" />
-									<ReactTooltip id={`delete-tooltip-${props.media.id}`} effect="solid" place="top" />
+									<ReactTooltip id={`copy-tooltip-${props.media.id}`} effect="solid" place="top"/>
+									<ReactTooltip id={`delete-tooltip-${props.media.id}`} effect="solid" place="top"/>
 								</td>
 								<td>
-									<Button data-for={`delete-tooltip-${props.media.id}`} data-tip={localization[props.locale].delete}
-									        flat className="red-text text-accent-2 accent-2" onClick={handleDelete} node="button"><Icon>delete</Icon></Button>
+									<Button data-for={`delete-tooltip-${props.media.id}`}
+									        data-tip={localization[props.locale].delete}
+									        flat className="red-text text-accent-2 accent-2" onClick={handleDelete}
+									        node="button"><Icon>delete</Icon></Button>
 								</td>
 							</tr>
 							</tbody>
 						</table>
+						<div className="row">
+							<div className="input-field col s12 l6">
+								<input value={media.keywords}
+								       onChange={ev => setMedia({...media, keywords: ev.target.value})}
+								       placeholder={localization[props.locale].keywords} type="text"/>
+								<label htmlFor="first_name">{localization[props.locale].keywords}</label>
+							</div>
+							<br/>
+							<div>
+								<button className="btn theme-green" onClick={handleUpdate}><i
+									className="material-icons">save</i></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</li>

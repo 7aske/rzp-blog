@@ -5,6 +5,8 @@
 #media-view {
 	.collection {
 		min-height: 34vh;
+		//overflow: inherit;
+		width: 100%;
 	}
 
 	tr {

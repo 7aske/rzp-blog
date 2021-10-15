@@ -50,11 +50,6 @@ export const UserEdit = (props: UserEditProps) => {
 	}, []);
 
 	useEffect(() => {
-		Console.log(user);
-		// eslint-disable-next-line
-	}, [user]);
-
-	useEffect(() => {
 		userService.getById(idUser)
 			.then(userRes => {
 				setUser({...userRes.data} as User);
@@ -81,7 +76,6 @@ export const UserEdit = (props: UserEditProps) => {
 			userService.update(_user as any).then(() => {
 				setMessages([localization[locale].userSavedText]);
 			}).catch(err => {
-				Console.error(err);
 				if (!err){
 					setErrors([getErrorText("generic", locale)]);
 					return;
@@ -96,7 +90,6 @@ export const UserEdit = (props: UserEditProps) => {
 			userService.save(_user as any).then(() => {
 				setMessages([localization[locale].userSavedText]);
 			}).catch(err => {
-				Console.error(err);
 				if (!err){
 					setErrors([getErrorText("generic", locale)]);
 					return;

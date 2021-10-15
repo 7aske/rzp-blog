@@ -5,12 +5,19 @@ import { QueryBuilder } from "../utils/QueryBuilder";
 export default class MediaService {
 	private service = new MediaControllerApi();
 
-	public getAll(page: number): Promise<AxiosResponse<Array<Media>>> {
-		return this.service.getAllMedias(String(page), new QueryBuilder().eq("type", "POST_IMAGE").build());
+	public getAll(page: number, queryParams: string[] = []): Promise<AxiosResponse<Array<Media>>> {
+		const stringAttrs = ["keywords"];
+		const builder = new QueryBuilder();
+		stringAttrs.forEach(attr => queryParams.forEach(param => builder.like(attr, param).or()));
+		return this.service.getAllMedias(String(page), builder.build());
 	}
 
-	public upload(file: any): Promise<AxiosResponse<Media>> {
-		return this.service.uploadMedia(file);
+	public upload(type: "PROFILE_IMAGE" | "POST_IMAGE", file: any): Promise<AxiosResponse<Media>> {
+		return this.service.uploadMedia(type, file);
+	}
+
+	public update(media: Media): Promise<AxiosResponse<Media>> {
+		return this.service.updateMedia(media);
 	}
 
 	public deleteById(id: number): Promise<AxiosResponse<void>> {
