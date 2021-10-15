@@ -34,7 +34,8 @@
     "deploy:prod": "rsync --delete --progress -havz build/ root@digitize.rs:/srv/http/rzp/blog/",
     "predeploy:prod": "REACT_APP_ENV=production npm run build",
     "deploy:staging": "rsync --delete --progress -havz build/ root@viking.lan:/srv/http/rzp/blog/",
-    "predeploy:staging": "REACT_APP_ENV=staging npm run build"
+    "predeploy:staging": "npm run build:staging",
+    "build:staging": "REACT_APP_ENV=staging npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"

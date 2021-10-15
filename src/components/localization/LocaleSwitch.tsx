@@ -9,8 +9,6 @@ export const LocaleSwitch = () => {
 		setLocale(newLocale);
 	};
 
-	return (
-		// eslint-disable-next-line
-		<a onClick={toggleLocale}>{locale.toUpperCase()}</a>
-	);
+	// eslint-disable-next-line
+	return (<a onClick={toggleLocale}>{locale.toUpperCase()}</a>);
 };
