@@ -22,6 +22,7 @@ export const ContactInput = (props: ContactInputProps) => {
 			M.FormSelect.init(selectRef.current, {});
 		}
 		M.updateTextFields();
+		// eslint-disable-next-line
 	}, [props.contact, selectRef.current, locale]);
 
 	return (

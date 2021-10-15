@@ -48,6 +48,7 @@ export const MediaView = () => {
 
 	useEffect(() => {
 		getAll();
+		// eslint-disable-next-line
 	}, [page]);
 
 	return (

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import Console from "../../utils/Console";
 import AuthService from "../../services/Auth.service";
 
 const authService = new AuthService();

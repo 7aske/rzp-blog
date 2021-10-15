@@ -164,11 +164,13 @@ const AdminPostListItem = (props: AdminPostListItemProps) => {
 							                 node="button"><Icon>more_vert</Icon></Button>}>
 							<Link className="btn-edit" to={"/author/posts/edit/" + post.slug}><i
 								className="material-icons">edit</i>{localization[props.locale].editPostButton}</Link>
+							{/*eslint-disable-next-line*/}
 							<a onClick={togglePublished}>
 								{post.recordStatus === PostPreviewRecordStatusEnum.Active ?
 									<Icon>assignment_late</Icon> : <Icon>assignment</Icon>}
 								{post.recordStatus === PostPreviewRecordStatusEnum.Active ? localization[props.locale].unPublish : localization[props.locale].publish}
 							</a>
+							{/*eslint-disable-next-line*/}
 							<a onClick={deletePost}><Icon>delete</Icon>{localization[props.locale].deletePostButton}</a>
 						</Dropdown>
 					</div>

@@ -15,8 +15,7 @@ import { getUserStatusIcon } from "../../../utils/RecordStatusUtils";
 
 const service = new UserService();
 
-type UserViewProps = {};
-export const UserView = (props: UserViewProps) => {
+export const UserView = () => {
 	const [locale] = useLocale();
 	const pageCount = useRef<number>(0);
 	const {page, perPage, setPage} = usePageable();
@@ -189,19 +188,23 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 							<Link className="btn-user-edit" to={"/admin/users/edit/" + user.id}><i
 								className="material-icons">edit</i>{localization[props.locale].editUserButton}</Link>
 							{ctx.user?.id === user.id ? undefined :
+								// eslint-disable-next-line
 								<a onClick={resetPassword}>
 									<Icon>lock_open</Icon>{localization[props.locale].resetUserButton}
 								</a>}
 							{ctx.user?.id === user.id ? undefined :
 								(user.recordStatus === UserRecordStatusEnum.Disabled ?
+									// eslint-disable-next-line
 									<a onClick={enableUser}>
 										<Icon>check</Icon>{localization[props.locale].enableUserButton}
 									</a>
 									:
+									// eslint-disable-next-line
 									<a onClick={disableUser}>
 										<Icon>do_not_disturb_on</Icon>{localization[props.locale].disableUserButton}
 									</a>)}
 							{ctx.user?.id === user.id ? undefined :
+								// eslint-disable-next-line
 								<a className={ctx.user?.id === user.id ? "hidden" : ""}
 								   onClick={deleteUser}><Icon>delete</Icon>{localization[props.locale].deleteUserButton}
 								</a>}

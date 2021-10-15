@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, ChangeEvent, useState, useEffect } from "react";
+import { useContext, ChangeEvent, useState } from "react";
 import { User } from "../../../../@types/User";
 import MaterializeInput from "../../../../components/materialize/input/MaterializeInput";
 import MaterializeTextarea from "../../../../components/materialize/textarea/MaterializeTextarea";

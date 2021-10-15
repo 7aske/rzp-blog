@@ -13,6 +13,7 @@ export const Pagination = (props: PaginationProps) => {
 	useEffect(() => {
 		setPageCount(props.pageCount);
 		changePage(0);
+		// eslint-disable-next-line
 	}, [props.pageCount]);
 
 	const changePage = (page: number) => {

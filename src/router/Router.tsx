@@ -13,7 +13,6 @@ import { PostPage } from "../pages/post/PostPage";
 import { UserProfilePage } from "../pages/roles/user/userProfile/UserProfilePage";
 import { TagPage } from "../pages/tag/TagPage";
 import Roles from "../utils/Roles";
-import { PasswordChangeInput } from "../components/propertyUpdateInput/PasswordChangeInput";
 import { UserChangePasswordPage } from "../pages/roles/user/userChangePasswordPage/UserChangePasswordPage";
 import { UserPage } from "../pages/user/UserPage";
 

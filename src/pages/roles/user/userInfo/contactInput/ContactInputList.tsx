@@ -28,6 +28,7 @@ export const ContactInputList = (props: ContactInputListProps) => {
 
 	useEffect(() => {
 		props.onUpdate(contacts);
+		// eslint-disable-next-line
 	}, [contacts]);
 
 	const addInput = () => {

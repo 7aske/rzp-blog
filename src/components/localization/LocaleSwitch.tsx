@@ -1,8 +1,7 @@
 import * as React from "react";
 import useLocale, { locales } from "../../hooks/useLocale";
 
-type LocaleSwitchProps = {};
-export const LocaleSwitch = (props: LocaleSwitchProps) => {
+export const LocaleSwitch = () => {
 	const [locale, setLocale] = useLocale();
 
 	const toggleLocale = () => {
@@ -11,6 +10,7 @@ export const LocaleSwitch = (props: LocaleSwitchProps) => {
 	};
 
 	return (
+		// eslint-disable-next-line
 		<a onClick={toggleLocale}>{locale.toUpperCase()}</a>
 	);
 };

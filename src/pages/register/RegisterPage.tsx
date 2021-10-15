@@ -1,10 +1,9 @@
 import * as React from "react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router";
 import MaterializeInput from "../../components/materialize/input/MaterializeInput";
 import { MessageList } from "../../components/messageList/MessageList";
 import useLocale from "../../hooks/useLocale";
-import Console from "../../utils/Console";
 import { getErrorText } from "../errors/localization";
 import localization from "./localization";
 import "./RegisterPage.scss";

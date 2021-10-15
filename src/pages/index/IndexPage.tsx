@@ -6,11 +6,9 @@ import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
 import "./IndexPage.scss";
 import localization from "./localization";
-import PostService from "../../services/Post.service";
 import PostPreviewService from "../../services/PostPreview.service";
 import { usePageable } from "../../hooks/usePageable";
 
-const postService = new PostService();
 const postPreviewService = new PostPreviewService();
 
 type IndexPageProps = {};
@@ -18,7 +16,7 @@ export const IndexPage = (props: IndexPageProps) => {
 	const [locale] = useLocale();
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState(new Array(perPage).fill(null));
-	const [pageCount, setPageCount] = useState(1);
+	const [pageCount] = useState(1);
 	const [search, setSearch] = useState("");
 
 

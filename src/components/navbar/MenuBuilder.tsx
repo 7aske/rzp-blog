@@ -42,6 +42,7 @@ class MenuBuilder {
 	}
 
 	public withNavTrigger() {
+		// eslint-disable-next-line
 		this.navItems.push(new MenuItem(<a data-target="sidenav" className="sidenav-trigger"><i
 				className="material-icons">menu</i></a>,
 			1000, [], null, true));

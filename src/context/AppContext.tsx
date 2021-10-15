@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useState, useEffect } from "react";
+import React, { createContext, Dispatch, SetStateAction, useState } from "react";
 import { User } from "../@types/User";
 
 interface AppContext {

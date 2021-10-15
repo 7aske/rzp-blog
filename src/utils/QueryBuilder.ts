@@ -39,9 +39,6 @@ export class QueryBuilder {
   private isCriteriaOr = true;
   private of = "";
 
-  public constructor() {
-  }
-
   public static of(of: string) {
     const builder = new QueryBuilder();
     builder.of = of;

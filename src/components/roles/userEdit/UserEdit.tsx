@@ -46,6 +46,7 @@ export const UserEdit = (props: UserEditProps) => {
 		roleService.getAllRoles()
 			.then(res => setRoles(res.data))
 			.catch(Console.error);
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {

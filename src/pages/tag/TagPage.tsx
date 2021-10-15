@@ -10,16 +10,13 @@ import localization from "./localization";
 import Console from "../../utils/Console";
 import PostPreviewService from "../../services/PostPreview.service";
 import TagService from "../../services/Tag.service";
-import PostService from "../../services/Post.service";
 import { usePageable } from "../../hooks/usePageable";
 import { PostPreview, Tag } from "../../api/api";
 
 const postPreviewService = new PostPreviewService();
-const postService = new PostService();
 const tagService = new TagService();
 
-type TagPageProps = {};
-export const TagPage = (props: TagPageProps) => {
+export const TagPage = () => {
 	const {tagName} = useParams();
 	const [tag, setTag] = useState<Tag | null>(null);
 	const [tags, setTags] = useState<Tag []>([]);

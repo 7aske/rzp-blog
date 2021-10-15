@@ -28,6 +28,7 @@ export const UserPage = () => {
 				.then(res => setUser(res.data))
 				.catch(() => history.goBack());
 		}
+		// eslint-disable-next-line
 	}, [username]);
 
 	const getIcon = (contact: Contact) => {
