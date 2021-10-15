@@ -10,6 +10,7 @@ import profile from "../../assets/img/team/profile.png";
 import localization from "./localization";
 import Moment from "react-moment";
 import { environment } from "../../environment";
+import { Head } from "../../components/meta/Head";
 
 const userApi = new UserControllerApi();
 const postPreviewApi = new PostPreviewControllerApi();
@@ -73,6 +74,7 @@ export const UserPage = () => {
 
 	return (
 		<div id="user-page">
+			<Head title={user?.firstName + " " + user?.lastName} author={user?.displayName} description={user?.about} image={user?.profileImage??profile}/>
 			<div className="container">
 				<div className="row">
 					<div className="col s12 l3">

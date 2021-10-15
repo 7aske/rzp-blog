@@ -12,6 +12,7 @@ import "./PostPage.scss";
 import PostService from "../../services/Post.service";
 import { Post } from "../../api/api";
 import { ScrollToTop } from "../../components/scrollToTop/ScrollToTop";
+import { Head } from "../../components/meta/Head";
 
 const postService = new PostService();
 
@@ -40,6 +41,9 @@ export const PostPage = () => {
 
 	return (
 		<div id="post" className="container">
+			{post ?
+				<Head title={post?.title!} description={post?.excerpt!} image={post?.image}
+				      author={post!.user!.displayName!}/> : undefined}
 			<ScrollToTop/>
 			<button className={"btn btn-back"} onClick={history.goBack}>{localization[locale].back}</button>
 			{post ?
