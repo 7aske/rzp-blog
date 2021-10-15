@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { CommentList } from "../../components/commentList/CommentList";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
@@ -44,7 +45,8 @@ export const PostPage = () => {
 			{post ?
 				<article className="animate__animated animate__fadeIn animate__slow">
 					<h2 className="title">{post?.title}</h2>
-					<h5 className="author">{post?.user?.displayName?.toUpperCase()}</h5>
+					<Link className="theme-white-text" to={"/users/" + post.user?.username}><h5
+						className="author">{post?.user?.displayName?.toUpperCase()}</h5></Link>
 					<h6 className="date">{formatDate(post?.createdDate ? post.createdDate : "", locale)}</h6>
 					<MarkdownContainer content={post?.body ? post?.body : ""}/>
 					<hr/>
