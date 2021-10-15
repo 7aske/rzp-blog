@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useParams, useHistory } from "react-router";
-import { User, PostPreview, UserControllerApi, PostPreviewControllerApi, Contact } from "../../api/api";
+import { User, UserControllerApi, PostPreviewControllerApi, Contact } from "../../api/api";
 import "./UserPage.scss";
 import useLocale from "../../hooks/useLocale";
 import { QueryBuilder } from "../../utils/QueryBuilder";
@@ -9,6 +9,7 @@ import { PostPreviewList } from "../../components/postPreviewList/PostPreviewLis
 import profile from "../../assets/img/team/profile.png";
 import localization from "./localization";
 import Moment from "react-moment";
+import { Simulate } from "react-dom/test-utils";
 
 const userApi = new UserControllerApi();
 const postPreviewApi = new PostPreviewControllerApi();
@@ -101,7 +102,8 @@ export const UserPage = () => {
 						</div>
 					</div>
 					<div className="col s12 l9">
-						<PostList username={user?.username}/>
+						{user?.username ?
+							<PostList username={user?.username}/> : undefined}
 					</div>
 				</div>
 			</div>
@@ -114,38 +116,67 @@ type PostListProps = {
 	username?: string;
 };
 const PostList = (props: PostListProps) => {
-	const [posts, setPosts] = useState<PostPreview[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [cantLoadMore, setCantLoadMore] = useState(false);
-	const page = useRef(0);
+	const initialState = {
+		posts: [],
+		username: props.username,
+		loading: false,
+		cantLoadMore: false,
+		page: 0,
+	};
+
+	const reducer = (state: any, action: { type: string, value: any }) => {
+		switch (action.type) {
+			case "setPosts":
+				console.log(action.value);
+				return {...state, posts: [...state.posts, ...action.value]};
+			case "setPage":
+				return {...state, page: action.value};
+			case "setLoading":
+				return {...state, loading: action.value};
+			case "setCantLoadMore":
+				return {...state, cantLoadMore: action.value};
+			case "setUsername":
+				return {...state, username: action.value};
+			case "reset":
+				return initialState;
+			default:
+				return state;
+		}
+	};
+
+	const [state, dispatch] = useReducer(reducer, initialState);
+
 	const [locale] = useLocale();
 
 	const loadPosts = () => {
 		if (!props.username) return;
-		if (loading || cantLoadMore) return;
-		setLoading(true);
-		const query = new QueryBuilder().eq("user.username", props.username).build();
-		postPreviewApi.getAllPostPreviews(page.current + ",2", "datePosted", query)
+		if (state.loading || state.cantLoadMore) return;
+		dispatch({type: "setLoading", value: true});
+
+		const query = new QueryBuilder().eq("user.username", state.username).build();
+		postPreviewApi.getAllPostPreviews(state.page + ",2", "datePosted", query)
 			.then(res => {
 				if (res.data.length === 0) {
-					console.log("cant load more");
-					setCantLoadMore(true);
+					dispatch({type: "setCantLoadMore", value: true});
 				} else {
-					page.current = page.current + 1;
-					setPosts([...posts, ...res.data]);
+					dispatch({type: "setPage", value: state.page + 1});
+					dispatch({type: "setPosts", value: res.data});
 				}
 			})
 			.catch(console.error)
-			.finally(() => setLoading(false));
+			.finally(() => dispatch({type: "setLoading", value: false}));
 	};
 
 	const loadMore = () => {
-		console.log(loading, cantLoadMore);
 		loadPosts();
 	};
 
 	useEffect(() => {
 		loadPosts();
+	}, [state.username])
+
+	useEffect(() => {
+		dispatch({type: "reset", value: undefined});
 		// eslint-disable-next-line
 	}, [props.username]);
 
@@ -153,14 +184,14 @@ const PostList = (props: PostListProps) => {
 		<div className="row posts-container">
 			<h4 className="list-title theme-green-text">{localization[locale].latestPosts}</h4>
 			<div className="col s12">
-				<PostPreviewList posts={posts}/>
+				<PostPreviewList posts={state.posts}/>
 			</div>
-			{loading ?
+			{state.loading ?
 				<div className="progress">
 					<div className="indeterminate"/>
 				</div> : undefined}
 			<div className="center">
-				<button disabled={cantLoadMore} onClick={loadMore}
+				<button disabled={state.cantLoadMore} onClick={loadMore}
 				        className="btn theme-green theme-white-text load-more">{localization[locale].loadMore}
 				</button>
 			</div>
