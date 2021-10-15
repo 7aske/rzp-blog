@@ -37,7 +37,9 @@ export const UserProfilePage = (props: UserProfilePageProps) => {
 	return (
 		<div id="user-profile-page" className="container white-text">
 			<div className="row">
-				<h2 className="title">{localization[locale].title}</h2>
+				<div className="col s12">
+					<h2 className="title">{localization[locale].title}</h2>
+				</div>
 			</div>
 			<div className="row">
 				<div className="col s12 m12 l4 xl3">
