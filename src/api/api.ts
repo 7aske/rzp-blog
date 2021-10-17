@@ -2187,14 +2187,13 @@ export const MediaControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @summary saveMedia
-         * @param {'PROFILE_IMAGE' | 'POST_IMAGE'} [type] type
+         * @summary uploadPostImage
          * @param {any} [file] file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadMedia: async (type?: 'PROFILE_IMAGE' | 'POST_IMAGE', file?: any, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/medias`;
+        uploadPostImage: async (file?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/medias/post`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2207,9 +2206,44 @@ export const MediaControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
             }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary uploadProfileImage
+         * @param {any} [file] file
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadProfileImage: async (file?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/medias/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
 
             if (file !== undefined) { 
@@ -2287,14 +2321,24 @@ export const MediaControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary saveMedia
-         * @param {'PROFILE_IMAGE' | 'POST_IMAGE'} [type] type
+         * @summary uploadPostImage
          * @param {any} [file] file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadMedia(type?: 'PROFILE_IMAGE' | 'POST_IMAGE', file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Media>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadMedia(type, file, options);
+        async uploadPostImage(file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Media>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadPostImage(file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary uploadProfileImage
+         * @param {any} [file] file
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadProfileImage(file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Media>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadProfileImage(file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2351,14 +2395,23 @@ export const MediaControllerApiFactory = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary saveMedia
-         * @param {'PROFILE_IMAGE' | 'POST_IMAGE'} [type] type
+         * @summary uploadPostImage
          * @param {any} [file] file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadMedia(type?: 'PROFILE_IMAGE' | 'POST_IMAGE', file?: any, options?: any): AxiosPromise<Media> {
-            return localVarFp.uploadMedia(type, file, options).then((request) => request(axios, basePath));
+        uploadPostImage(file?: any, options?: any): AxiosPromise<Media> {
+            return localVarFp.uploadPostImage(file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary uploadProfileImage
+         * @param {any} [file] file
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadProfileImage(file?: any, options?: any): AxiosPromise<Media> {
+            return localVarFp.uploadProfileImage(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2422,15 +2475,26 @@ export class MediaControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary saveMedia
-     * @param {'PROFILE_IMAGE' | 'POST_IMAGE'} [type] type
+     * @summary uploadPostImage
      * @param {any} [file] file
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MediaControllerApi
      */
-    public uploadMedia(type?: 'PROFILE_IMAGE' | 'POST_IMAGE', file?: any, options?: any) {
-        return MediaControllerApiFp(this.configuration).uploadMedia(type, file, options).then((request) => request(this.axios, this.basePath));
+    public uploadPostImage(file?: any, options?: any) {
+        return MediaControllerApiFp(this.configuration).uploadPostImage(file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary uploadProfileImage
+     * @param {any} [file] file
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MediaControllerApi
+     */
+    public uploadProfileImage(file?: any, options?: any) {
+        return MediaControllerApiFp(this.configuration).uploadProfileImage(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

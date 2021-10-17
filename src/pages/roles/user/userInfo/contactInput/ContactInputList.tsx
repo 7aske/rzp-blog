@@ -55,7 +55,7 @@ export const ContactInputList = (props: ContactInputListProps) => {
 		<>
 			<h4>{localization[locale].title}</h4>
 			{contacts.map((c, i) => {
-				return (<ContactInput types={types} contact={c} onUpdate={handleUpdate} onDelete={handleDelete} index={i}/>);
+				return (<ContactInput key={i} types={types} contact={c} onUpdate={handleUpdate} onDelete={handleDelete} index={i}/>);
 			})}
 			<div>
 				<button onClick={addInput} id="add-contact-button" className="btn-floating theme-green"><i className="material-icons">add</i>

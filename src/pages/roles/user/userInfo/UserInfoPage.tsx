@@ -16,17 +16,17 @@ import Toast from "../../../../utils/Toast";
 import { environment } from "../../../../environment";
 import "./UserInfo.scss";
 import { Button, Icon } from "react-materialize";
+import MediaService from "../../../../services/MediaService";
 
 
 const service = new UserService();
-const mediaApi = new MediaControllerApi();
+const mediaApi = new MediaService();
+
 export const UserInfoPage = () => {
 	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
 	const [user, setUser] = useState(ctx.user);
 	const [image, setImage] = useState<File | null>(null);
-	const [errors, setErrors] = useState<string[]>([]);
-	const [messages, setMessages] = useState<string[]>([]);
 	const imageRef = useRef<HTMLImageElement | null>(null);
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -55,19 +55,26 @@ export const UserInfoPage = () => {
 	const save = () => {
 		(async function () {
 			const _user: User = {...(user as User)};
-			let uploaded: Media | null = null;
-			try {
-				uploaded = (await mediaApi.uploadMedia("PROFILE_IMAGE", image)).data;
-			} catch (e) {
-				Toast.showError("upload.failed", locale);
+
+			if (image) {
+				try {
+					const res = (await mediaApi.uploadProfileImage(image));
+					const uploaded = res.data;
+					_user.image = uploaded!;
+				} catch (e) {
+					if (e.response.status === 413) {
+						Toast.showError("upload.file.too-large", locale);
+					} else {
+						Toast.showError("upload.failed", locale);
+					}
+				}
 			}
-			_user.image = uploaded!;
 
 			service.update(_user as any).then(data => {
-				setMessages([localization[locale].userSavedText]);
+				Toast.showSuccess(localization[locale].userSavedText)
 				setUser(data.data as User);
 			}).catch(err => {
-				setErrors([getErrorText(err, locale)]);
+				Toast.showError(err, locale);
 			});
 		})();
 	};
@@ -143,12 +150,6 @@ export const UserInfoPage = () => {
 					<div className="row">
 						<div className="col s12">
 							<ContactInputList contacts={user?.contacts} onUpdate={handleContactsUpdate}/>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col s12">
-							<MessageList timeout={3000} className="red accent-2 white-text" messages={errors}/>
-							<MessageList className="green accent-2 theme-black-text" messages={messages}/>
 						</div>
 					</div>
 					<div className="row">

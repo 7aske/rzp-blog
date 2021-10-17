@@ -33,7 +33,7 @@ export const ContactInput = (props: ContactInputProps) => {
 					        ...props.contact,
 					        contactType: ev.target.value,
 				        }, props.index)}>
-					{props.types.map(value => <option value={value}>{localization[locale][value]}</option>)}
+					{props.types.map(value => <option key={value} value={value}>{localization[locale][value]}</option>)}
 				</select>
 				<label>{localization[locale].type}</label>
 			</div>

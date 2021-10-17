@@ -12,8 +12,12 @@ export default class MediaService {
 		return this.service.getAllMedias(String(page), builder.build());
 	}
 
-	public upload(type: "PROFILE_IMAGE" | "POST_IMAGE", file: any): Promise<AxiosResponse<Media>> {
-		return this.service.uploadMedia(type, file);
+	public uploadProfileImage(file: any): Promise<AxiosResponse<Media>> {
+		return this.service.uploadProfileImage(file);
+	}
+
+	public uploadPostImage(file: any): Promise<AxiosResponse<Media>> {
+		return this.service.uploadPostImage(file);
 	}
 
 	public update(media: Media): Promise<AxiosResponse<Media>> {

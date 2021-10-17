@@ -39,7 +39,7 @@ export const PostEditor = (props: PostEditorProps) => {
 				           showIcons: ["strikethrough", "code", "table", "redo", "heading", "undo", "horizontal-rule"],
 				           imageUploadFunction: (file, onSuccess, onError) => {
 							   // TODO: make a service with POST_IMAGE being optional
-					           service.upload("POST_IMAGE", file as any)
+					           service.uploadPostImage(file as any)
 						           .then(res => onSuccess(environment.backendUrl + "/" + res.data.uri))
 						           .catch(err => onError(getErrorText(err, locale)));
 				           },
