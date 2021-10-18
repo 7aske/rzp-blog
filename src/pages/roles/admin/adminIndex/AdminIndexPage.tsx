@@ -17,8 +17,7 @@ import localization from "./localization";
 import Roles from "../../../../utils/Roles";
 import { MediaView } from "../../../../components/roles/mediaView/MediaView";
 
-type AdminIndexPageProps = {};
-export const AdminIndexPage = (props: AdminIndexPageProps) => {
+export const AdminIndexPage = () => {
 	const {ctx} = useContext(AppContext);
 	const [locale] = useLocale();
 
@@ -53,16 +52,16 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							<PostView/>
 						</Route>
 						<Route exact path="/author/categories">
-							<CategoryEdit roles={ctx.user?.roles || []}/>
+							<CategoryEdit/>
 						</Route>
 						<Route exact path="/author/tags">
-							<TagEdit roles={ctx.user?.roles || []}/>
+							<TagEdit/>
 						</Route>
 						<Route exact path="/author/posts/edit">
-							<PostEdit roles={ctx.user?.roles || []}/>
+							<PostEdit/>
 						</Route>
 						<Route path="/author/posts/edit/:postSlug">
-							<PostEdit roles={ctx.user?.roles || []}/>
+							<PostEdit/>
 						</Route>
 						<Route exact path="/author/media">
 							<MediaView/>
@@ -71,10 +70,10 @@ export const AdminIndexPage = (props: AdminIndexPageProps) => {
 							<UserView/>
 						</Route>
 						<Route exact path="/admin/users/edit">
-							<UserEdit roles={ctx.user?.roles || []}/>
+							<UserEdit/>
 						</Route>
 						<Route path="/admin/users/edit/:idUser">
-							<UserEdit roles={ctx.user?.roles || []}/>
+							<UserEdit/>
 						</Route>
 						<Route>
 							<UserProfilePage/>

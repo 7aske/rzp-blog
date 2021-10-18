@@ -13,10 +13,7 @@ import { Role, Category } from "../../../api/api";
 
 const categoryService = new CategoryService();
 
-type CategoryEditProps = {
-	roles: Role[];
-};
-export const CategoryEdit = (props: CategoryEditProps) => {
+export const CategoryEdit = () => {
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);

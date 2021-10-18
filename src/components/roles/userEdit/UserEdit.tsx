@@ -16,10 +16,7 @@ import { RoleControllerApi, Role, UserRecordStatusEnum } from "../../../api/api"
 import { User } from "../../../@types/User";
 
 
-type UserEditProps = {
-	roles: Role[];
-};
-export const UserEdit = (props: UserEditProps) => {
+export const UserEdit = () => {
 	const roleService = new RoleControllerApi();
 	const userService = new UserService();
 

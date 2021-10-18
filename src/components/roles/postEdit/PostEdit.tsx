@@ -28,10 +28,7 @@ const postService = new PostService();
 const tagService = new TagService();
 const categoryService = new CategoryService();
 
-type PostEditProps = {
-	roles: Role[];
-};
-export const PostEdit = (props: PostEditProps) => {
+export const PostEdit = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [locale] = useLocale();
 	const [post, setPost] = useState<Post>();

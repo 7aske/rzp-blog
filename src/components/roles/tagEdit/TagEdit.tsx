@@ -13,10 +13,7 @@ import { Role, Tag } from "../../../api/api";
 
 const tagService = new TagService();
 
-type AdminTagListProps = {
-	roles: Role[];
-};
-export const TagEdit = (props: AdminTagListProps) => {
+export const TagEdit = () => {
 	const [tags, setTags] = useState<Tag[]>([]);
 	const [errors, setErrors] = useState<string[]>([]);
 	const [messages, setMessages] = useState<string[]>([]);
