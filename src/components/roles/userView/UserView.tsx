@@ -30,7 +30,7 @@ export const UserView = () => {
 	const getAllUsers = () => {
 		setLoading(true);
 		service.getAll(page).then(res => {
-			const _users = new Array(perPage).fill(null).map((_, i) => res.data[i]);
+			const _users = new Array(perPage).fill(undefined).map((_, i) => res.data[i]);
 			pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 			setUsers(_users);
 		}).catch(() => {
@@ -59,7 +59,6 @@ export const UserView = () => {
 					</ul>
 				</div>
 			</nav>
-			<Preloader active={loading}/>
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
@@ -82,8 +81,15 @@ export const UserView = () => {
 						</div>
 					</div>
 				</li>
-				{users.map((user, i) => <UserViewListItem onDeleteUser={handleDeleteUser} key={i} user={user}
-				                                          locale={locale}/>)}
+				{users.map((user, i) => {
+					if (loading) {
+						return (<AdminUserListPlaceholder/>);
+					} else {
+						return (<UserViewListItem onDeleteUser={handleDeleteUser} key={i} user={user}
+						                          locale={locale}/>);
+					}
+
+				})}
 			</ul>
 			<Pagination className="right" onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
@@ -97,7 +103,7 @@ type AdminPostListItemProps = {
 	onDeleteUser: (id: number) => void;
 };
 const UserViewListItem = (props: AdminPostListItemProps) => {
-	const [roles, setRoles] = useState<Role[]>([]);
+	const [roles, setRoles] = useState<(Role|null)[]>(new Array(Math.ceil(Math.random() * 3)).fill(null));
 	const [user, setUser] = useState(props.user);
 	const {ctx} = useContext(AppContext);
 
@@ -137,7 +143,7 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 	const enableUser = () => {
 		service.enableUser(user.id!)
 			.then(() => {
-				setUser({...user, recordStatus: UserRecordStatusEnum.Active})
+				setUser({...user, recordStatus: UserRecordStatusEnum.Active});
 				Toast.showSuccess(localization[props.locale].successAction);
 			})
 			.catch(err => {
@@ -148,7 +154,7 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 	const disableUser = () => {
 		service.disableUser(user.id!)
 			.then(() => {
-				setUser({...user, recordStatus: UserRecordStatusEnum.Disabled})
+				setUser({...user, recordStatus: UserRecordStatusEnum.Disabled});
 				Toast.showSuccess(localization[props.locale].successAction);
 			})
 			.catch(err => {
@@ -167,8 +173,13 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 						{user.displayName}
 					</div>
 					<div className="col s3 l3 hide-on-med-and-down">
-						{roles.sort().map(role =>
-							<span key={role.name} className="blob theme-green black-text darken-2">{role.name}</span>)}
+						{roles.sort().map(role => {
+							if (role)
+								return <span key={role.name}
+								             className="blob theme-green black-text darken-2">{role.name}</span>;
+							else
+								return <span style={{width:(Math.ceil(Math.random() * 2 + 4))+"em"}} className="blob role-loading theme-green animate__animated animate__flash animate__delay-1s animate__slower animate__infinite"/>;
+						})}
 					</div>
 					<div className="col s3 l3 hide-on-med-and-down">
 						{user.email}
@@ -216,4 +227,32 @@ const UserViewListItem = (props: AdminPostListItemProps) => {
 	else
 		return (<li className="admin-post-list-item collection-item"/>);
 
+};
+
+const AdminUserListPlaceholder = () => {
+	return (
+		<li className="admin-post-list-item collection-item loading">
+			<div className="row animate__animated animate__flash animate__delay-1s animate__slower animate__infinite">
+				<div className="col s6 l2 truncate">
+					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s2 l2 hide-on-med-and-down">
+					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s3 l3 hide-on-med-and-down">
+					<span className="theme-green" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s3 l3 hide-on-med-and-down">
+					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s4 l1 center">
+					<span className="theme-white"/>
+				</div>
+				<div className="col s1 l1">
+					<Button className="theme-white-text" flat
+					        node="button"><Icon>more_vert</Icon></Button>
+				</div>
+			</div>
+		</li>
+	);
 };

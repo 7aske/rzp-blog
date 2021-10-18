@@ -30,7 +30,7 @@ export const PostView = () => {
 		setLoading(true);
 		postPreviewService.getAllForAdmin(page)
 			.then(res => {
-				const _posts = new Array(perPage).fill(null).map((_, i) => res.data[i]);
+				const _posts = new Array(perPage).fill(undefined).map((_, i) => res.data[i]);
 				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 				setPosts(_posts);
 			})
@@ -56,7 +56,6 @@ export const PostView = () => {
 					</ul>
 				</div>
 			</nav>
-			<Preloader active={loading}/>
 			<ul className="collection with-header">
 				<li className="admin-post-list-item collection-header">
 					<div className="row">
@@ -82,7 +81,13 @@ export const PostView = () => {
 						</div>
 					</div>
 				</li>
-				{posts.map((post, i) => <AdminPostListItem key={i} post={post} onDeletePost={getAll} locale={locale}/>)}
+				{posts.map((post, i) => {
+					if (loading) {
+						return (<AdminPostListPlaceholder/>);
+					} else {
+						return (<AdminPostListItem key={i} post={post} onDeletePost={getAll} locale={locale}/>);
+					}
+				})}
 			</ul>
 			<Pagination className={"right"} onPageChange={setPage} pageCount={pageCount.current}/>
 		</div>
@@ -179,5 +184,35 @@ const AdminPostListItem = (props: AdminPostListItemProps) => {
 		);
 	else
 		return (<li className="admin-post-list-item collection-item"/>);
-
 };
+
+const AdminPostListPlaceholder = () => {
+	return (
+		<li className="admin-post-list-item collection-item loading">
+			<div className="row animate__animated animate__flash animate__delay-1s animate__slower animate__infinite">
+				<div className="col s8 l2 truncate post-edit-container">
+					<span className="theme-green" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s2 hide-on-med-and-down truncate">
+					<span className="theme-green" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s2 hide-on-med-and-down">
+					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s2 hide-on-med-and-down">
+					<span className="theme-grey" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s2 l1">
+					<span className="theme-white"/>
+				</div>
+				<div className="col s3 l2 hide-on-med-and-down">
+					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
+				</div>
+				<div className="col s1 l1">
+					<Button className="theme-white-text" flat
+					               node="button"><Icon>more_vert</Icon></Button>
+				</div>
+			</div>
+		</li>
+	);
+}

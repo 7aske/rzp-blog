@@ -59,5 +59,14 @@
 				text-decoration: underline;
 			}
 		}
+
+		&.loading {
+			padding: 0.5em;
+			span {
+				display: block;
+				height: 2.25em;
+				border-radius: 5px;
+			}
+		}
 	}
 }

@@ -73,5 +73,20 @@
 		.hidden {
 			display: none !important;
 		}
+
+		&.loading {
+			padding: 0.5em;
+			span {
+				display: block;
+				height: 2.25em;
+				border-radius: 5px;
+			}
+		}
+
+		.role-loading {
+			margin-right: .25em;
+			height: 1.75em;
+			display: inline-block;
+		}
 	}
 }
