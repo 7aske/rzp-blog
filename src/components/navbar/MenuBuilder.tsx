@@ -4,6 +4,7 @@ import { LocaleSwitch } from "../localization/LocaleSwitch";
 import { MenuItem, MenuItemBuilder, MenuItemType } from "./MenuItem";
 import { environment } from "../../environment";
 import Roles from "../../utils/Roles";
+import { Notifications } from "./Notifications";
 
 class MenuBuilder {
 	private navItems: MenuItem[];
@@ -34,6 +35,8 @@ class MenuBuilder {
 				.order(902).loggedIn(true).build(),
 			new MenuItem(<LocaleSwitch/>,
 				999),
+			new MenuItem(<Notifications/>,
+				1000),
 
 		];
 
