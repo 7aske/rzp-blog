@@ -9,7 +9,7 @@ import { MessageList } from "../../messageList/MessageList";
 import "./CategoryEdit.scss";
 import localization from "./localization";
 import CategoryService from "../../../services/Category.service";
-import { Role, Category } from "../../../api/api";
+import { Category } from "../../../api/api";
 
 const categoryService = new CategoryService();
 

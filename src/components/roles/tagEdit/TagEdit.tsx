@@ -9,7 +9,7 @@ import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./TagEdit.scss";
 import TagService from "../../../services/Tag.service";
-import { Role, Tag } from "../../../api/api";
+import { Tag } from "../../../api/api";
 
 const tagService = new TagService();
 

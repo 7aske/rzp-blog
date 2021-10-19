@@ -7,7 +7,7 @@ import localization from "./localization";
 import "./UserView.scss";
 import { User, Role, UserRecordStatusEnum } from "../../../api/api";
 import { usePageable } from "../../../hooks/usePageable";
-import { Dropdown, Button, Icon, Preloader } from "react-materialize";
+import { Dropdown, Button, Icon } from "react-materialize";
 import UserService from "../../../services/User.service";
 import { AppContext } from "../../../context/AppContext";
 import Toast from "../../../utils/Toast";
@@ -246,7 +246,7 @@ const AdminUserListPlaceholder = () => {
 					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
 				</div>
 				<div className="col s4 l1 center">
-					<span className="theme-white"/>
+					<span className="icon theme-white"/>
 				</div>
 				<div className="col s1 l1">
 					<Button className="theme-white-text" flat

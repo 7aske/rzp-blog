@@ -18,7 +18,7 @@ import { PostEditor } from "./postEditor/PostEditor";
 import PostService from "../../../services/Post.service";
 import TagService from "../../../services/Tag.service";
 import CategoryService from "../../../services/Category.service";
-import { Role, Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
+import { Post, Tag, PostRecordStatusEnum, Category } from "../../../api/api";
 import { Button, Modal } from "react-materialize";
 import { MediaView } from "../mediaView/MediaView";
 import code from "../../../assets/img/code.png";

@@ -10,7 +10,7 @@ import "./PostView.scss";
 import PostPreviewService from "../../../services/PostPreview.service";
 import { usePageable } from "../../../hooks/usePageable";
 import { PostPreview, PostPreviewRecordStatusEnum } from "../../../api/api";
-import { Dropdown, Button, Icon, Preloader } from "react-materialize";
+import { Dropdown, Button, Icon } from "react-materialize";
 import { getPostStatusIcon } from "../../../utils/RecordStatusUtils";
 import PostService from "../../../services/Post.service";
 import Toast from "../../../utils/Toast";
@@ -203,7 +203,7 @@ const AdminPostListPlaceholder = () => {
 					<span className="theme-grey" style={{width: (Math.random() * 70 + 30) + "%"}}/>
 				</div>
 				<div className="col s2 l1">
-					<span className="theme-white"/>
+					<span className="icon theme-white"/>
 				</div>
 				<div className="col s3 l2 hide-on-med-and-down">
 					<span className="theme-white" style={{width: (Math.random() * 70 + 30) + "%"}}/>
