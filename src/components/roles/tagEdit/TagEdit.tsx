@@ -9,9 +9,12 @@ import { MessageList } from "../../messageList/MessageList";
 import localization from "./localization";
 import "./TagEdit.scss";
 import TagService from "../../../services/Tag.service";
-import { Tag } from "../../../api/api";
+import { Tag, PostControllerApi, PostSummary } from "../../../api/api";
+import { ProgressBar } from "react-materialize";
+import {Link} from "react-router-dom";
 
 const tagService = new TagService();
+const postService = new PostControllerApi();
 
 export const TagEdit = () => {
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -19,11 +22,13 @@ export const TagEdit = () => {
 	const [messages, setMessages] = useState<string[]>([]);
 	const [idRef, setIdRef] = useState<HTMLInputElement | null>(null);
 	const [nameRef, setNameRef] = useState<HTMLInputElement | null>(null);
+	const [stats, setStats] = useState<PostSummary | null>(null);
 
 	const [locale] = useLocale();
 
 	useEffect(() => {
 		getTags();
+		getStats();
 	}, []);
 
 
@@ -34,6 +39,11 @@ export const TagEdit = () => {
 				Console.error(err);
 				setTags([]);
 			});
+	};
+
+	const getStats = () => {
+		postService.getPostSummary("TAG")
+			.then(res => setStats(res.data));
 	};
 
 	const setTag = (tag: Tag) => {
@@ -105,54 +115,63 @@ export const TagEdit = () => {
 	};
 
 	return (
-		<div id="admin-tag-edit">
-			<div className="row">
-				<form onSubmit={saveTag} className="col s12 m6">
-					<h3>{localization[locale].title}</h3>
-					<div className="row">
-						<div className="input-field col s12 m8">
-							<GenericSelect list={tags.map(elem =>
-								new GenericElement<Tag>(elem, elem.id!, elem.name!))}
-							               create={true}
-							               onSelect={elem => setTag(elem?.element)}
-							               newOptionText={localization[locale].tagNewOption}
-							               labelText={localization[locale].tagSelectLabel}/>
-						</div>
+		<div id="admin-tag-edit" className="row">
+			<form onSubmit={saveTag} className="col s12 m6">
+				<h3>{localization[locale].title}</h3>
+				<div className="row">
+					<div className="input-field col s12 m8">
+						<GenericSelect list={tags.map(elem =>
+							new GenericElement<Tag>(elem, elem.id!, elem.name!))}
+						               create={true}
+						               onSelect={elem => setTag(elem?.element)}
+						               newOptionText={localization[locale].tagNewOption}
+						               labelText={localization[locale].tagSelectLabel}/>
 					</div>
-					<div className="row">
-						<div className="input-field col s12 m8">
-							<input ref={elem => setIdRef(elem)} id="idTag" name="idTag" type="text" disabled={true}/>
-							<label htmlFor="idTag">ID</label>
-						</div>
+				</div>
+				<input hidden ref={elem => setIdRef(elem)} id="idTag" name="idTag" type="text" disabled={true}/>
+				<div className="row">
+					<div className="input-field col s12 m8">
+						<input ref={elem => setNameRef(elem)} id="tagName" name="tag-name" type="text"/>
+						<label htmlFor="tag-name">{localization[locale].tagNameLabel}</label>
 					</div>
-					<div className="row">
-						<div className="input-field col s12 m8">
-							<input ref={elem => setNameRef(elem)} id="tagName" name="tag-name" type="text"/>
-							<label htmlFor="tag-name">{localization[locale].tagNameLabel}</label>
-						</div>
+				</div>
+				<div className="row">
+					<div className="col s12 m8">
+						<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
+						<MessageList className="green accent-2 white-text" timeout={3000} messages={messages}/>
 					</div>
-					<div className="row">
-						<div className="col s12 m8">
-							<MessageList className="red accent-2 white-text" timeout={3000} messages={errors}/>
-							<MessageList className="green accent-2 white-text" timeout={3000} messages={messages}/>
-						</div>
+				</div>
+				<div className="row">
+					<div className="col s12">
+						<button className="btn btn-form" type="submit">
+							<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
+						</button>
+						<br/>
+						<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
+							<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
+						</button>
+						<br/>
+						<button className="btn btn-form grey" type="reset">
+							<i className="material-icons left">clear</i>{localization[locale].tagResetButton}
+						</button>
 					</div>
-					<div className="row">
-						<div className="col s12">
-							<button className="btn btn-form" type="submit">
-								<i className="material-icons left">save</i>{localization[locale].tagSaveButton}
-							</button>
-							<br/>
-							<button onClick={deleteTag} className="btn btn-form red accent-2" type="button">
-								<i className="material-icons left">delete</i>{localization[locale].tagDeleteButton}
-							</button>
-							<br/>
-							<button className="btn btn-form grey" type="reset">
-								<i className="material-icons left">clear</i>{localization[locale].tagResetButton}
-							</button>
-						</div>
+				</div>
+			</form>
+			<div className="col s12 m6">
+				<div className="row ">
+					<div className="col s12 m8 stats">
+						{stats ? Object.keys(stats.summary!).map(key => (<>
+							<Link to={"/tag/" + key}><h6 className="theme-white-text">{key}&nbsp;<span
+								className="theme-grey-light-text">({stats.summary![key]})</span></h6>
+							</Link>
+							<div className="progress">
+								<div className="determinate"
+								     style={{width: Math.round(stats.summary![key] / stats.count! * 100) + "%"}}/>
+							</div>
+						</>)) : <ProgressBar/>}
 					</div>
-				</form>
+					<div className="s12 m4"/>
+				</div>
 			</div>
 		</div>
 	);

@@ -656,6 +656,25 @@ export enum PostPreviewRecordStatusEnum {
 /**
  * 
  * @export
+ * @interface PostSummary
+ */
+export interface PostSummary {
+    /**
+     * 
+     * @type {number}
+     * @memberof PostSummary
+     */
+    count?: number;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof PostSummary
+     */
+    summary?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
  * @interface RegisterUserDto
  */
 export interface RegisterUserDto {
@@ -2747,6 +2766,43 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary getPostSummary
+         * @param {'TAG' | 'CATEGORY'} type type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostSummary: async (type: 'TAG' | 'CATEGORY', options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('getPostSummary', 'type', type)
+            const localVarPath = `/posts/summary`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary savePost
          * @param {Post} post post
          * @param {*} [options] Override http request option.
@@ -2982,6 +3038,17 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary getPostSummary
+         * @param {'TAG' | 'CATEGORY'} type type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPostSummary(type: 'TAG' | 'CATEGORY', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPostSummary(type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary savePost
          * @param {Post} post post
          * @param {*} [options] Override http request option.
@@ -3102,6 +3169,16 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
          */
         getPostById(identifier: string, options?: any): AxiosPromise<Post> {
             return localVarFp.getPostById(identifier, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getPostSummary
+         * @param {'TAG' | 'CATEGORY'} type type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPostSummary(type: 'TAG' | 'CATEGORY', options?: any): AxiosPromise<PostSummary> {
+            return localVarFp.getPostSummary(type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3232,6 +3309,18 @@ export class PostControllerApi extends BaseAPI {
      */
     public getPostById(identifier: string, options?: any) {
         return PostControllerApiFp(this.configuration).getPostById(identifier, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getPostSummary
+     * @param {'TAG' | 'CATEGORY'} type type
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostControllerApi
+     */
+    public getPostSummary(type: 'TAG' | 'CATEGORY', options?: any) {
+        return PostControllerApiFp(this.configuration).getPostSummary(type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

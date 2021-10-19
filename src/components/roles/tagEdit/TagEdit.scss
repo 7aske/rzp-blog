@@ -15,6 +15,11 @@
 			background-color: $theme-green;
 		}
 	}
+	.stats {
+		max-height: 70vh;
+		overflow-y: scroll;
+		margin-top: 6em;
+	}
 }
 
 @media screen and (max-width: 993px) {

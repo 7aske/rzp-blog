@@ -340,6 +340,13 @@ textarea {
 	}
 }
 
+.progress {
+	background-color: $theme-grey;
+	.determinate {
+		background-color: $theme-green;
+	}
+}
+
 button:focus {
 	background-color: $theme-green !important;
 }
