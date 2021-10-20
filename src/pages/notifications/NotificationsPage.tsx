@@ -6,6 +6,7 @@ import Moment from "react-moment";
 import useLocale from "../../hooks/useLocale";
 import "./NotificationsPage.scss"
 import { Button } from "react-materialize";
+import localization from "./localization";
 
 const notificationService = new NotificationControllerApi();
 export const NotificationsPage = () => {
@@ -16,10 +17,11 @@ export const NotificationsPage = () => {
 	return (
 		<div id="notifications" className="container">
 			<ul className="collection">
+				{notifications.length === 0 ? <h5 className="center theme-white-text">{localization[locale].noNotifications}</h5> : undefined}
 				{notifications.map(notif => <NotificationItem notification={notif} locale={locale}/>)}
 			</ul>
 			<div className="row load-more-container">
-				<Button className="load-more" flat disabled={!hasMore} onClick={loadMore}>Load More</Button>
+				<Button className="load-more" flat disabled={!hasMore} onClick={loadMore}>{localization[locale].loadMore}</Button>
 			</div>
 		</div>
 	);

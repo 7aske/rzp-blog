@@ -11,11 +11,10 @@ import Console from "../../utils/Console";
 import MenuBuilder from "./MenuBuilder";
 import "./Navbar.scss";
 import { Sidenav } from "./sidenav/Sidenav";
-import Roles from "../../utils/Roles";
 import AuthService from "../../services/Auth.service";
 import { User } from "../../@types/User";
 import UserService from "../../services/User.service";
-import { Notifications } from "./Notifications";
+import localization from "./localization";
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -108,7 +107,7 @@ export const Navbar = () => {
 				</ul>
 			</div>
 			<Sidenav menuItems={[...sidenavItems.slice(0, sidenavItems.length - 1),
-				<Link to="/notifications"><i className="material-icons">notifications</i></Link>]}/>
+				<Link to="/notifications">{localization[locale].notifications}</Link>]}/>
 			<Route path="/posts/*">
 				<div ref={elem => setProgRef(elem)} className="prog"/>
 			</Route>

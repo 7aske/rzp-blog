@@ -1,6 +1,7 @@
 @import "../../assets/css/theme";
 
 nav#nav {
+	user-select: none;
 	&.fixed {
 		position: fixed;
 		top: 0;

@@ -18,6 +18,7 @@ export const Notifications = (props: NotificationsProps) => {
 
 	useEffect(() => {
 		getNotifications();
+		// eslint-disable-next-line
 	}, []);
 
 	const getNotifications = () => {
@@ -34,14 +35,15 @@ export const Notifications = (props: NotificationsProps) => {
 
 	return (
 		<>
-			<Dropdown className="notifications collection" trigger={<a><i className="material-icons">{notifications.length === 0 ? "notifications_none": "notifications"}</i></a>}
+			<Dropdown className="notifications collection" trigger={<a><i
+				className="material-icons">{notifications.length === 0 ? "notifications_none" : "notifications"}</i></a>}
 			          options={{
 				          constrainWidth: false,
 				          coverTrigger: false,
 				          closeOnClick: true,
 				          hover: true,
 				          alignment: "left",
-				          container: <li className="collection-item"/>
+				          container: <li className="collection-item"/>,
 			          }}>
 				{notifications.map(notif => <NotificationItem notification={notif} locale={locale}/>)}
 			</Dropdown>
@@ -58,10 +60,11 @@ const NotificationItem = ({notification, locale}: NotificationProps) => {
 	const handleClick = () => {
 		notificationService.markAsRead(notification.id!)
 			.then(console.log);
-	}
+	};
 
 	return (
-		<Link onClick={handleClick} className="notification" to={notification.actionUrl ?? ""} href={notification.actionUrl}>
+		<Link onClick={handleClick} className="notification" to={notification.actionUrl ?? ""}
+		      href={notification.actionUrl}>
 			<i className="material-icons icon">notifications</i>
 			<h6 className="title">{notification.title}</h6>
 			<p className="truncate body">{notification.body}</p>

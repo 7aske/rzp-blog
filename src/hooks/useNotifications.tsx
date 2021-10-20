@@ -11,6 +11,7 @@ export const useNotifications = (props?: UseNotificationsProps) => {
 	const [hasMore, setHasMore] = useState(true);
 	const {page, setPage} = usePageable();
 
+	// eslint-disable-next-line
 	useEffect(() => void updateNotifications(), [page])
 
 	const updateNotifications = () =>
