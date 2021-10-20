@@ -15,6 +15,7 @@ import { TagPage } from "../pages/tag/TagPage";
 import Roles from "../utils/Roles";
 import { UserChangePasswordPage } from "../pages/roles/user/userChangePasswordPage/UserChangePasswordPage";
 import { UserPage } from "../pages/user/UserPage";
+import { NotificationsPage } from "../pages/notifications/NotificationsPage";
 
 export const Router = () => {
 	return (
@@ -28,6 +29,7 @@ export const Router = () => {
 			<Route path="/tag/:tagName" component={TagPage}/>
 			<Route path="/register" component={RegisterPage}/>
 			<AuthGuard>
+				<Route exact path="/notifications" component={NotificationsPage}/>
 				<Route exact path="/logout" component={LogoutPage}/>
 				<RoleGuard roles={[Roles.ADMIN_ROLE, Roles.AUTHOR_ROLE, Roles.USER_ROLE]}>
 					<Route path={"/user/profile"} component={UserProfilePage}/>

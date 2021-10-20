@@ -1,0 +1,59 @@
+@import "../../assets/css/theme";
+
+#notifications {
+	min-height: 56vh;
+
+	.notification {
+		height: 64px;
+		display: block;
+		padding-left: 4em;
+		overflow: hidden;
+		//background-color: $theme-grey;
+		color: $theme-white;
+		position: relative;
+
+		.icon {
+			position: absolute;
+			//left: .75em;
+			left: 0;
+			top: .75em;
+		}
+
+		.title {
+			//margin: 0;
+		}
+
+		.body {
+			//padding: 0;
+			//margin: 0;
+		}
+
+		.age {
+			position: absolute;
+			right: .5em;
+			top: .5em;
+		}
+
+		&:hover {
+			.icon {
+				color: $theme-green-light !important;
+			}
+
+			//background-color: $theme-green-light !important;
+			//border-bottom: solid 2px $theme-green-light;
+		}
+	}
+
+	.load-more-container {
+		text-align: center;
+
+		.load-more {
+			user-select: none;
+			color: $theme-green-light;
+
+			&:focus, &:active {
+				background-color: transparent !important;
+			}
+		}
+	}
+}

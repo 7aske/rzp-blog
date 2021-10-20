@@ -23,7 +23,7 @@ export const Notifications = (props: NotificationsProps) => {
 	const getNotifications = () => {
 		userApi.getNotificationsForUser()
 			.then(res => {
-				setNotifications(res.data);
+				setNotifications([...notifications, ...res.data]);
 			});
 	};
 

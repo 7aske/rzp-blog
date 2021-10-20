@@ -15,6 +15,7 @@ import Roles from "../../utils/Roles";
 import AuthService from "../../services/Auth.service";
 import { User } from "../../@types/User";
 import UserService from "../../services/User.service";
+import { Notifications } from "./Notifications";
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -34,8 +35,7 @@ export const Navbar = () => {
 
 	const navItems = new MenuBuilder(locale)
 		.withLoggedIn([loggedIn, null])
-		.withRoles([Roles.USER_ROLE])
-		.withRoles(ctx.user?.roles.find(r => r.name === Roles.USER_ROLE) ? [Roles.AUTHOR_ROLE] : [])
+		.withRoles(roles.map(r => r.name!))
 		.withNavTrigger()
 		.build();
 
@@ -107,7 +107,8 @@ export const Navbar = () => {
 					{navItems.map((item, i) => <li key={i}>{item}</li>)}
 				</ul>
 			</div>
-			<Sidenav menuItems={sidenavItems}/>
+			<Sidenav menuItems={[...sidenavItems.slice(0, sidenavItems.length - 1),
+				<Link to="/notifications"><i className="material-icons">notifications</i></Link>]}/>
 			<Route path="/posts/*">
 				<div ref={elem => setProgRef(elem)} className="prog"/>
 			</Route>
