@@ -91,7 +91,7 @@ const CommentListItem = ({comment: {body, createdDate, id, user}, locale}: Comme
 	};
 
 	return (
-		<div key={id} className="comment-list-item animate__animated animate__fadeIn">
+		<div id={"comment-" + id} key={id} className="comment-list-item animate__animated animate__fadeIn">
 			<h6 className="theme-green-text">{(user as User).username}</h6>
 			<Moment className="theme-grey-light-text" locale={locale} fromNow>{createdDate}</Moment>
 			<p ref={elem => setBodyRef(elem)} className={longComment ? "truncate" : ""}>

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { CommentList } from "../../components/commentList/CommentList";
 import { MarkdownContainer } from "../../components/markdown/MarkdownContainer";
 import useLocale from "../../hooks/useLocale";
 import Console from "../../utils/Console";
-import { formatDate, scrollToTop } from "../../utils/utils";
+import { formatDate, scrollToTop, scrollTo } from "../../utils/utils";
 import localization from "./localization";
 import "./PostPage.scss";
 import PostService from "../../services/Post.service";
@@ -19,6 +19,7 @@ const postService = new PostService();
 export const PostPage = () => {
 	const [locale] = useLocale();
 	const {slug} = useParams();
+	const location = useLocation();
 	const history = useHistory();
 	const [post, setPost] = useState<Post>();
 
@@ -38,6 +39,11 @@ export const PostPage = () => {
 		// eslint-disable-next-line
 	}, []);
 
+	useEffect(() => {
+		if (location.hash && post) {
+			setTimeout(() => scrollTo(location.hash), 1000);
+		}
+	}, [location.hash, post]);
 
 	return (
 		<div id="post" className="container">
@@ -55,7 +61,7 @@ export const PostPage = () => {
 					<MarkdownContainer content={post?.body ? post?.body : ""}/>
 					<hr/>
 					<h4 className="theme-green-text">{localization[locale].commentTitle}</h4>
-					<div className="row">
+					<div id="comments" className="row">
 						<div className="col s12 m12 l6">
 							<CommentList idPost={post.id!} locale={locale}/>
 						</div>

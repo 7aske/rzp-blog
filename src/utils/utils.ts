@@ -7,6 +7,12 @@ export const scrollToTop = (ev?: React.MouseEvent<any, any>) => {
 	window.scroll({top: 0, left: 0, behavior: "smooth"});
 };
 
+export const scrollTo = (id: string) => {
+	if (!id) return;
+	const elem = document.querySelector(id);
+	if (elem) elem.scrollIntoView({behavior: "smooth", block:"start"})
+};
+
 export const formatDate = (date: string, locale = "en"): string => {
 	const format: Intl.DateTimeFormatOptions = {
 		day: "2-digit",
