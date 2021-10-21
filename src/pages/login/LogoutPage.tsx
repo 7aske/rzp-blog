@@ -10,6 +10,7 @@ export const LogoutPage = (props: LogoutPageProps) => {
 	const {ctx, setCtx} = useContext(AppContext);
 	useEffect(() => {
 		Cookies.remove("auth" );
+		Cookies.remove("refresh" );
 		history.replace("/login");
 		setCtx({...ctx, user: null});
 		// eslint-disable-next-line

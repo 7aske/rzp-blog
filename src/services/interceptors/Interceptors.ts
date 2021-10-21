@@ -18,6 +18,9 @@ export default class Interceptors {
 		const auth = Cookies.get("auth")
 		if (auth)
 			config.headers["Authorization"] = `Bearer ${auth}`;
+		const refresh = Cookies.get("refresh")
+		if (refresh)
+			config.headers["X-Refresh-Token"] = `Refresh ${refresh}`;
 		return config;
 	}
 

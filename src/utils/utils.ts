@@ -36,7 +36,6 @@ export const getHistoryErrors = (history: H.History<any>): string[] => {
 };
 
 export const hasRole = (roles: Role[] | string[], role: string): boolean => {
-	console.log(roles, role);
 	return (roles as any[]).find(r => r.name ? r.name.toUpperCase() === role.toUpperCase() : r.toUpperCase() === role.toUpperCase()) !== undefined;
 };
 
