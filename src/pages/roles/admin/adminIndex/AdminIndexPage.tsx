@@ -23,19 +23,20 @@ export const AdminIndexPage = () => {
 
 	const menuItems = [
 		<NavLink activeClassName="active" className="btn btn-flat" to="/author/posts"><i
-			className="material-icons left hide-on-small-and-down">library_books</i>{localization[locale].sidebarPosts}
+			className="material-icons left">library_books</i><span className="hide-on-small-and-down">{localization[locale].sidebarPosts}</span>
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/author/media"><i
-			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarMedia}
+			className="material-icons left">people</i><span className="hide-on-small-and-down">{localization[locale].sidebarMedia}</span>
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/author/categories"><i
-			className="material-icons left hide-on-small-and-down">label</i>{localization[locale].sidebarCategories}
+			className="material-icons left">label</i><span className="hide-on-small-and-down">{localization[locale].sidebarCategories}</span>
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/author/tags"><i
-			className="material-icons left hide-on-small-and-down">local_offer</i>{localization[locale].sidebarTags}
+			className="material-icons left">local_offer</i><span className="hide-on-small-and-down">{localization[locale].sidebarTags}</span>
 		</NavLink>,
 		<NavLink activeClassName="active" className="btn btn-flat" to="/admin/users"><i
-			className="material-icons left hide-on-small-and-down">people</i>{localization[locale].sidebarAuthors}
+			className="material-icons left">people</i><span
+			className="hide-on-small-and-down">{localization[locale].sidebarAuthors}</span>
 		</NavLink>,
 	];
 
