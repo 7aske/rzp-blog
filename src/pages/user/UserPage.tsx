@@ -159,7 +159,7 @@ const PostList = (props: PostListProps) => {
 		dispatch({type: "setLoading", value: true});
 
 		const query = new QueryBuilder().eq("user.username", state.username).build();
-		postPreviewApi.getAllPostPreviews(state.page + ",2", "datePosted", query)
+		postPreviewApi.getAllPostPreviewsNotDeleted(state.page + ",2", query, "datePosted")
 			.then(res => {
 				if (res.data.length === 0) {
 					dispatch({type: "setCantLoadMore", value: true});
