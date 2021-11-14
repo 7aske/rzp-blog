@@ -18,7 +18,7 @@ export const IndexPage = (props: IndexPageProps) => {
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState(new Array(perPage).fill(null));
 	const [pageCount] = useState(1);
-	const [search, setSearch] = useSearch();
+	const [search, setSearch] = useSearch({key:"index.search"});
 
 
 	useEffect(() => {

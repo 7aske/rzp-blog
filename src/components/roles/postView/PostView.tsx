@@ -25,7 +25,7 @@ export const PostView = () => {
 	const pageCount = useRef(0);
 	const [posts, setPosts] = useState<PostPreview[]>(new Array(perPage).fill(null));
 	const [loading, setLoading] = useState(false);
-	const [search, setSearch] = useSearch();
+	const [search, setSearch] = useSearch({key: "posts.search"});
 	moment.locale(locale);
 
 	const getAll = () => {

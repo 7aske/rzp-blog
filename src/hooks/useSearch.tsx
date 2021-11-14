@@ -1,15 +1,20 @@
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 
-export const useSearch = (): [string, Dispatch<SetStateAction<string>>] => {
-	const [search, setSearch] = useState(localStorage.getItem("search") ?? "");
+type UseSearchProps = {
+	key?: string,
+}
+export const useSearch = (props?: UseSearchProps): [string, Dispatch<SetStateAction<string>>] => {
+	const storage: Storage = sessionStorage;
+	const [search, setSearch] = useState(storage.getItem(props?.key!) ?? "");
 
 	useEffect(() => {
-		localStorage.setItem("search", search);
+		storage.setItem(props?.key!, search);
+		// eslint-disable-next-line
 	}, [search]);
 
-	const setSearchWrapper: Dispatch<SetStateAction<string>> = (value: SetStateAction<string>) => {
-		setSearch(value);
-	};
+	return [search, setSearch];
+};
 
-	return [search, setSearchWrapper];
+useSearch.defaultProps = {
+	key: "search",
 };
