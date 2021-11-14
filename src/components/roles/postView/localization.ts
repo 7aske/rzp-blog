@@ -12,6 +12,7 @@ type AdminPostsListLocalizationStrings = {
 	publish: string;
 	unPublish: string;
 	success: string;
+	search: string;
 	[key: string]: string;
 }
 
@@ -28,7 +29,8 @@ const sr: AdminPostsListLocalizationStrings = {
 	publish: "Objavi",
 	unPublish: "Povuci",
 	success: "Uspešno",
-	deletePostButton: "Obriši"
+	deletePostButton: "Obriši",
+	search: "Pretraga",
 };
 
 const en: AdminPostsListLocalizationStrings = {
@@ -44,8 +46,8 @@ const en: AdminPostsListLocalizationStrings = {
 	publish: "Publish",
 	unPublish: "Unpublish",
 	success: "Successful",
-	deletePostButton: "Delete"
-
+	deletePostButton: "Delete",
+	search: "Search",
 };
 
 const localization: Localized<AdminPostsListLocalizationStrings> = {en, sr};

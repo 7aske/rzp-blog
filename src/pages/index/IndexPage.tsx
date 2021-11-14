@@ -8,6 +8,7 @@ import "./IndexPage.scss";
 import localization from "./localization";
 import PostPreviewService from "../../services/PostPreview.service";
 import { usePageable } from "../../hooks/usePageable";
+import { useSearch } from "../../hooks/useSearch";
 
 const postPreviewService = new PostPreviewService();
 
@@ -17,7 +18,7 @@ export const IndexPage = (props: IndexPageProps) => {
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState(new Array(perPage).fill(null));
 	const [pageCount] = useState(1);
-	const [search, setSearch] = useState("");
+	const [search, setSearch] = useSearch();
 
 
 	useEffect(() => {
@@ -52,7 +53,7 @@ export const IndexPage = (props: IndexPageProps) => {
 			</div>
 			<div className="row">
 				<div className="input-field col s12 m12 l6 xl6 right">
-					<input onChange={ev => setSearch(ev.target.value)} placeholder={localization[locale].search}
+					<input value={search} onChange={ev => setSearch(ev.target.value)} placeholder={localization[locale].search}
 					       id="search" type="text" autoComplete="off"/>
 				</div>
 			</div>

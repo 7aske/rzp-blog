@@ -14,6 +14,7 @@ import { Dropdown, Button, Icon } from "react-materialize";
 import { getPostStatusIcon } from "../../../utils/RecordStatusUtils";
 import PostService from "../../../services/Post.service";
 import Toast from "../../../utils/Toast";
+import { useSearch } from "../../../hooks/useSearch";
 
 const postPreviewService = new PostPreviewService();
 const postService = new PostService();
@@ -24,11 +25,12 @@ export const PostView = () => {
 	const pageCount = useRef(0);
 	const [posts, setPosts] = useState<PostPreview[]>(new Array(perPage).fill(null));
 	const [loading, setLoading] = useState(false);
+	const [search, setSearch] = useSearch();
 	moment.locale(locale);
 
 	const getAll = () => {
 		setLoading(true);
-		postPreviewService.getAllForAdmin(page)
+		postPreviewService.getAllForAdmin(page, search.split(/\s+/))
 			.then(res => {
 				const _posts = new Array(perPage).fill(undefined).map((_, i) => res.data[i]);
 				pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
@@ -43,13 +45,22 @@ export const PostView = () => {
 	useEffect(() => {
 		getAll();
 		// eslint-disable-next-line
-	}, [page]);
+	}, [page, search]);
 
 	return (
 		<div className="admin-post-list">
 			<nav>
 				<div className="nav-wrapper">
 					<ul className="right">
+						<li>
+							<div className="input-field">
+								<i className="material-icons search-icon">search</i>
+								<input onChange={ev => setSearch(ev.target.value)}
+								       value={search}
+								       placeholder={localization[locale].search}
+								       className="search" type="text" autoComplete="off"/>
+							</div>
+						</li>
 						<li><Link className="btn theme-green" to="/author/posts/edit"><i
 							className="material-icons left">add_to_photos</i>
 							{localization[locale].newPostButton}</Link></li>
@@ -210,9 +221,9 @@ const AdminPostListPlaceholder = () => {
 				</div>
 				<div className="col s1 l1">
 					<Button className="theme-white-text" flat
-					               node="button"><Icon>more_vert</Icon></Button>
+					        node="button"><Icon>more_vert</Icon></Button>
 				</div>
 			</div>
 		</li>
 	);
-}
+};
