@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Pagination } from "../../components/pagination/Pagination";
 import { PostPreviewList } from "../../components/postPreviewList/PostPreviewList";
 import useLocale from "../../hooks/useLocale";
@@ -17,7 +17,7 @@ export const IndexPage = (props: IndexPageProps) => {
 	const [locale] = useLocale();
 	const {page, perPage, setPage} = usePageable();
 	const [posts, setPosts] = useState(new Array(perPage).fill(null));
-	const [pageCount] = useState(1);
+	const pageCount = useRef<number>(0);
 	const [search, setSearch] = useSearch({key:"index.search"});
 
 
@@ -25,6 +25,7 @@ export const IndexPage = (props: IndexPageProps) => {
 		if (search !== "") {
 			postPreviewService.getAll(page, search.split(/\s+/))
 				.then(res => {
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
 					setPosts(res.data)
 				})
 				.catch(err => {
@@ -33,7 +34,10 @@ export const IndexPage = (props: IndexPageProps) => {
 				});
 		} else {
 			postPreviewService.getAll(page)
-				.then(res => setPosts(res.data))
+				.then(res => {
+					pageCount.current = Math.ceil(parseInt(res.headers["x-data-count"], 10) / perPage);
+					setPosts(res.data)
+				})
 				.catch(err => {
 					Console.error(err);
 					setPosts([]);
@@ -61,7 +65,7 @@ export const IndexPage = (props: IndexPageProps) => {
 				{posts.length > 0 ?
 					<div className="col s12">
 						<PostPreviewList posts={posts} search={search}/>
-						<Pagination onPageChange={setPage} pageCount={pageCount}/>
+						<Pagination onPageChange={setPage} pageCount={pageCount.current}/>
 					</div>
 					: <div className="col s12 no-posts">
 						<h3 className="title">{localization[locale].noPosts}</h3>
